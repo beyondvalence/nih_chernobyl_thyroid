@@ -272,7 +272,7 @@ logl 1 exct@
 para 13=1@
 fit @ 
 profile 14@ 
-!profile 15@ 
+profile 15@ 
 profile 16@
 
 
@@ -284,7 +284,7 @@ logl 1 agect @
 para 13=1@
 fit @ 
 profile 14@ 
-!profile 15@ 
+profile 15@ 
 profile 16@
 
 
@@ -320,7 +320,7 @@ para 14=1@
 fit @ 
 profile 15@ 
 profile 16@ 
-!profile 17@     
+profile 17@     
 
 ! effect modification by thyroid enlargement
 nomodel @
@@ -352,7 +352,7 @@ para 14=1@
 fit @ 
 profile 15@ 
 profile 16@  
-!profile 17@ 
+profile 17@ 
 
 
 !Effect modification  P-values for <4Gy
