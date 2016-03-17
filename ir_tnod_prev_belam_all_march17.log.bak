@@ -1,0 +1,5391 @@
+
+new @
+
+names 
+IDN	
+byear AGE_EXM	AGE_EXP	YEAR_EXM 
+SEX_L	
+OBL_M	OBL_86	UR_RUR	ur_rur86
+thnod_prev	max_size nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+DOSE_GYAV_S		
+IODINE	tvolume TSH	TG	atg 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+@
+
+skip 1 @
+
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
+Input from E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv
+
+ ***   ERROR: Unable to open file: E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv
+
+input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+Input from C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv
+
+       11422 records read       11421 records used
+                                    1 records rejected
+
+40 variables defined  At least 500 additional variables can be created.
+
+
+
+tran dgy=dose_gyav_s;
+     dgysq=dgy*dgy;
+     ex8=(age_exp-8);
+     ex8sq=ex8*ex8;
+     age21=(age_exm-21);
+     age21sq=age21*age21;
+     tvol13=(tvolume-13);
+     tvol13sq=tvol13*tvol13;
+     yob1983=(byear-1983);
+
+     if any_fhf1==-1 then any_fhf1=2 !2 recoded to missing
+     endif; 
+
+     if smoke_f==-1 then smoke_f=2
+     endif;
+     
+     if ismiss(goiter_df_pal)==1 then goiter_df_pal=2
+     endif;
+
+
+     if obl_m==1 then obl_mn=2 !Gomel
+     elif obl_m==2 or obl_m==4 then obl_mn=1 !Minsk
+     else obl_mn=3 !Mogilev and others
+     endif;
+
+     if obl_86==1 then obl_86n=2 !Gomel
+     elif obl_86==2 or obl_86==4 then obl_86n=1 !Minsk
+     else obl_86n=3 !Mogilev and others
+     endif;
+
+     if ur_rur86==1 then ur_rur86n=1 !Rural
+     elif ur_rur86==2 or ur_rur86==3 or ur_rur86==4 then ur_rur86n=2 !Urban
+     endif;
+
+     if tvolume>=18 and sex_l==1 then tvlarge=1 !Thyroid enlargement for women
+     elif tvolume>=25 and sex_l==0 then tvlarge=1  !Thyroid enlargement for men
+     else tvlarge=0 !Normal thyroid
+     endif;
+
+     iod100=(iodine-100);
+     iod60=(iodine-60);
+     iodinen=iodine;
+     if ismiss(iodine)==1 then iodinen=9999
+     endif; 
+
+
+@
+ 
+levels   
+SEX_L	 
+OBL_M	obl_mn OBL_86 obl_86n	UR_RUR	ur_rur86 ur_rur86n
+thnod_prev nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+tvlarge 
+@
+
+SEX_L has 2 levels from 0 to 1
+OBL_M has 5 levels from 1 to 5
+obl_mn has 3 levels from 1 to 3
+OBL_86 has 8 levels from 1 to 8
+obl_86n has 3 levels from 1 to 3
+UR_RUR has 2 levels from 0 to 1
+ur_rur86 has 4 levels from 1 to 4
+ur_rur86n has 2 levels from 1 to 2
+thnod_prev has 2 levels from 0 to 1
+nod_sz has 3 levels from 0 to 2
+nod_sz3 has 4 levels from 0 to 3
+thcount has 5 levels from 0 to 4
+nod_neohc has 2 levels from 0 to 1
+nod_neo has 2 levels from 0 to 1
+tc has 4 levels from 0 to 3
+prevcases has 2 levels from 0 to 1
+FA_PREV has 2 levels from 0 to 1
+SMOKE_F has 3 levels from 0 to 2
+VITAM_F has 2 levels from 0 to 1
+AIT_TOTF has 3 levels from -1 to 1
+goiter_df_pal has 3 levels from 0 to 2
+NDG_RELF has 3 levels from -1 to 1
+ANY_FHF1 has 3 levels from 0 to 2
+Cytology has 2 levels from 1 to 2
+CytologyRecomend has 2 levels from 0 to 1
+Operat has 2 levels from 1 to 2
+OperatRecomend has 2 levels from 0 to 1
+RefOnko has 4 levels from 0 to 3
+fnb has 3 levels from 1 to 3
+tvlarge has 2 levels from 0 to 1
+
+categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+dobyrct has 5 levels from 1 to 5
+
+categ age_exm as agect </ 18/ 25/ > @
+agect has 3 levels from 1 to 3
+
+categ age_exp as exct </ 5/ 12/ > @
+exct has 3 levels from 1 to 3
+
+categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+yearexmct has 5 levels from 1 to 5
+
+categ tvolume as tvct </ 8/ 10/ 14/ > @
+tvct has 4 levels from 1 to 4
+
+categ iodinen as iodct </20/9998> @
+iodct has 3 levels from 1 to 3
+
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+dct7 has 7 levels from 1 to 7
+
+
+tran 
+if        dct7==1 then dct7num=1
+     elif dct7==2 then dct7num=2
+     elif dct7==3 then dct7num=3
+     elif dct7==4 then dct7num=4
+     elif dct7==5 then dct7num=5
+     elif dct7==6 then dct7num=6
+     else              dct7num=7
+     endif;
+
+@
+
+! Table 3 Cases
+cases thnod_prev @
+
+
+! Background
+! A priori: sex, attained age, age at exposure 
+! To examine: UR_RUR, oblast, iodine,  tvlarge, goiter_df_pal,any_fhf1, vitam_f
+
+!Urban rural
+
+nomodel@
+logl 0 sex_l age21  ex8 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 dct7@
+fit@
+          Iter  Step      Deviance
+
+             0     0    15832.868
+             1     0     6615.826
+             2     0     5812.729
+             3     0     5715.327
+             4     0     5711.847
+             5     0     5711.841
+             6     0     5711.841
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.615      0.1445     -25.03    < 0.001
+ 3 SEX_L_1..................         0.2932     0.07467      3.926    < 0.001
+ 5 UR_RUR_1.................         0.1977     0.07972       2.48     0.0131
+ 7 obl_86n_2................         0.1537      0.1316      1.168      0.243
+ 8 obl_86n_3................        -0.2401      0.1763     -1.362      0.173
+10 tvlarge_1................         0.6041      0.1172      5.154    < 0.001
+12 goiter_df_pal_1..........          1.161     0.08958      12.96    < 0.001
+13 goiter_df_pal_2..........        -0.7951       1.034    -0.7688      0.442
+15 ANY_FHF1_1...............         0.4748      0.1104      4.299    < 0.001
+16 ANY_FHF1_2...............         0.2174      0.2396     0.9071      0.364
+18 dct7_2...................        0.03330      0.1171     0.2843      > 0.5
+19 dct7_3...................        0.04298      0.1212     0.3547      > 0.5
+20 dct7_4...................        0.09978      0.1299     0.7683      0.442
+21 dct7_5...................         0.4938        0.14      3.528    < 0.001
+22 dct7_6...................         0.3738      0.1949      1.917     0.0552
+23 dct7_7...................          1.564      0.2047      7.641    < 0.001
+24 age21....................         0.3101      0.0355      8.736    < 0.001
+25 ex8......................        -0.2360     0.03695     -6.389    < 0.001
+
+            Records used        11421
+
+                Deviance     5711.841
+                     AIC     5747.841
+            Pearson Chi2     11239.82      Degrees of freedom   11403
+
+
+
+
+profile 18@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   0.05673  -0.04000     0.421 *
+    0.1504    -1.001     0.159 *
+    0.1123   -0.4548     0.250 *
+    0.1504    -1.000     0.159 *
+    0.1680    -1.323     0.125 *
+    0.2258    -2.706    0.0500 *
+    0.2627    -3.841    0.0250 *
+    0.2956    -5.024    0.0125 *
+    0.3348    -6.635   0.00500 *
+    0.3618    -7.879   0.00250 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+  0.009878  -0.03998     0.421 *
+  -0.08387   -0.9989     0.159 *
+  -0.04576   -0.4551     0.250 *
+  -0.08393    -1.000     0.159 *
+   -0.1016    -1.323     0.125 *
+   -0.1596    -2.705    0.0500 *
+   -0.1967    -3.841    0.0250 *
+   -0.2298    -5.023    0.0125 *
+   -0.2692    -6.634   0.00500 *
+   -0.2965    -7.879   0.00250 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.2965    -7.879   0.00250
+   -0.2692    -6.634   0.00500
+   -0.2298    -5.023    0.0125
+   -0.1967    -3.841    0.0250
+   -0.1596    -2.705    0.0500
+   -0.1016    -1.323     0.125
+  -0.08393    -1.000     0.159
+  -0.08387   -0.9989     0.159
+  -0.04576   -0.4551     0.250
+  0.009878  -0.03998     0.421
+   0.03330     0.000      0.00
+   0.05673  -0.04000     0.421
+    0.1123   -0.4548     0.250
+    0.1504    -1.000     0.159
+    0.1504    -1.001     0.159
+    0.1680    -1.323     0.125
+    0.2258    -2.706    0.0500
+    0.2627    -3.841    0.0250
+    0.2956    -5.024    0.0125
+    0.3348    -6.635   0.00500
+    0.3618    -7.879   0.00250
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 18 (dct7_2)
+
+            MLE    0.03330    exp(MLE)      1.034
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%   -0.004035     0.07061      0.9960       1.073
+      50.0%    -0.04575      0.1123      0.9553       1.119
+      68.3%    -0.08393      0.1504      0.9195       1.162
+      75.0%     -0.1016      0.1680      0.9034       1.183
+      90.0%     -0.1597      0.2258      0.8524       1.253
+      95.0%     -0.1967      0.2627      0.8214       1.300
+      97.5%     -0.2299      0.2956      0.7946       1.344
+      99.0%     -0.2693      0.3348      0.7639       1.398
+      99.5%     -0.2965      0.3618      0.7434       1.436
+
+
+profile 19@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   0.06722  -0.04001     0.421 *
+    0.1641    -1.001     0.159 *
+    0.1247   -0.4548     0.250 *
+    0.1641    -1.000     0.159 *
+    0.1823    -1.323     0.125 *
+    0.2421    -2.706    0.0500 *
+    0.2802    -3.842    0.0250 *
+    0.3142    -5.024    0.0125 *
+    0.3547    -6.635   0.00500 *
+    0.3826    -7.879   0.00250 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   0.01875  -0.03997     0.421 *
+  -0.07827   -0.9985     0.159 *
+  -0.03885   -0.4552     0.250 *
+  -0.07836    -1.000     0.159 *
+  -0.09663    -1.323     0.125 *
+   -0.1568    -2.704    0.0500 *
+   -0.1952    -3.841    0.0250 *
+   -0.2295    -5.023    0.0125 *
+   -0.2703    -6.634   0.00500 *
+   -0.2986    -7.879   0.00250 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.2986    -7.879   0.00250
+   -0.2703    -6.634   0.00500
+   -0.2295    -5.023    0.0125
+   -0.1952    -3.841    0.0250
+   -0.1568    -2.704    0.0500
+  -0.09663    -1.323     0.125
+  -0.07836    -1.000     0.159
+  -0.07827   -0.9985     0.159
+  -0.03885   -0.4552     0.250
+   0.01875  -0.03997     0.421
+   0.04298     0.000      0.00
+   0.06722  -0.04001     0.421
+    0.1247   -0.4548     0.250
+    0.1641    -1.000     0.159
+    0.1641    -1.001     0.159
+    0.1823    -1.323     0.125
+    0.2421    -2.706    0.0500
+    0.2802    -3.842    0.0250
+    0.3142    -5.024    0.0125
+    0.3547    -6.635   0.00500
+    0.3826    -7.879   0.00250
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 19 (dct7_3)
+
+            MLE    0.04298    exp(MLE)      1.044
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%    0.004345     0.08159       1.004       1.085
+      50.0%    -0.03883      0.1247      0.9619       1.133
+      68.3%    -0.07836      0.1641      0.9246       1.178
+      75.0%    -0.09663      0.1823      0.9079       1.200
+      90.0%     -0.1568      0.2421      0.8549       1.274
+      95.0%     -0.1952      0.2802      0.8227       1.323
+      97.5%     -0.2295      0.3142      0.7949       1.369
+      99.0%     -0.2703      0.3547      0.7631       1.426
+      99.5%     -0.2986      0.3826      0.7418       1.466
+
+
+profile 20@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    0.1257  -0.04002     0.421 *
+    0.2295    -1.002     0.158 *
+    0.1872   -0.4546     0.250 *
+    0.2294    -1.000     0.159 *
+    0.2488    -1.323     0.125 *
+    0.3128    -2.706    0.0500 *
+    0.3534    -3.842    0.0250 *
+    0.3897    -5.024    0.0125 *
+    0.4328    -6.635   0.00500 *
+    0.4626    -7.880   0.00250 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   0.07381  -0.03996     0.421 *
+  -0.03020   -0.9972     0.159 *
+   0.01200   -0.4554     0.250 *
+  -0.03039    -1.000     0.159 *
+  -0.05001    -1.323     0.125 *
+   -0.1146    -2.704    0.0501 *
+   -0.1559    -3.840    0.0250 *
+   -0.1929    -5.023    0.0125 *
+   -0.2369    -6.634   0.00500 *
+   -0.2674    -7.879   0.00250 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.2674    -7.879   0.00250
+   -0.2369    -6.634   0.00500
+   -0.1929    -5.023    0.0125
+   -0.1559    -3.840    0.0250
+   -0.1146    -2.704    0.0501
+  -0.05001    -1.323     0.125
+  -0.03039    -1.000     0.159
+  -0.03020   -0.9972     0.159
+   0.01200   -0.4554     0.250
+   0.07381  -0.03996     0.421
+   0.09978     0.000      0.00
+    0.1257  -0.04002     0.421
+    0.1872   -0.4546     0.250
+    0.2294    -1.000     0.159
+    0.2295    -1.002     0.158
+    0.2488    -1.323     0.125
+    0.3128    -2.706    0.0500
+    0.3534    -3.842    0.0250
+    0.3897    -5.024    0.0125
+    0.4328    -6.635   0.00500
+    0.4626    -7.880   0.00250
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 20 (dct7_4)
+
+            MLE    0.09978    exp(MLE)      1.105
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%     0.05836      0.1411       1.060       1.152
+      50.0%     0.01205      0.1873       1.012       1.206
+      68.3%    -0.03039      0.2294      0.9701       1.258
+      75.0%    -0.05002      0.2488      0.9512       1.283
+      90.0%     -0.1147      0.3127      0.8916       1.367
+      95.0%     -0.1560      0.3534      0.8556       1.424
+      97.5%     -0.1930      0.3897      0.8245       1.477
+      99.0%     -0.2370      0.4328      0.7890       1.542
+      99.5%     -0.2675      0.4626      0.7653       1.588
+
+
+profile 21@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    0.5218  -0.04004     0.421 *
+    0.6337    -1.003     0.158 *
+    0.5880   -0.4544     0.250 *
+    0.6334    -1.000     0.159 *
+    0.6544    -1.323     0.125 *
+    0.7231    -2.707    0.0500 *
+    0.7668    -3.842    0.0250 *
+    0.8058    -5.025    0.0125 *
+    0.8521    -6.635   0.00500 *
+    0.8841    -7.880   0.00250 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    0.4658  -0.03994     0.421 *
+    0.3537   -0.9962     0.159 *
+    0.3992   -0.4556     0.250 *
+    0.3534    -1.000     0.159 *
+    0.3322    -1.323     0.125 *
+    0.2625    -2.703    0.0501 *
+    0.2178    -3.840    0.0250 *
+    0.1778    -5.022    0.0125 *
+    0.1302    -6.633   0.00500 *
+   0.09717    -7.878   0.00250 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   0.09717    -7.878   0.00250
+    0.1302    -6.633   0.00500
+    0.1778    -5.022    0.0125
+    0.2178    -3.840    0.0250
+    0.2625    -2.703    0.0501
+    0.3322    -1.323     0.125
+    0.3534    -1.000     0.159
+    0.3537   -0.9962     0.159
+    0.3992   -0.4556     0.250
+    0.4658  -0.03994     0.421
+    0.4938     0.000      0.00
+    0.5218  -0.04004     0.421
+    0.5880   -0.4544     0.250
+    0.6334    -1.000     0.159
+    0.6337    -1.003     0.158
+    0.6544    -1.323     0.125
+    0.7231    -2.707    0.0500
+    0.7668    -3.842    0.0250
+    0.8058    -5.025    0.0125
+    0.8521    -6.635   0.00500
+    0.8841    -7.880   0.00250
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 21 (dct7_5)
+
+            MLE     0.4938    exp(MLE)      1.639
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      0.4492      0.5384       1.567       1.713
+      50.0%      0.3992      0.5881       1.491       1.801
+      68.3%      0.3534      0.6334       1.424       1.884
+      75.0%      0.3322      0.6544       1.394       1.924
+      90.0%      0.2624      0.7231       1.300       2.061
+      95.0%      0.2177      0.7668       1.243       2.153
+      97.5%      0.1778      0.8058       1.195       2.239
+      99.0%      0.1301      0.8521       1.139       2.345
+      99.5%     0.09714      0.8841       1.102       2.421
+
+
+
+!Basic linear dose model AIC=5723
+nomodel@
+logl 0 sex_l age21  ex8 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15832.868
+             1     0     6602.581
+             2     0     5802.196
+             3     0     5708.549
+             4     0     5705.786
+             5     0     5705.783
+             6     0     5705.783
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.648      0.1433     -25.46    < 0.001
+ 3 SEX_L_1..................         0.2949      0.0746      3.953    < 0.001
+ 5 UR_RUR_1.................         0.2100     0.07951      2.641    0.00827
+ 7 obl_86n_2................        0.09960      0.1207     0.8251      0.409
+ 8 obl_86n_3................        -0.2696      0.1728      -1.56      0.119
+10 tvlarge_1................         0.6034       0.117      5.157    < 0.001
+12 goiter_df_pal_1..........          1.161     0.08952      12.97    < 0.001
+13 goiter_df_pal_2..........        -0.7496       1.032    -0.7263      0.468
+15 ANY_FHF1_1...............         0.4765      0.1104      4.317    < 0.001
+16 ANY_FHF1_2...............         0.1918      0.2396     0.8006      0.423
+17 age21....................         0.3110     0.03536      8.795    < 0.001
+18 ex8......................        -0.2362     0.03678     -6.423    < 0.001
+
+Linear term 1
+19 dgy......................         0.4345       0.096      4.526    < 0.001
+
+            Records used        11421
+
+                Deviance     5705.783
+                     AIC     5731.783
+            Pearson Chi2     11199.04      Degrees of freedom   11408
+
+
+
+null@
+
+!linear quadratic dose-response AIC=5718.7
+line 1 +dgysq @ 
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5705.783
+             1     0     5699.190
+             2     0     5699.127
+             3     0     5699.127
+             4     0     5699.127
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.627      0.1433     -25.32    < 0.001
+ 3 SEX_L_1..................         0.2903     0.07473      3.884    < 0.001
+ 5 UR_RUR_1.................         0.2069     0.07964      2.598    0.00938
+ 7 obl_86n_2................         0.1456      0.1216      1.198      0.231
+ 8 obl_86n_3................        -0.2451      0.1731     -1.416      0.157
+10 tvlarge_1................         0.6084      0.1171      5.196    < 0.001
+12 goiter_df_pal_1..........          1.164     0.08968      12.98    < 0.001
+13 goiter_df_pal_2..........        -0.7208       1.032    -0.6987      0.485
+15 ANY_FHF1_1...............         0.4732      0.1106      4.277    < 0.001
+16 ANY_FHF1_2...............         0.1855      0.2411     0.7694      0.442
+17 age21....................         0.3060     0.03551      8.617    < 0.001
+18 ex8......................        -0.2302     0.03697     -6.225    < 0.001
+
+Linear term 1
+19 dgy......................         0.2245      0.1187      1.892     0.0585
+20 dgysq....................        0.03623     0.01928      1.879     0.0602
+
+            Records used        11421
+
+                Deviance     5699.127
+                     AIC     5727.127
+            Pearson Chi2     11251.13      Degrees of freedom   11407
+
+
+
+
+line 1 -dgysq@
+logl 1 dgy @
+fit@  
+          Iter  Step      Deviance
+
+             0     0     5715.888
+             1     0     5700.713
+             2     0     5697.209
+             3     0     5697.197
+             4     0     5697.197
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.629      0.1429     -25.39    < 0.001
+ 3 SEX_L_1..................         0.2901     0.07475      3.881    < 0.001
+ 5 UR_RUR_1.................         0.2082     0.07965      2.614    0.00894
+ 7 obl_86n_2................         0.1449      0.1202      1.206      0.228
+ 8 obl_86n_3................        -0.2463      0.1728     -1.425      0.154
+10 tvlarge_1................         0.6084      0.1171      5.196    < 0.001
+12 goiter_df_pal_1..........          1.165     0.08975      12.99    < 0.001
+13 goiter_df_pal_2..........        -0.7219       1.032    -0.6998      0.484
+15 ANY_FHF1_1...............         0.4729      0.1107      4.272    < 0.001
+16 ANY_FHF1_2...............         0.1749      0.2426     0.7211      0.471
+17 age21....................         0.3057     0.03548      8.616    < 0.001
+18 ex8......................        -0.2297     0.03694     -6.219    < 0.001
+
+Linear term 1
+19 dgy......................         0.2465     0.08142      3.027    0.00247
+
+Log-linear term 1
+20 dgy......................        0.08287      0.0298      2.781    0.00542
+
+            Records used        11421
+
+                Deviance     5697.197
+                     AIC     5725.197
+            Pearson Chi2     11262.17      Degrees of freedom   11407
+
+
+
+
+select dgy<4@
+11169 records to be used
+
+
+
+!Confirm linear dose-response <4 Gy
+!Basic linear dose model 
+nomodel@
+logl 0 sex_l age21  ex8 ur_rur obl_86n   @
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6509.795
+             2     0     5813.135
+             3     0     5746.884
+             4     0     5745.205
+             5     0     5745.203
+             6     0     5745.203
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.278      0.1389      -23.6    < 0.001
+ 3 SEX_L_1..................         0.4412     0.07445      5.926    < 0.001
+ 5 UR_RUR_1.................         0.2093     0.07997      2.617    0.00888
+ 7 obl_86n_2................         0.1250      0.1193      1.048      0.295
+ 8 obl_86n_3................        -0.1910      0.1705      -1.12      0.263
+ 9 age21....................         0.1556      0.0338      4.603    < 0.001
+10 ex8......................       -0.07576     0.03547     -2.136     0.0327
+
+Linear term 1
+11 dgy......................         0.3153      0.1017      3.099    0.00194
+
+            Records used        11169
+
+                Deviance     5745.203
+                     AIC     5761.203
+            Pearson Chi2     10987.32      Degrees of freedom   11161
+
+
+
+null@
+
+!linear quadratic dose-response 
+line 1 +dgysq @ 
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5745.203
+             1     0     5745.056
+             2     0     5745.056
+             3     0     5745.056
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.284      0.1401     -23.44    < 0.001
+ 3 SEX_L_1..................         0.4415     0.07445       5.93    < 0.001
+ 5 UR_RUR_1.................         0.2110     0.08012      2.633    0.00847
+ 7 obl_86n_2................         0.1142      0.1231     0.9278      0.353
+ 8 obl_86n_3................        -0.1981      0.1717     -1.154      0.249
+ 9 age21....................         0.1563     0.03386      4.616    < 0.001
+10 ex8......................       -0.07648     0.03552     -2.153     0.0313
+
+Linear term 1
+11 dgy......................         0.3892      0.2266      1.717     0.0859
+12 dgysq....................       -0.03038     0.07948    -0.3823      > 0.5
+
+            Records used        11169
+
+                Deviance     5745.056
+                     AIC     5763.056
+            Pearson Chi2     10982.94      Degrees of freedom   11160
+
+
+
+lrt @
+
+!linear exponential dose-response
+
+             LR statistic      0.1475      Degrees of freedom      1
+                  P value      > 0.50
+
+line 1 -dgysq@
+logl 1 dgy @
+fit@  
+          Iter  Step      Deviance
+
+             0     0     5745.909
+             1     0     5745.086
+             2     0     5745.081
+             3     0     5745.081
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.284      0.1403     -23.41    < 0.001
+ 3 SEX_L_1..................         0.4415     0.07445      5.929    < 0.001
+ 5 UR_RUR_1.................         0.2107     0.08013       2.63    0.00855
+ 7 obl_86n_2................         0.1156      0.1237     0.9345       0.35
+ 8 obl_86n_3................        -0.1972      0.1719     -1.147      0.251
+ 9 age21....................         0.1562     0.03386      4.613    < 0.001
+10 ex8......................       -0.07637     0.03552      -2.15     0.0316
+
+Linear term 1
+11 dgy......................         0.3814      0.2508      1.521      0.128
+
+Log-linear term 1
+12 dgy......................       -0.07846       0.241    -0.3255      > 0.5
+
+            Records used        11169
+
+                Deviance     5745.081
+                     AIC     5763.081
+            Pearson Chi2     10983.74      Degrees of freedom   11160
+
+
+
+lrt@
+
+!Final model <4 Gy
+
+             LR statistic      0.1226      Degrees of freedom      1
+                  P value      > 0.50
+
+nomodel@
+logl 0 sex_l age21  ex8 ur_rur obl_86n @
+line 1 dgy@
+fit@
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6509.795
+             2     0     5813.135
+             3     0     5746.884
+             4     0     5745.205
+             5     0     5745.203
+             6     0     5745.203
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.278      0.1389      -23.6    < 0.001
+ 3 SEX_L_1..................         0.4412     0.07445      5.926    < 0.001
+ 5 UR_RUR_1.................         0.2093     0.07997      2.617    0.00888
+ 7 obl_86n_2................         0.1250      0.1193      1.048      0.295
+ 8 obl_86n_3................        -0.1910      0.1705      -1.12      0.263
+ 9 age21....................         0.1556      0.0338      4.603    < 0.001
+10 ex8......................       -0.07576     0.03547     -2.136     0.0327
+
+Linear term 1
+11 dgy......................         0.3153      0.1017      3.099    0.00194
+
+            Records used        11169
+
+                Deviance     5745.203
+                     AIC     5761.203
+            Pearson Chi2     10987.32      Degrees of freedom   11161
+
+
+
+
+profile 11@
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    0.3357  -0.03866     0.422 *
+    0.4206   -0.9354     0.167 *
+    0.3883   -0.4670     0.247 *
+    0.4243   -0.9990     0.159 *
+    0.4419    -1.322     0.125 *
+    0.5011    -2.669    0.0512 *
+    0.5422    -3.812    0.0254 *
+    0.5803    -5.002    0.0127 *
+    0.6271    -6.613   0.00506 *
+    0.6609    -7.867   0.00252 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    0.2950  -0.04070     0.420 *
+    0.2153    -1.094     0.148 *
+    0.2504   -0.4396     0.254 *
+    0.2195   -0.9984     0.159 *
+    0.2060    -1.324     0.125 *
+    0.1628    -2.750    0.0486 *
+    0.1377    -3.875    0.0245 *
+    0.1160    -5.049    0.0123 *
+   0.09103    -6.663   0.00492 *
+   0.07455    -7.896   0.00248 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   0.07455    -7.896   0.00248
+   0.09103    -6.663   0.00492
+    0.1160    -5.049    0.0123
+    0.1377    -3.875    0.0245
+    0.1628    -2.750    0.0486
+    0.2060    -1.324     0.125
+    0.2195   -0.9984     0.159
+    0.2153    -1.094     0.148
+    0.2504   -0.4396     0.254
+    0.2950  -0.04070     0.420
+    0.3153     0.000      0.00
+    0.3357  -0.03866     0.422
+    0.3883   -0.4670     0.247
+    0.4206   -0.9354     0.167
+    0.4243   -0.9990     0.159
+    0.4419    -1.322     0.125
+    0.5011    -2.669    0.0512
+    0.5422    -3.812    0.0254
+    0.5803    -5.002    0.0127
+    0.6271    -6.613   0.00506
+    0.6609    -7.867   0.00252
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 11 (dgy)
+
+            MLE     0.3153
+
+      2-sided          Bounds         
+       Level      Lower       Upper   
+      ________________________________
+
+      25.0%      0.2837      0.3488
+      50.0%      0.2493      0.3873
+      68.3%      0.2194      0.4244
+      75.0%      0.2061      0.4420
+      90.0%      0.1639      0.5026
+      95.0%      0.1384      0.5432
+      97.5%      0.1164      0.5810
+      99.0%     0.09142      0.6277
+      99.5%     0.07475      0.6612
+
+
+freq thnod_prev @
+
+Using dgy<4
+
+  FOR: thnod_prev
+  Level     Freq     %      Cum %
+      0       10332   92.51    92.51
+      1         837    7.49   100.00
+  Total       11169
+
+
+freq thnod_prev @
+
+Using dgy<4
+
+  FOR: thnod_prev
+  Level     Freq     %      Cum %
+      0       10332   92.51    92.51
+      1         837    7.49   100.00
+  Total       11169
+
+
+freq sex_l thnod_prev @
+Entries:
+         count
+
+Using dgy<4
+
+             thnod_prev
+SEX_L      |         0         1 |  Total
+-----------+---------------------+----------
+      0    |      5111       328 |      5439
+      1    |      5221       509 |      5730
+-----------+---------------------+----------
+     Total |     10332       837 |     11169
+
+
+freq sex_l by thnod_prev @
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: SEX_L
+  Level     Freq     %      Cum %
+      0        5111   49.47    49.47
+      1        5221   50.53   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: SEX_L
+  Level     Freq     %      Cum %
+      0         328   39.19    39.19
+      1         509   60.81   100.00
+  Total         837
+
+
+freq exct by thnod_prev @
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: exct
+  Level     Freq     %      Cum %
+      1        3376   32.68    32.68
+      2        4267   41.30    73.97
+      3        2689   26.03   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: exct
+  Level     Freq     %      Cum %
+      1         151   18.04    18.04
+      2         343   40.98    59.02
+      3         343   40.98   100.00
+  Total         837
+
+
+freq agect by thnod_prev @
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: agect
+  Level     Freq     %      Cum %
+      1        3188   30.86    30.86
+      2        4140   40.07    70.93
+      3        3004   29.07   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: agect
+  Level     Freq     %      Cum %
+      1         139   16.61    16.61
+      2         320   38.23    54.84
+      3         378   45.16   100.00
+  Total         837
+
+
+freq obl_86n by thnod_prev @
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: obl_86n
+  Level     Freq     %      Cum %
+      1        1558   15.08    15.08
+      2        7780   75.30    90.38
+      3         994    9.62   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: obl_86n
+  Level     Freq     %      Cum %
+      1         104   12.43    12.43
+      2         670   80.05    92.47
+      3          63    7.53   100.00
+  Total         837
+
+
+freq ur_rur by thnod_prev @
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: UR_RUR
+  Level     Freq     %      Cum %
+      0        4032   39.02    39.02
+      1        6300   60.98   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: UR_RUR
+  Level     Freq     %      Cum %
+      0         302   36.08    36.08
+      1         535   63.92   100.00
+  Total         837
+
+
+freq iodct by thnod_prev @
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: iodct
+  Level     Freq     %      Cum %
+      1        1117   10.81    10.81
+      2        9080   87.88    98.69
+      3         135    1.31   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: iodct
+  Level     Freq     %      Cum %
+      1         106   12.66    12.66
+      2         723   86.38    99.04
+      3           8    0.96   100.00
+  Total         837
+
+
+freq tvlarge by thnod_prev @
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: tvlarge
+  Level     Freq     %      Cum %
+      0        9831   95.15    95.15
+      1         501    4.85   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: tvlarge
+  Level     Freq     %      Cum %
+      0         712   85.07    85.07
+      1         125   14.93   100.00
+  Total         837
+
+
+freq any_fhf1 by thnod_prev @
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: ANY_FHF1
+  Level     Freq     %      Cum %
+      0        9335   90.35    90.35
+      1         840    8.13    98.48
+      2         157    1.52   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: ANY_FHF1
+  Level     Freq     %      Cum %
+      0         708   84.59    84.59
+      1         109   13.02    97.61
+      2          20    2.39   100.00
+  Total         837
+
+
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n @ 
+line 1 dgy @ 
+logl 1 sex_l@  
+para 11=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6961.572
+             2     0     5879.296
+             3     0     5750.651
+             4     0     5745.177
+             5     0     5745.158
+             6     0     5745.158
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.288      0.1465     -22.44    < 0.001
+ 3 SEX_L_1..................         0.4569       0.105      4.352    < 0.001
+ 5 UR_RUR_1.................         0.2094     0.07997      2.618    0.00884
+ 7 obl_86n_2................         0.1257      0.1193      1.053      0.292
+ 8 obl_86n_3................        -0.1904      0.1706     -1.116      0.264
+ 9 age21....................         0.1557      0.0338      4.606    < 0.001
+10 ex8......................       -0.07595     0.03547     -2.141     0.0323
+
+Linear term 1
+11 dgy......................          1.000     Aliased
+
+Log-linear term 1
+12 SEX_L_0..................         -1.087      0.4347     -2.502     0.0124
+13 SEX_L_1..................         -1.211      0.4345     -2.788    0.00531
+
+            Records used        11169
+
+                Deviance     5745.158
+                     AIC     5763.158
+            Pearson Chi2     10987.83      Degrees of freedom   11160
+
+
+
+lrt@
+
+             LR statistic     0.04482      Degrees of freedom      1
+                  P value      > 0.50
+
+profile 12@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.000  -0.04133     0.419 *
+   -0.6669    -1.169     0.140 *
+   -0.8215   -0.4288     0.256 *
+   -0.6961   -0.9959     0.159 *
+   -0.6426    -1.324     0.125 *
+   -0.4735    -2.757    0.0484 *
+   -0.3772    -3.874    0.0245 *
+   -0.2933    -5.045    0.0123 *
+   -0.1961    -6.654   0.00495 *
+   -0.1312    -7.889   0.00249 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.174  -0.03727     0.423 *
+    -1.554   -0.8479     0.179 *
+    -1.425   -0.4822     0.244 *
+    -1.599   -0.9928     0.160 *
+    -1.695    -1.317     0.126 *
+    -2.035    -2.569    0.0545 *
+    -2.341    -3.691    0.0274 *
+    -2.707    -4.880    0.0136 *
+    -3.384    -6.489   0.00543 *
+    -3.819    -7.161   0.00372
+    -4.688    -7.934   0.00243 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.688    -7.934   0.00243
+    -3.384    -6.489   0.00543
+    -2.707    -4.880    0.0136
+    -2.341    -3.691    0.0274
+    -2.035    -2.569    0.0545
+    -1.695    -1.317     0.126
+    -1.599   -0.9928     0.160
+    -1.554   -0.8479     0.179
+    -1.425   -0.4822     0.244
+    -1.174  -0.03727     0.423
+    -1.087     0.000      0.00
+    -1.000  -0.04133     0.419
+   -0.8215   -0.4288     0.256
+   -0.6961   -0.9959     0.159
+   -0.6669    -1.169     0.140
+   -0.6426    -1.324     0.125
+   -0.4735    -2.757    0.0484
+   -0.3772    -3.874    0.0245
+   -0.2933    -5.045    0.0123
+   -0.1961    -6.654   0.00495
+   -0.1312    -7.889   0.00249
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 12 (SEX_L_0)
+
+            MLE     -1.087    exp(MLE)     0.3371
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.237     -0.9548      0.2902      0.3849
+      50.0%      -1.414     -0.8143      0.2432      0.4430
+      68.3%      -1.602     -0.6953      0.2015      0.4989
+      75.0%      -1.697     -0.6428      0.1832      0.5258
+      90.0%      -2.072     -0.4785      0.1259      0.6197
+      95.0%      -2.385     -0.3797     0.09212      0.6840
+      97.5%      -2.757     -0.2947     0.06348      0.7447
+      99.0%      -3.461     -0.1972     0.03141      0.8210
+      99.5%      -4.539     -0.1317     0.01069      0.8766
+
+
+
+profile 12@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.000  -0.04133     0.419 *
+   -0.6669    -1.169     0.140 *
+   -0.8215   -0.4288     0.256 *
+   -0.6961   -0.9959     0.159 *
+   -0.6426    -1.324     0.125 *
+   -0.4735    -2.757    0.0484 *
+   -0.3772    -3.874    0.0245 *
+   -0.2933    -5.045    0.0123 *
+   -0.1961    -6.654   0.00495 *
+   -0.1312    -7.889   0.00249 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.174  -0.03727     0.423 *
+    -1.554   -0.8479     0.179 *
+    -1.425   -0.4822     0.244 *
+    -1.599   -0.9928     0.160 *
+    -1.695    -1.317     0.126 *
+    -2.035    -2.569    0.0545 *
+    -2.341    -3.691    0.0274 *
+    -2.707    -4.880    0.0136 *
+    -3.384    -6.489   0.00543 *
+    -3.819    -7.161   0.00372
+    -4.688    -7.934   0.00243 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.688    -7.934   0.00243
+    -3.384    -6.489   0.00543
+    -2.707    -4.880    0.0136
+    -2.341    -3.691    0.0274
+    -2.035    -2.569    0.0545
+    -1.695    -1.317     0.126
+    -1.599   -0.9928     0.160
+    -1.554   -0.8479     0.179
+    -1.425   -0.4822     0.244
+    -1.174  -0.03727     0.423
+    -1.087     0.000      0.00
+    -1.000  -0.04133     0.419
+   -0.8215   -0.4288     0.256
+   -0.6961   -0.9959     0.159
+   -0.6669    -1.169     0.140
+   -0.6426    -1.324     0.125
+   -0.4735    -2.757    0.0484
+   -0.3772    -3.874    0.0245
+   -0.2933    -5.045    0.0123
+   -0.1961    -6.654   0.00495
+   -0.1312    -7.889   0.00249
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 12 (SEX_L_0)
+
+            MLE     -1.087    exp(MLE)     0.3371
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.237     -0.9548      0.2902      0.3849
+      50.0%      -1.414     -0.8143      0.2432      0.4430
+      68.3%      -1.602     -0.6953      0.2015      0.4989
+      75.0%      -1.697     -0.6428      0.1832      0.5258
+      90.0%      -2.072     -0.4785      0.1259      0.6197
+      95.0%      -2.385     -0.3797     0.09212      0.6840
+      97.5%      -2.757     -0.2947     0.06348      0.7447
+      99.0%      -3.461     -0.1972     0.03141      0.8210
+      99.5%      -4.539     -0.1317     0.01069      0.8766
+
+
+profile 13@
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.124  -0.04235     0.418 *
+   -0.8009    -1.149     0.142 *
+   -0.9495   -0.4279     0.257 *
+   -0.8264   -0.9961     0.159 *
+   -0.7742    -1.324     0.125 *
+   -0.6093    -2.762    0.0483 *
+   -0.5162    -3.878    0.0245 *
+   -0.4354    -5.048    0.0123 *
+   -0.3420    -6.657   0.00494 *
+   -0.2799    -7.891   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.298  -0.03795     0.423 *
+    -1.669   -0.8283     0.181 *
+    -1.547   -0.4818     0.244 *
+    -1.721   -0.9916     0.160 *
+    -1.817    -1.316     0.126 *
+    -2.159    -2.566    0.0546 *
+    -2.471    -3.687    0.0274 *
+    -2.849    -4.877    0.0136 *
+    -3.572    -6.497   0.00540 *
+    -4.007    -7.111   0.00383
+    -4.876    -7.812   0.00259 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.876    -7.812   0.00259
+    -3.572    -6.497   0.00540
+    -2.849    -4.877    0.0136
+    -2.471    -3.687    0.0274
+    -2.159    -2.566    0.0546
+    -1.817    -1.316     0.126
+    -1.721   -0.9916     0.160
+    -1.669   -0.8283     0.181
+    -1.547   -0.4818     0.244
+    -1.298  -0.03795     0.423
+    -1.211     0.000      0.00
+    -1.124  -0.04235     0.418
+   -0.9495   -0.4279     0.257
+   -0.8264   -0.9961     0.159
+   -0.8009    -1.149     0.142
+   -0.7742    -1.324     0.125
+   -0.6093    -2.762    0.0483
+   -0.5162    -3.878    0.0245
+   -0.4354    -5.048    0.0123
+   -0.3420    -6.657   0.00494
+   -0.2799    -7.891   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 13 (SEX_L_1)
+
+            MLE     -1.211    exp(MLE)     0.2978
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.360      -1.080      0.2567      0.3395
+      50.0%      -1.536     -0.9422      0.2153      0.3898
+      68.3%      -1.724     -0.8257      0.1784      0.4379
+      75.0%      -1.820     -0.7744      0.1621      0.4610
+      90.0%      -2.198     -0.6145      0.1110      0.5409
+      95.0%      -2.517     -0.5189     0.08070      0.5952
+      97.5%      -2.902     -0.4370     0.05493      0.6460
+      99.0%      -3.650     -0.3432     0.02598      0.7095
+      99.5%        ????     -0.2805        ????      0.7554
+
+
+
+
+
+! effect modification by age at accident 
+nomodel @
+logl 0 sex_l age21 exct ur_rur obl_86n @ 
+line 1 dgy @ 
+logl 1 exct@  
+para 13=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6973.008
+             2     0     5934.647
+             3     0     5748.617
+             4     0     5736.314
+             5     0     5736.159
+             6     0     5736.159
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.595      0.2134     -16.84    < 0.001
+ 3 SEX_L_1..................         0.4250     0.07454      5.701    < 0.001
+ 5 exct_2...................         0.4549      0.1979      2.299     0.0215
+ 6 exct_3...................         0.3584      0.2694      1.331      0.183
+ 8 UR_RUR_1.................         0.2170     0.07993      2.715    0.00664
+10 obl_86n_2................         0.1300      0.1196      1.087      0.277
+11 obl_86n_3................        -0.1705      0.1706    -0.9995      0.318
+12 age21....................        0.09082     0.01723      5.272    < 0.001
+
+Linear term 1
+13 dgy......................          1.000     Aliased
+
+Log-linear term 1
+14 exct_1...................        0.07465      0.3517     0.2122      > 0.5
+15 exct_2...................         -1.997      0.9176     -2.176     0.0295
+16 exct_3...................         -2.285       1.195     -1.912     0.0558
+
+            Records used        11169
+
+                Deviance     5736.159
+                     AIC     5758.159
+            Pearson Chi2     11049.83      Degrees of freedom   11158
+
+
+
+
+profile 14@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    0.1450  -0.03790     0.423 *
+    0.4458    -1.114     0.146 *
+    0.3127   -0.4489     0.251 *
+    0.4267   -0.9995     0.159 *
+    0.4783    -1.323     0.125 *
+    0.6470    -2.711    0.0498 *
+    0.7529    -3.842    0.0250 *
+    0.8477    -5.022    0.0125 *
+    0.9607    -6.630   0.00501 *
+     1.039    -7.875   0.00251 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+  0.004317  -0.03724     0.423 *
+   -0.3031   -0.9897     0.160 *
+   -0.1802   -0.4660     0.247 *
+   -0.3051   -0.9999     0.159 *
+   -0.3658    -1.322     0.125 *
+   -0.5701    -2.659    0.0515 *
+   -0.7147    -3.795    0.0257 *
+   -0.8523    -4.983    0.0128 *
+    -1.027    -6.584   0.00515 *
+    -1.160    -7.845   0.00255 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.160    -7.845   0.00255
+    -1.027    -6.584   0.00515
+   -0.8523    -4.983    0.0128
+   -0.7147    -3.795    0.0257
+   -0.5701    -2.659    0.0515
+   -0.3658    -1.322     0.125
+   -0.3051   -0.9999     0.159
+   -0.3031   -0.9897     0.160
+   -0.1802   -0.4660     0.247
+  0.004317  -0.03724     0.423
+   0.07465     0.000      0.00
+    0.1450  -0.03790     0.423
+    0.3127   -0.4489     0.251
+    0.4267   -0.9995     0.159
+    0.4458    -1.114     0.146
+    0.4783    -1.323     0.125
+    0.6470    -2.711    0.0498
+    0.7529    -3.842    0.0250
+    0.8477    -5.022    0.0125
+    0.9607    -6.630   0.00501
+     1.039    -7.875   0.00251
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 14 (exct_1)
+
+            MLE    0.07465    exp(MLE)      1.078
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%    -0.04304      0.1887      0.9579       1.208
+      50.0%     -0.1770      0.3142      0.8377       1.369
+      68.3%     -0.3051      0.4268      0.7370       1.532
+      75.0%     -0.3661      0.4783      0.6934       1.613
+      90.0%     -0.5764      0.6464      0.5619       1.909
+      95.0%     -0.7202      0.7529      0.4866       2.123
+      97.5%     -0.8569      0.8479      0.4245       2.335
+      99.0%      -1.032      0.9610      0.3562       2.614
+      99.5%      -1.164       1.040      0.3123       2.828
+
+
+profile 15@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.813  -0.04153     0.419 *
+    -1.113    -1.686    0.0971 *
+    -1.515   -0.3655     0.273 *
+    -1.284   -0.9600     0.164 *
+    -1.191    -1.318     0.125 *
+   -0.9288    -2.836    0.0461 *
+   -0.8011    -3.909    0.0240 *
+   -0.6897    -5.066    0.0122 *
+   -0.5627    -6.673   0.00490 *
+   -0.4804    -7.899   0.00247 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.180  -0.03105     0.430 *
+    -3.179   -0.5905     0.221 *
+    -3.017   -0.4964     0.241 *
+    -3.860   -0.9065     0.171 *
+    -4.777    -1.142     0.143
+    -6.613    -1.287     0.128 *
+    -10.28    -1.316     0.126
+    -17.62    -1.316     0.126
+    -32.31    -1.316     0.126
+    -61.67    -1.316     0.126
+    -120.4    -1.316     0.126
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -6.613    -1.287     0.128
+    -3.860   -0.9065     0.171
+    -3.179   -0.5905     0.221
+    -3.017   -0.4964     0.241
+    -2.180  -0.03105     0.430
+    -1.997     0.000      0.00
+    -1.813  -0.04153     0.419
+    -1.515   -0.3655     0.273
+    -1.284   -0.9600     0.164
+    -1.191    -1.318     0.125
+    -1.113    -1.686    0.0971
+   -0.9288    -2.836    0.0461
+   -0.8011    -3.909    0.0240
+   -0.6897    -5.066    0.0122
+   -0.5627    -6.673   0.00490
+   -0.4804    -7.899   0.00247
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 15 (exct_2)
+
+            MLE     -1.997    exp(MLE)     0.1357
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -2.399      -1.728     0.09077      0.1776
+      50.0%      -2.945      -1.471     0.05261      0.2297
+      68.3%      -4.109      -1.273     0.01643      0.2800
+      75.0%      -5.765      -1.190    0.003135      0.3041
+      90.0%        ????     -0.9464        ????      0.3881
+      95.0%        ????     -0.8082        ????      0.4456
+      97.5%        ????     -0.6933        ????      0.4999
+      99.0%        ????     -0.5654        ????      0.5681
+      99.5%        ????     -0.4817        ????      0.6178
+
+
+profile 16@
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.046  -0.05095     0.411 *
+    -1.347    -1.403     0.118 *
+    -1.722   -0.3711     0.271 *
+    -1.465   -0.9720     0.162 *
+    -1.367    -1.322     0.125 *
+    -1.082    -2.851    0.0457 *
+   -0.9478    -3.915    0.0239 *
+   -0.8303    -5.070    0.0122 *
+   -0.6969    -6.676   0.00488 *
+   -0.6108    -7.901   0.00247 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.523  -0.03423     0.427 *
+    -3.680   -0.4728     0.246 *
+    -3.649   -0.4622     0.248 *
+    -5.720   -0.8158     0.183
+    -6.915   -0.8579     0.177
+    -9.304   -0.8749     0.175
+    -14.08   -0.8766     0.175
+    -23.64   -0.8766     0.175
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -3.680   -0.4728     0.246
+    -3.649   -0.4622     0.248
+    -2.523  -0.03423     0.427
+    -2.285     0.000    0.0971
+    -2.046  -0.05095     0.411
+    -1.722   -0.3711     0.271
+    -1.465   -0.9720     0.162
+    -1.367    -1.322     0.125
+    -1.347    -1.403     0.118
+    -1.082    -2.851    0.0457
+   -0.9478    -3.915    0.0239
+   -0.8303    -5.070    0.0122
+   -0.6969    -6.676   0.00488
+   -0.6108    -7.901   0.00247
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 16 (exct_3)
+
+            MLE     -2.285    exp(MLE)     0.1018
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -2.810      -1.968     0.06019      0.1398
+      50.0%      -3.627      -1.676     0.02659      0.1871
+      68.3%        ????      -1.457        ????      0.2330
+      75.0%        ????      -1.367        ????      0.2550
+      90.0%        ????      -1.103        ????      0.3318
+      95.0%        ????     -0.9561        ????      0.3844
+      97.5%        ????     -0.8345        ????      0.4341
+      99.0%        ????     -0.7000        ????      0.4966
+      99.5%        ????     -0.6123        ????      0.5421
+
+
+
+
+
+! effect modification by age at screen 
+nomodel @
+logl 0 sex_l agect ex8 ur_rur obl_86n @ 
+line 1 dgy @ 
+logl 1 agect @  
+para 13=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6996.858
+             2     0     5937.559
+             3     0     5761.081
+             4     0     5749.443
+             5     0     5749.267
+             6     0     5749.267
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.838      0.2298      -16.7    < 0.001
+ 3 SEX_L_1..................         0.4193     0.07449      5.629    < 0.001
+ 5 agect_2..................         0.7480      0.2062      3.627    < 0.001
+ 6 agect_3..................         0.8942      0.2773      3.225    0.00126
+ 8 UR_RUR_1.................         0.2147     0.07978      2.692    0.00711
+10 obl_86n_2................         0.1645      0.1192      1.381      0.167
+11 obl_86n_3................        -0.1167        0.17    -0.6865      0.492
+12 ex8......................        0.05378     0.01812      2.968      0.003
+
+Linear term 1
+13 dgy......................          1.000     Aliased
+
+Log-linear term 1
+14 agect_1..................        0.01088      0.3752    0.02899      > 0.5
+15 agect_2..................         -2.562       1.486     -1.724     0.0847
+16 agect_3..................         -2.245       1.111     -2.022     0.0432
+
+            Records used        11169
+
+                Deviance     5749.267
+                     AIC     5771.267
+            Pearson Chi2     11123.19      Degrees of freedom   11158
+
+
+
+
+profile 14@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   0.08590  -0.03881     0.422 *
+    0.3975    -1.085     0.149 *
+    0.2620   -0.4493     0.251 *
+    0.3823   -0.9997     0.159 *
+    0.4368    -1.323     0.125 *
+    0.6150    -2.709    0.0499 *
+    0.7275    -3.840    0.0250 *
+    0.8284    -5.020    0.0125 *
+    0.9490    -6.627   0.00502 *
+     1.033    -7.873   0.00251 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+  -0.06415  -0.03792     0.423 *
+   -0.3847   -0.9696     0.162 *
+   -0.2588   -0.4664     0.247 *
+   -0.3911   -0.9995     0.159 *
+   -0.4558    -1.322     0.125 *
+   -0.6737    -2.654    0.0516 *
+   -0.8296    -3.790    0.0258 *
+   -0.9794    -4.977    0.0128 *
+    -1.171    -6.576   0.00517 *
+    -1.320    -7.839   0.00256 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.320    -7.839   0.00256
+    -1.171    -6.576   0.00517
+   -0.9794    -4.977    0.0128
+   -0.8296    -3.790    0.0258
+   -0.6737    -2.654    0.0516
+   -0.4558    -1.322     0.125
+   -0.3911   -0.9995     0.159
+   -0.3847   -0.9696     0.162
+   -0.2588   -0.4664     0.247
+  -0.06415  -0.03792     0.423
+   0.01088     0.000    0.0239
+   0.08590  -0.03881     0.422
+    0.2620   -0.4493     0.251
+    0.3823   -0.9997     0.159
+    0.3975    -1.085     0.149
+    0.4368    -1.323     0.125
+    0.6150    -2.709    0.0499
+    0.7275    -3.840    0.0250
+    0.8284    -5.020    0.0125
+    0.9490    -6.627   0.00502
+     1.033    -7.873   0.00251
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 14 (agect_1)
+
+            MLE    0.01088    exp(MLE)      1.011
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%     -0.1135      0.1312      0.8927       1.140
+      50.0%     -0.2553      0.2635      0.7747       1.302
+      68.3%     -0.3913      0.3823      0.6762       1.466
+      75.0%     -0.4561      0.4368      0.6337       1.548
+      90.0%     -0.6812      0.6146      0.5060       1.849
+      95.0%     -0.8363      0.7276      0.4333       2.070
+      97.5%     -0.9852      0.8287      0.3734       2.290
+      99.0%      -1.178      0.9495      0.3078       2.585
+      99.5%      -1.325       1.034      0.2658       2.812
+
+
+
+profile 15@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.265  -0.04700     0.414 *
+    -1.298    -1.996    0.0789 *
+    -1.903   -0.3193     0.286
+    -1.822   -0.4324     0.255 *
+    -1.571   -0.9662     0.163 *
+    -1.450    -1.352     0.122 *
+    -1.143    -2.864    0.0453 *
+   -0.9987    -3.924    0.0238 *
+   -0.8731    -5.074    0.0121 *
+   -0.7309    -6.680   0.00487 *
+   -0.6398    -7.903   0.00247 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.859  -0.02808     0.433 *
+    -4.678   -0.3579     0.275 *
+    -5.036   -0.3901     0.266 *
+    -6.522   -0.4519     0.251
+    -9.494   -0.4700     0.247
+    -15.44   -0.4709     0.246
+    -27.32   -0.4709     0.246
+    -51.10   -0.4709     0.246
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -5.036   -0.3901     0.266
+    -4.678   -0.3579     0.275
+    -2.859  -0.02808     0.433
+    -2.562     0.000    0.0239
+    -2.265  -0.04700     0.414
+    -1.822   -0.4324     0.255
+    -1.571   -0.9662     0.163
+    -1.450    -1.352     0.122
+    -1.298    -1.996    0.0789
+    -1.143    -2.864    0.0453
+   -0.9987    -3.924    0.0238
+   -0.8731    -5.074    0.0121
+   -0.7309    -6.680   0.00487
+   -0.6398    -7.903   0.00247
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 15 (agect_2)
+
+            MLE     -2.562    exp(MLE)    0.07716
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -3.424      -2.164     0.03257      0.1149
+      50.0%        ????      -1.808        ????      0.1639
+      68.3%        ????      -1.559        ????      0.2102
+      75.0%        ????      -1.458        ????      0.2326
+      90.0%        ????      -1.168        ????      0.3109
+      95.0%        ????      -1.009        ????      0.3647
+      97.5%        ????     -0.8781        ????      0.4156
+      99.0%        ????     -0.7346        ????      0.4797
+      99.5%        ????     -0.6415        ????      0.5265
+
+
+
+profile 16@
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.023  -0.05008     0.411 *
+    -1.358    -1.385     0.120 *
+    -1.711   -0.3753     0.270 *
+    -1.467   -0.9743     0.162 *
+    -1.373    -1.322     0.125 *
+    -1.099    -2.846    0.0458 *
+   -0.9684    -3.914    0.0239 *
+   -0.8543    -5.069    0.0122 *
+   -0.7248    -6.676   0.00489 *
+   -0.6412    -7.901   0.00247 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.467  -0.03463     0.426 *
+    -3.528   -0.5017     0.239 *
+    -3.457   -0.4720     0.246 *
+    -4.802   -0.8502     0.178
+    -5.913   -0.9588     0.164 *
+    -8.134    -1.009     0.158
+    -12.58    -1.015     0.157
+    -21.46    -1.015     0.157
+    -39.23    -1.015     0.157
+    -74.77    -1.015     0.157
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -5.913   -0.9588     0.164
+    -3.528   -0.5017     0.239
+    -3.457   -0.4720     0.246
+    -2.467  -0.03463     0.426
+    -2.245     0.000    0.0238
+    -2.023  -0.05008     0.411
+    -1.711   -0.3753     0.270
+    -1.467   -0.9743     0.162
+    -1.373    -1.322     0.125
+    -1.358    -1.385     0.120
+    -1.099    -2.846    0.0458
+   -0.9684    -3.914    0.0239
+   -0.8543    -5.069    0.0122
+   -0.7248    -6.676   0.00489
+   -0.6412    -7.901   0.00247
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 16 (agect_3)
+
+            MLE     -2.245    exp(MLE)     0.1059
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -2.717      -1.948     0.06604      0.1426
+      50.0%      -3.416      -1.670     0.03283      0.1882
+      68.3%        ????      -1.460        ????      0.2323
+      75.0%        ????      -1.373        ????      0.2533
+      90.0%        ????      -1.119        ????      0.3267
+      95.0%        ????     -0.9763        ????      0.3767
+      97.5%        ????     -0.8584        ????      0.4238
+      99.0%        ????     -0.7278        ????      0.4830
+      99.5%        ????     -0.6426        ????      0.5259
+
+
+
+
+
+
+! effect modification by oblast in 1986 
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n  @ 
+line 1 dgy @ 
+logl 1 obl_86n @  
+para 11=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6973.137
+             2     0     5882.511
+             3     0     5748.979
+             4     0     5743.169
+             5     0     5743.062
+             6     0     5743.062
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.258      0.1375     -23.69    < 0.001
+ 3 SEX_L_1..................         0.4409     0.07444      5.924    < 0.001
+ 5 UR_RUR_1.................         0.2132     0.08005      2.664    0.00772
+ 7 obl_86n_2................         0.1037      0.1222     0.8491      0.396
+ 8 obl_86n_3................        -0.3503      0.2213     -1.583      0.113
+ 9 age21....................         0.1558     0.03377      4.613    < 0.001
+10 ex8......................       -0.07577     0.03544     -2.138     0.0325
+
+Linear term 1
+11 dgy......................          1.000     Aliased
+
+Log-linear term 1
+12 obl_86n_1................     -9.119e+04           0          0      > 0.5
+13 obl_86n_2................         -1.165      0.3347      -3.48    < 0.001
+14 obl_86n_3................       -0.04374      0.7585   -0.05767      > 0.5
+
+            Records used        11169
+
+                Deviance     5743.062
+                     AIC     5761.062
+            Pearson Chi2     10996.48      Degrees of freedom   11160
+
+
+
+
+!profile 12@ 
+profile 13@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.098  -0.04140     0.419 *
+   -0.8413    -1.119     0.145 *
+   -0.9564   -0.4349     0.255 *
+   -0.8580   -0.9976     0.159 *
+   -0.8155    -1.324     0.125 *
+   -0.6797    -2.749    0.0486 *
+   -0.6010    -3.871    0.0246 *
+   -0.5325    -5.043    0.0124 *
+   -0.4529    -6.653   0.00495 *
+   -0.3997    -7.889   0.00249 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.232  -0.03822     0.422 *
+    -1.515   -0.8787     0.174 *
+    -1.414   -0.4757     0.245 *
+    -1.540   -0.9960     0.159 *
+    -1.606    -1.319     0.125 *
+    -1.833    -2.614    0.0530 *
+    -2.013    -3.750    0.0264 *
+    -2.198    -4.942    0.0131 *
+    -2.457    -6.538   0.00528 *
+    -2.685    -7.819   0.00258 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.685    -7.819   0.00258
+    -2.457    -6.538   0.00528
+    -2.198    -4.942    0.0131
+    -2.013    -3.750    0.0264
+    -1.833    -2.614    0.0530
+    -1.606    -1.319     0.125
+    -1.540   -0.9960     0.159
+    -1.515   -0.8787     0.174
+    -1.414   -0.4757     0.245
+    -1.232  -0.03822     0.422
+    -1.165     0.000    0.0458
+    -1.098  -0.04140     0.419
+   -0.9564   -0.4349     0.255
+   -0.8580   -0.9976     0.159
+   -0.8413    -1.119     0.145
+   -0.8155    -1.324     0.125
+   -0.6797    -2.749    0.0486
+   -0.6010    -3.871    0.0246
+   -0.5325    -5.043    0.0124
+   -0.4529    -6.653   0.00495
+   -0.3997    -7.889   0.00249
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 13 (obl_86n_2)
+
+            MLE     -1.165    exp(MLE)     0.3120
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.277      -1.062      0.2789      0.3457
+      50.0%      -1.408     -0.9521      0.2446      0.3859
+      68.3%      -1.541     -0.8576      0.2141      0.4242
+      75.0%      -1.607     -0.8156      0.2005      0.4424
+      90.0%      -1.848     -0.6831      0.1576      0.5050
+      95.0%      -2.027     -0.6029      0.1317      0.5472
+      97.5%      -2.211     -0.5336      0.1096      0.5865
+      99.0%      -2.474     -0.4538     0.08428      0.6352
+      99.5%      -2.696     -0.4001     0.06748      0.6703
+
+
+profile 12@ 
+ ***   ERROR: Parameter 12 (obl_86n_1) is fixed or aliased
+
+
+profile 14@
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    0.1079  -0.03990     0.421 *
+    0.7164    -1.279     0.129 *
+    0.4177   -0.4214     0.258 *
+    0.6357   -0.9930     0.160 *
+    0.7279    -1.324     0.125 *
+     1.018    -2.748    0.0487 *
+     1.185    -3.862    0.0247 *
+     1.334    -5.033    0.0124 *
+     1.509    -6.637   0.00499 *
+     1.629    -7.877   0.00250 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.1954  -0.03469     0.426 *
+   -0.9182   -0.7908     0.187 *
+   -0.6964   -0.4968     0.240 *
+    -1.055   -0.9811     0.161 *
+    -1.291    -1.307     0.126 *
+    -2.252    -2.387    0.0612
+    -2.636    -2.669    0.0511 *
+    -3.394    -3.026    0.0410
+    -4.911    -3.296    0.0347
+    -7.945    -3.372    0.0332
+    -14.01    -3.376    0.0331
+    -26.15    -3.376    0.0331
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.636    -2.669    0.0511
+    -1.291    -1.307     0.126
+    -1.055   -0.9811     0.161
+   -0.9182   -0.7908     0.187
+   -0.6964   -0.4968     0.240
+   -0.1954  -0.03469     0.426
+  -0.04374     0.000    0.0458
+    0.1079  -0.03990     0.421
+    0.4177   -0.4214     0.258
+    0.6357   -0.9930     0.160
+    0.7164    -1.279     0.129
+    0.7279    -1.324     0.125
+     1.018    -2.748    0.0487
+     1.185    -3.862    0.0247
+     1.334    -5.033    0.0124
+     1.509    -6.637   0.00499
+     1.629    -7.877   0.00250
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 14 (obl_86n_3)
+
+            MLE   -0.04374    exp(MLE)     0.9572
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%     -0.3227      0.1898      0.7242       1.209
+      50.0%     -0.6610      0.4338      0.5163       1.543
+      68.3%      -1.069      0.6378      0.3434       1.892
+      75.0%      -1.303      0.7278      0.2717       2.071
+      90.0%      -2.688       1.010     0.06799       2.747
+      95.0%     -0.2356       1.183      0.7901       3.263
+      97.5%     -0.8380       1.333      0.4326       3.792
+      99.0%      -1.659       1.509      0.1904       4.520
+      99.5%      -2.293       1.629      0.1010       5.099
+
+
+
+
+
+
+! effect modification by urbanicity at screen 
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n @ 
+line 1 dgy @ 
+logl 1 ur_rur @  
+para 11=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6974.629
+             2     0     5890.880
+             3     0     5750.526
+             4     0     5744.398
+             5     0     5744.376
+             6     0     5744.376
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.352      0.1621     -20.68    < 0.001
+ 3 SEX_L_1..................         0.4416     0.07446      5.931    < 0.001
+ 5 UR_RUR_1.................         0.2901      0.1205      2.407     0.0161
+ 7 obl_86n_2................         0.1480      0.1215      1.218      0.223
+ 8 obl_86n_3................        -0.1667      0.1723    -0.9671      0.333
+ 9 age21....................         0.1548     0.03381      4.578    < 0.001
+10 ex8......................       -0.07462     0.03548     -2.103     0.0354
+
+Linear term 1
+11 dgy......................          1.000     Aliased
+
+Log-linear term 1
+12 UR_RUR_0.................        -0.8819      0.3917     -2.251     0.0244
+13 UR_RUR_1.................         -1.453      0.5382       -2.7    0.00693
+
+            Records used        11169
+
+                Deviance     5744.376
+                     AIC     5762.376
+            Pearson Chi2     10983.36      Degrees of freedom   11160
+
+
+
+
+profile 12@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.8035  -0.04062     0.420 *
+   -0.4962    -1.134     0.143 *
+   -0.6353   -0.4358     0.255 *
+   -0.5185   -0.9976     0.159 *
+   -0.4678    -1.324     0.125 *
+   -0.3056    -2.743    0.0489 *
+   -0.2103    -3.865    0.0247 *
+   -0.1268    -5.039    0.0124 *
+  -0.02921    -6.647   0.00496 *
+   0.03670    -7.885   0.00249 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.9602  -0.03758     0.423 *
+    -1.299   -0.8890     0.173 *
+    -1.177   -0.4771     0.245 *
+    -1.327   -0.9961     0.159 *
+    -1.405    -1.319     0.125 *
+    -1.676    -2.605    0.0533 *
+    -1.896    -3.736    0.0266 *
+    -2.131    -4.926    0.0132 *
+    -2.473    -6.516   0.00535 *
+    -2.800    -7.807   0.00260 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.800    -7.807   0.00260
+    -2.473    -6.516   0.00535
+    -2.131    -4.926    0.0132
+    -1.896    -3.736    0.0266
+    -1.676    -2.605    0.0533
+    -1.405    -1.319     0.125
+    -1.327   -0.9961     0.159
+    -1.299   -0.8890     0.173
+    -1.177   -0.4771     0.245
+   -0.9602  -0.03758     0.423
+   -0.8819     0.000     0.129
+   -0.8035  -0.04062     0.420
+   -0.6353   -0.4358     0.255
+   -0.5185   -0.9976     0.159
+   -0.4962    -1.134     0.143
+   -0.4678    -1.324     0.125
+   -0.3056    -2.743    0.0489
+   -0.2103    -3.865    0.0247
+   -0.1268    -5.039    0.0124
+  -0.02921    -6.647   0.00496
+   0.03670    -7.885   0.00249
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 12 (UR_RUR_0)
+
+            MLE    -0.8819    exp(MLE)     0.4140
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.015     -0.7606      0.3625      0.4674
+      50.0%      -1.170     -0.6303      0.3105      0.5324
+      68.3%      -1.328     -0.5181      0.2651      0.5957
+      75.0%      -1.406     -0.4679      0.2452      0.6263
+      90.0%      -1.696     -0.3091      0.1834      0.7341
+      95.0%      -1.917     -0.2121      0.1470      0.8089
+      97.5%      -2.151     -0.1277      0.1164      0.8801
+      99.0%      -2.501    -0.02991     0.08203      0.9705
+      99.5%      -2.820     0.03640     0.05958       1.037
+
+
+
+profile 13@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.346  -0.04279     0.418 *
+   -0.9503    -1.223     0.134 *
+    -1.140   -0.4166     0.259 *
+   -0.9937   -0.9922     0.160 *
+   -0.9330    -1.324     0.125 *
+   -0.7442    -2.780    0.0477 *
+   -0.6416    -3.887    0.0243 *
+   -0.5529    -5.054    0.0123 *
+   -0.4508    -6.663   0.00492 *
+   -0.3836    -7.894   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.561  -0.03679     0.424 *
+    -2.038   -0.7737     0.190 *
+    -1.895   -0.4894     0.242 *
+    -2.136   -0.9833     0.161 *
+    -2.284    -1.311     0.126 *
+    -2.843    -2.483    0.0575
+    -2.954    -2.687    0.0506 *
+    -3.744    -3.771    0.0261 *
+    -4.282    -4.204    0.0202
+    -5.359    -4.633    0.0157
+    -7.511    -4.839    0.0139
+    -11.82    -4.866    0.0137 *
+    -20.43    -4.867    0.0137
+    -37.65    -4.867    0.0137
+    -72.09    -4.867    0.0137
+    -141.0    -4.867    0.0137
+    -278.7    -4.867    0.0137
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -11.82    -4.866    0.0137
+    -3.744    -3.771    0.0261
+    -2.954    -2.687    0.0506
+    -2.284    -1.311     0.126
+    -2.136   -0.9833     0.161
+    -2.038   -0.7737     0.190
+    -1.895   -0.4894     0.242
+    -1.561  -0.03679     0.424
+    -1.453     0.000     0.129
+    -1.346  -0.04279     0.418
+    -1.140   -0.4166     0.259
+   -0.9937   -0.9922     0.160
+   -0.9503    -1.223     0.134
+   -0.9330    -1.324     0.125
+   -0.7442    -2.780    0.0477
+   -0.6416    -3.887    0.0243
+   -0.5529    -5.054    0.0123
+   -0.4508    -6.663   0.00492
+   -0.3836    -7.894   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 13 (UR_RUR_1)
+
+            MLE     -1.453    exp(MLE)     0.2338
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.644      -1.293      0.1932      0.2743
+      50.0%      -1.876      -1.128      0.1532      0.3236
+      68.3%      -2.144     -0.9921      0.1172      0.3708
+      75.0%      -2.290     -0.9331      0.1012      0.3933
+      90.0%      -2.965     -0.7520     0.05155      0.4714
+      95.0%      -3.801     -0.6454     0.02236      0.5244
+      97.5%      -4.879     -0.5549    0.007601      0.5741
+      99.0%        ????     -0.4524        ????      0.6361
+      99.5%        ????     -0.3843        ????      0.6809
+
+
+
+
+
+! effect modification by iodine concentration
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n iodct @ 
+line 1 dgy @ 
+logl 1 iodct @  
+para 14=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6956.937
+             2     0     5884.644
+             3     0     5742.353
+             4     0     5736.013
+             5     0     5735.988
+             6     0     5735.988
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.203       0.212      -15.1    < 0.001
+ 3 SEX_L_1..................         0.4478     0.07454      6.008    < 0.001
+ 5 UR_RUR_1.................         0.2342     0.08095      2.893    0.00381
+ 7 obl_86n_2................         0.1259      0.1195      1.053      0.292
+ 8 obl_86n_3................        -0.2162      0.1716     -1.259      0.208
+10 iodct_2..................       -0.09652      0.1746    -0.5528      > 0.5
+11 iodct_3..................        -0.4882      0.5529    -0.8828      0.377
+12 age21....................         0.1538     0.03389      4.538    < 0.001
+13 ex8......................       -0.07323     0.03557     -2.059     0.0395
+
+Linear term 1
+14 dgy......................          1.000     Aliased
+
+Log-linear term 1
+15 iodct_1..................        -0.3480      0.5161    -0.6744      > 0.5
+16 iodct_2..................         -1.381      0.4013      -3.44    < 0.001
+17 iodct_3..................        -0.9031       2.859    -0.3159      > 0.5
+
+            Records used        11169
+
+                Deviance     5735.988
+                     AIC     5759.988
+            Pearson Chi2     10991.27      Degrees of freedom   11157
+
+
+
+
+profile 15@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.2448  -0.04571     0.415 *
+    0.1035   -0.9830     0.161 *
+  -0.03853   -0.4416     0.253 *
+    0.1072    -1.000     0.159 *
+    0.1709    -1.324     0.125 *
+    0.3767    -2.732    0.0492 *
+    0.5003    -3.856    0.0248 *
+    0.6095    -5.031    0.0124 *
+    0.7382    -6.639   0.00499 *
+    0.8264    -7.880   0.00250 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.4512  -0.04224     0.419 *
+   -0.8366   -0.8040     0.185 *
+   -0.7126   -0.4729     0.246 *
+   -0.8986   -0.9926     0.160 *
+   -0.9969    -1.317     0.126 *
+    -1.336    -2.593    0.0537 *
+    -1.620    -3.717    0.0269 *
+    -1.934    -4.902    0.0134 *
+    -2.427    -6.480   0.00546 *
+    -2.999    -7.804   0.00261 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.999    -7.804   0.00261
+    -2.427    -6.480   0.00546
+    -1.934    -4.902    0.0134
+    -1.620    -3.717    0.0269
+    -1.336    -2.593    0.0537
+   -0.9969    -1.317     0.126
+   -0.8986   -0.9926     0.160
+   -0.8366   -0.8040     0.185
+   -0.7126   -0.4729     0.246
+   -0.4512  -0.04224     0.419
+   -0.3480     0.000     0.259
+   -0.2448  -0.04571     0.415
+  -0.03853   -0.4416     0.253
+    0.1035   -0.9830     0.161
+    0.1072    -1.000     0.159
+    0.1709    -1.324     0.125
+    0.3767    -2.732    0.0492
+    0.5003    -3.856    0.0248
+    0.6095    -5.031    0.0124
+    0.7382    -6.639   0.00499
+    0.8264    -7.880   0.00250
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 15 (iodct_1)
+
+            MLE    -0.3480    exp(MLE)     0.7061
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%     -0.5125     -0.1969      0.5990      0.8213
+      50.0%     -0.7049    -0.03416      0.4942      0.9664
+      68.3%     -0.9010      0.1072      0.4062       1.113
+      75.0%     -0.9986      0.1707      0.3684       1.186
+      90.0%      -1.365      0.3735      0.2553       1.453
+      95.0%      -1.652      0.4988      0.1916       1.647
+      97.5%      -1.969      0.6089      0.1396       1.838
+      99.0%      -2.483      0.7379     0.08345       2.092
+      99.5%      -3.041      0.8263     0.04781       2.285
+
+
+
+profile 16@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.301  -0.04040     0.420 *
+   -0.9835    -1.215     0.135 *
+    -1.134   -0.4256     0.257 *
+    -1.017   -0.9943     0.159 *
+   -0.9680    -1.324     0.125 *
+   -0.8123    -2.763    0.0482 *
+   -0.7247    -3.879    0.0244 *
+   -0.6488    -5.049    0.0123 *
+   -0.5610    -6.658   0.00493 *
+   -0.5028    -7.892   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.461  -0.03635     0.424 *
+    -1.822   -0.8601     0.177 *
+    -1.698   -0.4836     0.243 *
+    -1.862   -0.9933     0.159 *
+    -1.952    -1.317     0.126 *
+    -2.272    -2.571    0.0544 *
+    -2.559    -3.695    0.0273 *
+    -2.900    -4.887    0.0135 *
+    -3.508    -6.496   0.00541 *
+    -3.909    -7.220   0.00360
+    -4.712    -8.093   0.00222
+    -4.436    -7.861   0.00253 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.436    -7.861   0.00253
+    -3.508    -6.496   0.00541
+    -2.900    -4.887    0.0135
+    -2.559    -3.695    0.0273
+    -2.272    -2.571    0.0544
+    -1.952    -1.317     0.126
+    -1.862   -0.9933     0.159
+    -1.822   -0.8601     0.177
+    -1.698   -0.4836     0.243
+    -1.461  -0.03635     0.424
+    -1.381     0.000     0.259
+    -1.301  -0.04040     0.420
+    -1.134   -0.4256     0.257
+    -1.017   -0.9943     0.159
+   -0.9835    -1.215     0.135
+   -0.9680    -1.324     0.125
+   -0.8123    -2.763    0.0482
+   -0.7247    -3.879    0.0244
+   -0.6488    -5.049    0.0123
+   -0.5610    -6.658   0.00493
+   -0.5028    -7.892   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 16 (iodct_2)
+
+            MLE     -1.381    exp(MLE)     0.2514
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.521      -1.257      0.2185      0.2845
+      50.0%      -1.687      -1.127      0.1851      0.3242
+      68.3%      -1.864      -1.017      0.1551      0.3618
+      75.0%      -1.954     -0.9681      0.1417      0.3798
+      90.0%      -2.306     -0.8174     0.09962      0.4416
+      95.0%      -2.599     -0.7274     0.07434      0.4832
+      97.5%      -2.944     -0.6502     0.05268      0.5219
+      99.0%      -3.573     -0.5622     0.02807      0.5700
+      99.5%      -4.461     -0.5033     0.01155      0.6045
+
+
+
+profile 17@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.3313  -0.04485     0.416 *
+     1.646    -2.075    0.0748 *
+    0.3979   -0.3524     0.276
+    0.5208   -0.4477     0.252 *
+     1.019   -0.9978     0.159 *
+     1.238    -1.327     0.125 *
+     1.925    -2.670    0.0511 *
+     2.388    -3.756    0.0263 *
+     2.865    -4.911    0.0133 *
+     3.550    -6.446   0.00556
+     3.638    -6.625   0.00503 *
+     4.339    -7.831   0.00257 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.475  -0.02092     0.442 *
+    -6.368   -0.1337     0.357 *
+    -9.227   -0.1350     0.357
+    -14.95   -0.1350     0.357
+    -26.38   -0.1350     0.357
+    -49.25   -0.1350     0.357
+    -95.00   -0.1350     0.357
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -6.368   -0.1337     0.357
+    -1.475  -0.02092     0.442
+   -0.9031     0.000     0.259
+   -0.3313  -0.04485     0.416
+    0.5208   -0.4477     0.252
+     1.019   -0.9978     0.159
+     1.238    -1.327     0.125
+     1.646    -2.075    0.0748
+     1.925    -2.670    0.0511
+     2.388    -3.756    0.0263
+     2.865    -4.911    0.0133
+     3.638    -6.625   0.00503
+     4.339    -7.831   0.00257
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 17 (iodct_3)
+
+            MLE    -0.9031    exp(MLE)     0.4053
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -4.348     -0.1364     0.01293      0.8725
+      50.0%        ????      0.5291        ????       1.697
+      68.3%        ????       1.020        ????       2.774
+      75.0%        ????       1.236        ????       3.440
+      90.0%        ????       1.941        ????       6.966
+      95.0%        ????       2.424        ????       11.30
+      97.5%        ????       2.914        ????       18.43
+      99.0%        ????       3.643        ????       38.21
+      99.5%      -1.101       4.373      0.3325       79.25
+
+
+
+
+
+
+! effect modification by thyroid enlargement
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n tvlarge @ 
+line 1 dgy @ 
+logl 1 tvlarge @  
+para 13=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6925.864
+             2     0     5814.018
+             3     0     5676.382
+             4     0     5670.479
+             5     0     5670.459
+             6     0     5670.459
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.374      0.1412      -23.9    < 0.001
+ 3 SEX_L_1..................         0.3833     0.07517      5.098    < 0.001
+ 5 UR_RUR_1.................         0.2466     0.08052      3.063    0.00219
+ 7 obl_86n_2................         0.1548        0.12      1.291      0.197
+ 8 obl_86n_3................        -0.2501       0.172     -1.454      0.146
+10 tvlarge_1................          1.105      0.1492      7.406    < 0.001
+11 age21....................         0.1561     0.03391      4.603    < 0.001
+12 ex8......................       -0.08504      0.0356     -2.389     0.0169
+
+Linear term 1
+13 dgy......................          1.000     Aliased
+
+Log-linear term 1
+14 tvlarge_0................         -1.124      0.3333     -3.371    < 0.001
+15 tvlarge_1................         -1.967       1.619     -1.215      0.225
+
+            Records used        11169
+
+                Deviance     5670.459
+                     AIC     5690.459
+            Pearson Chi2     10968.56      Degrees of freedom   11159
+
+
+
+
+profile 14@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.057  -0.04194     0.419 *
+   -0.8058    -1.101     0.147 *
+   -0.9174   -0.4356     0.255 *
+   -0.8199   -0.9980     0.159 *
+   -0.7778    -1.324     0.125 *
+   -0.6432    -2.749    0.0487 *
+   -0.5652    -3.871    0.0246 *
+   -0.4972    -5.043    0.0124 *
+   -0.4183    -6.653   0.00495 *
+   -0.3655    -7.889   0.00249 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.190  -0.03874     0.422 *
+    -1.468   -0.8707     0.175 *
+    -1.370   -0.4750     0.245 *
+    -1.495   -0.9958     0.159 *
+    -1.560    -1.319     0.125 *
+    -1.783    -2.616    0.0529 *
+    -1.959    -3.752    0.0264 *
+    -2.140    -4.944    0.0131 *
+    -2.391    -6.541   0.00527 *
+    -2.609    -7.820   0.00258 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.609    -7.820   0.00258
+    -2.391    -6.541   0.00527
+    -2.140    -4.944    0.0131
+    -1.959    -3.752    0.0264
+    -1.783    -2.616    0.0529
+    -1.560    -1.319     0.125
+    -1.495   -0.9958     0.159
+    -1.468   -0.8707     0.175
+    -1.370   -0.4750     0.245
+    -1.190  -0.03874     0.422
+    -1.124     0.000    0.0133
+    -1.057  -0.04194     0.419
+   -0.9174   -0.4356     0.255
+   -0.8199   -0.9980     0.159
+   -0.8058    -1.101     0.147
+   -0.7778    -1.324     0.125
+   -0.6432    -2.749    0.0487
+   -0.5652    -3.871    0.0246
+   -0.4972    -5.043    0.0124
+   -0.4183    -6.653   0.00495
+   -0.3655    -7.889   0.00249
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 14 (tvlarge_0)
+
+            MLE     -1.124    exp(MLE)     0.3251
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.235      -1.022      0.2909      0.3598
+      50.0%      -1.364     -0.9132      0.2555      0.4012
+      68.3%      -1.496     -0.8196      0.2241      0.4406
+      75.0%      -1.560     -0.7779      0.2101      0.4594
+      90.0%      -1.797     -0.6466      0.1658      0.5238
+      95.0%      -1.972     -0.5670      0.1391      0.5672
+      97.5%      -2.152     -0.4983      0.1162      0.6076
+      99.0%      -2.406     -0.4191     0.09016      0.6576
+      99.5%      -2.620     -0.3659     0.07282      0.6936
+
+
+
+profile 15@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.643  -0.04843     0.413 *
+   -0.6296    -1.774    0.0914 *
+    -1.236   -0.3388     0.280
+    -1.159   -0.4394     0.254 *
+   -0.8808   -0.9770     0.161 *
+   -0.7507    -1.347     0.123 *
+   -0.4025    -2.838    0.0460 *
+   -0.2311    -3.910    0.0240 *
+  -0.08192    -5.064    0.0122 *
+   0.08854    -6.669   0.00491 *
+    0.1997    -7.896   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.291  -0.02904     0.432 *
+    -4.197   -0.3503     0.277 *
+    -4.614   -0.3834     0.268 *
+    -6.233   -0.4382     0.254
+    -9.472   -0.4519     0.251
+    -15.95   -0.4525     0.251
+    -28.90   -0.4525     0.251
+    -54.81   -0.4525     0.251
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.614   -0.3834     0.268
+    -4.197   -0.3503     0.277
+    -2.291  -0.02904     0.432
+    -1.967     0.000    0.0133
+    -1.643  -0.04843     0.413
+    -1.159   -0.4394     0.254
+   -0.8808   -0.9770     0.161
+   -0.7507    -1.347     0.123
+   -0.6296    -1.774    0.0914
+   -0.4025    -2.838    0.0460
+   -0.2311    -3.910    0.0240
+  -0.08192    -5.064    0.0122
+   0.08854    -6.669   0.00491
+    0.1997    -7.896   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 15 (tvlarge_1)
+
+            MLE     -1.967    exp(MLE)     0.1399
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -2.884      -1.537     0.05590      0.2151
+      50.0%        ????      -1.149        ????      0.3171
+      68.3%        ????     -0.8718        ????      0.4182
+      75.0%        ????     -0.7580        ????      0.4686
+      90.0%        ????     -0.4267        ????      0.6526
+      95.0%        ????     -0.2409        ????      0.7859
+      97.5%        ????    -0.08665        ????      0.9170
+      99.0%        ????     0.08527        ????       1.089
+      99.5%        ????      0.1983        ????       1.219
+
+
+
+
+
+
+! effect modification by family hx of thyroid disease
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n any_fhf1 @ 
+line 1 dgy @ 
+logl 1 any_fhf1 @  
+para 14=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6953.670
+             2     0     5858.567
+             3     0     5725.062
+             4     0     5719.411
+             5     0     5719.392
+             6     0     5719.392
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.289      0.1396     -23.57    < 0.001
+ 3 SEX_L_1..................         0.4239     0.07468      5.676    < 0.001
+ 5 UR_RUR_1.................         0.1917     0.08016      2.392     0.0168
+ 7 obl_86n_2................         0.1019      0.1197     0.8515      0.394
+ 8 obl_86n_3................        -0.1803      0.1707     -1.056      0.291
+10 ANY_FHF1_1...............         0.3738      0.1728      2.164     0.0305
+11 ANY_FHF1_2...............         0.4812      0.3521      1.366      0.172
+12 age21....................         0.1518      0.0337      4.504    < 0.001
+13 ex8......................       -0.06968     0.03537      -1.97     0.0488
+
+Linear term 1
+14 dgy......................          1.000     Aliased
+
+Log-linear term 1
+15 ANY_FHF1_0...............         -1.298      0.3788     -3.427    < 0.001
+16 ANY_FHF1_1...............        -0.2446      0.5326    -0.4592      > 0.5
+17 ANY_FHF1_2...............         -2.333       4.147    -0.5627      > 0.5
+
+            Records used        11169
+
+                Deviance     5719.392
+                     AIC     5743.392
+            Pearson Chi2     11016.35      Degrees of freedom   11157
+
+
+
+
+profile 15@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.222  -0.04250     0.418 *
+   -0.9417    -1.120     0.145 *
+    -1.068   -0.4313     0.256 *
+   -0.9600   -0.9971     0.159 *
+   -0.9138    -1.325     0.125 *
+   -0.7672    -2.758    0.0484 *
+   -0.6836    -3.876    0.0245 *
+   -0.6111    -5.047    0.0123 *
+   -0.5272    -6.657   0.00494 *
+   -0.4713    -7.891   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.374  -0.03860     0.422 *
+    -1.691   -0.8410     0.180 *
+    -1.584   -0.4784     0.245 *
+    -1.730   -0.9934     0.159 *
+    -1.809    -1.318     0.126 *
+    -2.084    -2.591    0.0537 *
+    -2.317    -3.721    0.0269 *
+    -2.574    -4.914    0.0133 *
+    -2.968    -6.507   0.00537 *
+    -3.384    -7.820   0.00258 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -3.384    -7.820   0.00258
+    -2.968    -6.507   0.00537
+    -2.574    -4.914    0.0133
+    -2.317    -3.721    0.0269
+    -2.084    -2.591    0.0537
+    -1.809    -1.318     0.126
+    -1.730   -0.9934     0.159
+    -1.691   -0.8410     0.180
+    -1.584   -0.4784     0.245
+    -1.374  -0.03860     0.422
+    -1.298     0.000    0.0240
+    -1.222  -0.04250     0.418
+    -1.068   -0.4313     0.256
+   -0.9600   -0.9971     0.159
+   -0.9417    -1.120     0.145
+   -0.9138    -1.325     0.125
+   -0.7672    -2.758    0.0484
+   -0.6836    -3.876    0.0245
+   -0.6111    -5.047    0.0123
+   -0.5272    -6.657   0.00494
+   -0.4713    -7.891   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 15 (ANY_FHF1_0)
+
+            MLE     -1.298    exp(MLE)     0.2730
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.426      -1.184      0.2404      0.3061
+      50.0%      -1.576      -1.063      0.2068      0.3456
+      68.3%      -1.732     -0.9596      0.1769      0.3831
+      75.0%      -1.811     -0.9140      0.1636      0.4009
+      90.0%      -2.108     -0.7715      0.1214      0.4623
+      95.0%      -2.342     -0.6860     0.09611      0.5036
+      97.5%      -2.599     -0.6124     0.07437      0.5420
+      99.0%      -3.003     -0.5282     0.04962      0.5897
+      99.5%      -3.406     -0.4718     0.03316      0.6239
+
+
+
+ *** WARNING: Parameter ANY_FHF1_2 changed by 1.0% MLE may be infinite or may not exist
+
+
+profile 16@  
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.1381  -0.03864     0.422 *
+    0.3066    -1.203     0.136 *
+   0.09785   -0.4347     0.255 *
+    0.2606   -0.9967     0.159 *
+    0.3314    -1.324     0.125 *
+    0.5582    -2.734    0.0491 *
+    0.6937    -3.856    0.0248 *
+    0.8137    -5.031    0.0125 *
+    0.9552    -6.637   0.00499 *
+     1.052    -7.879   0.00250 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.3511  -0.03563     0.425 *
+   -0.8424   -0.9029     0.171 *
+   -0.6643   -0.4831     0.244 *
+   -0.8776   -0.9957     0.159 *
+   -0.9933    -1.318     0.126 *
+    -1.403    -2.567    0.0546 *
+    -1.773    -3.679    0.0276
+    -1.827    -3.833    0.0251 *
+    -2.283    -4.981    0.0128 *
+    -3.291    -6.593   0.00512 *
+    -3.823    -7.041   0.00398
+    -4.888    -7.487   0.00311
+    -7.019    -7.702   0.00276
+    -11.28    -7.732   0.00271 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -11.28    -7.732   0.00271
+    -3.291    -6.593   0.00512
+    -2.283    -4.981    0.0128
+    -1.827    -3.833    0.0251
+    -1.403    -2.567    0.0546
+   -0.9933    -1.318     0.126
+   -0.8776   -0.9957     0.159
+   -0.8424   -0.9029     0.171
+   -0.6643   -0.4831     0.244
+   -0.3511  -0.03563     0.425
+   -0.2446     0.000    0.0240
+   -0.1381  -0.03864     0.422
+   0.09785   -0.4347     0.255
+    0.2606   -0.9967     0.159
+    0.3066    -1.203     0.136
+    0.3314    -1.324     0.125
+    0.5582    -2.734    0.0491
+    0.6937    -3.856    0.0248
+    0.8137    -5.031    0.0125
+    0.9552    -6.637   0.00499
+     1.052    -7.879   0.00250
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 16 (ANY_FHF1_1)
+
+            MLE    -0.2446    exp(MLE)     0.7830
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%     -0.4313    -0.07589      0.6496      0.9269
+      50.0%     -0.6501      0.1052      0.5220       1.111
+      68.3%     -0.8792      0.2614      0.4151       1.299
+      75.0%     -0.9953      0.3314      0.3696       1.393
+      90.0%      -1.449      0.5544      0.2348       1.741
+      95.0%      -1.831      0.6921      0.1603       1.998
+      97.5%      -2.302      0.8130      0.1001       2.255
+      99.0%      -3.320      0.9550     0.03615       2.599
+      99.5%      -4.302       1.052     0.01354       2.865
+
+
+
+profile 17@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.504  -0.05599     0.406 *
+    0.6285    -2.803    0.0470 *
+   -0.8986   -0.2699     0.302
+   -0.6824   -0.4178     0.259 *
+   -0.1991   -0.9589     0.164 *
+   0.03383    -1.349     0.123 *
+    0.6203    -2.778    0.0478 *
+    0.9442    -3.848    0.0249 *
+     1.246    -5.004    0.0126 *
+     1.617    -6.587   0.00514 *
+     1.893    -7.839   0.00256 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -3.163  -0.01477     0.452 *
+    -4.407  -0.03743     0.423 *
+    -8.554  -0.04991     0.412
+    -16.85  -0.05013     0.411
+    -33.43  -0.05013     0.411
+    -66.61  -0.05013     0.411
+    -133.0  -0.05013     0.411
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.407  -0.03743     0.423
+    -3.163  -0.01477     0.452
+    -2.333     0.000    0.0240
+    -1.504  -0.05599     0.406
+   -0.6824   -0.4178     0.259
+   -0.1991   -0.9589     0.164
+   0.03383    -1.349     0.123
+    0.6203    -2.778    0.0478
+    0.6285    -2.803    0.0470
+    0.9442    -3.848    0.0249
+     1.246    -5.004    0.0126
+     1.617    -6.587   0.00514
+     1.893    -7.839   0.00256
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 17 (ANY_FHF1_2)
+
+            MLE     -2.333    exp(MLE)    0.09696
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%        ????      -1.347        ????      0.2600
+      50.0%        ????     -0.6407        ????      0.5269
+      68.3%        ????     -0.1719        ????      0.8420
+      75.0%        ????     0.02003        ????       1.020
+      90.0%        ????      0.5958        ????       1.815
+      95.0%        ????      0.9424        ????       2.566
+      97.5%        ????       1.251        ????       3.494
+      99.0%        ????       1.628        ????       5.093
+      99.5%        ????       1.901        ????       6.695
+
+
+
+! effect modification by goiter_df_pal
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n goiter_df_pal @ 
+line 1 dgy @ 
+logl 1 goiter_df_pal @  
+para 13=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    49503.856
+             1     1    49503.856
+             2     0    49503.856
+             3     0    49503.856
+             4     0    49503.856
+             5     0    49503.856
+             6     0    49503.856
+             7     0    49503.856
+             8     0    49503.856
+             9     0    49503.856
+            10     0    49503.856
+            11     0    49503.856
+            12     0    49503.856
+            13     0    49503.856
+            14     0    49503.856
+            15     0    49503.856
+            16     0    49503.856
+            17     0    49503.856
+            18     0    49503.856
+            19     0    49503.856
+            20     0    49503.856
+            21     0    49503.856
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000      0.1325          0      > 0.5
+ 3 SEX_L_1..................          0.000     0.07865          0      > 0.5
+ 5 UR_RUR_1.................          0.000     0.08804          0      > 0.5
+ 7 obl_86n_2................          0.000      0.1105          0      > 0.5
+ 8 obl_86n_3................          0.000      0.1593          0      > 0.5
+10 goiter_df_pal_1..........          0.000      0.1082          0      > 0.5
+11 goiter_df_pal_2..........          0.000      0.7536          0      > 0.5
+12 age21....................          0.000     0.01796          0      > 0.5
+13 ex8......................          1.000       Fixed      -973.3    < 0.001
+
+Linear term 1
+14 dgy......................          0.000     0.07115          0      > 0.5
+
+Log-linear term 1
+15 goiter_df_pal_0..........          0.000     Aliased
+16 goiter_df_pal_1..........          0.000     Aliased
+17 goiter_df_pal_2..........          0.000     Aliased
+
+            Records used        11169
+
+                Deviance    49503.856
+                     AIC    49521.856
+            Pearson Chi2    7610008.3      Degrees of freedom   11160
+
+
+
+ *** WARNING: The total score at the last iteration is 208764
+
+freq goiter_df_pal by thnod_prev @ 
+
+Using dgy<4
+For thnod_prev = 0
+
+  FOR: goiter_df_pal
+  Level     Freq     %      Cum %
+      0        8781   84.99    84.99
+      1        1526   14.77    99.76
+      2          25    0.24   100.00
+  Total       10332
+
+
+Using dgy<4
+For thnod_prev = 1
+
+  FOR: goiter_df_pal
+  Level     Freq     %      Cum %
+      0         562   67.14    67.14
+      1         274   32.74    99.88
+      2           1    0.12   100.00
+  Total         837
+
+
+logl 0 sex_l age21 ex8 ur_rur obl_86n tvlarge @ 
+line 1 dgy @ 
+logl 1 tvlarge @  
+para 13=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6925.864
+             2     0     5814.018
+             3     0     5676.382
+             4     0     5670.479
+             5     0     5670.459
+             6     0     5670.459
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.374      0.1412      -23.9    < 0.001
+ 3 SEX_L_1..................         0.3833     0.07517      5.098    < 0.001
+ 5 UR_RUR_1.................         0.2466     0.08052      3.063    0.00219
+ 7 obl_86n_2................         0.1548        0.12      1.291      0.197
+ 8 obl_86n_3................        -0.2501       0.172     -1.454      0.146
+10 tvlarge_1................          1.105      0.1492      7.406    < 0.001
+11 age21....................         0.1561     0.03391      4.603    < 0.001
+12 ex8......................       -0.08504      0.0356     -2.389     0.0169
+
+Linear term 1
+13 dgy......................          1.000     Aliased
+
+Log-linear term 1
+14 tvlarge_0................         -1.124      0.3333     -3.371    < 0.001
+15 tvlarge_1................         -1.967       1.619     -1.215      0.225
+
+            Records used        11169
+
+                Deviance     5670.459
+                     AIC     5690.459
+            Pearson Chi2     10968.56      Degrees of freedom   11159
+
+
+
+
+profile 14@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.057  -0.04194     0.419 *
+   -0.8058    -1.101     0.147 *
+   -0.9174   -0.4356     0.255 *
+   -0.8199   -0.9980     0.159 *
+   -0.7778    -1.324     0.125 *
+   -0.6432    -2.749    0.0487 *
+   -0.5652    -3.871    0.0246 *
+   -0.4972    -5.043    0.0124 *
+   -0.4183    -6.653   0.00495 *
+   -0.3655    -7.889   0.00249 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.190  -0.03874     0.422 *
+    -1.468   -0.8707     0.175 *
+    -1.370   -0.4750     0.245 *
+    -1.495   -0.9958     0.159 *
+    -1.560    -1.319     0.125 *
+    -1.783    -2.616    0.0529 *
+    -1.959    -3.752    0.0264 *
+    -2.140    -4.944    0.0131 *
+    -2.391    -6.541   0.00527 *
+    -2.609    -7.820   0.00258 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.609    -7.820   0.00258
+    -2.391    -6.541   0.00527
+    -2.140    -4.944    0.0131
+    -1.959    -3.752    0.0264
+    -1.783    -2.616    0.0529
+    -1.560    -1.319     0.125
+    -1.495   -0.9958     0.159
+    -1.468   -0.8707     0.175
+    -1.370   -0.4750     0.245
+    -1.190  -0.03874     0.422
+    -1.124     0.000    0.0126
+    -1.057  -0.04194     0.419
+   -0.9174   -0.4356     0.255
+   -0.8199   -0.9980     0.159
+   -0.8058    -1.101     0.147
+   -0.7778    -1.324     0.125
+   -0.6432    -2.749    0.0487
+   -0.5652    -3.871    0.0246
+   -0.4972    -5.043    0.0124
+   -0.4183    -6.653   0.00495
+   -0.3655    -7.889   0.00249
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 14 (tvlarge_0)
+
+            MLE     -1.124    exp(MLE)     0.3251
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.235      -1.022      0.2909      0.3598
+      50.0%      -1.364     -0.9132      0.2555      0.4012
+      68.3%      -1.496     -0.8196      0.2241      0.4406
+      75.0%      -1.560     -0.7779      0.2101      0.4594
+      90.0%      -1.797     -0.6466      0.1658      0.5238
+      95.0%      -1.972     -0.5670      0.1391      0.5672
+      97.5%      -2.152     -0.4983      0.1162      0.6076
+      99.0%      -2.406     -0.4191     0.09016      0.6576
+      99.5%      -2.620     -0.3659     0.07282      0.6936
+
+
+
+profile 15@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.643  -0.04843     0.413 *
+   -0.6296    -1.774    0.0914 *
+    -1.236   -0.3388     0.280
+    -1.159   -0.4394     0.254 *
+   -0.8808   -0.9770     0.161 *
+   -0.7507    -1.347     0.123 *
+   -0.4025    -2.838    0.0460 *
+   -0.2311    -3.910    0.0240 *
+  -0.08192    -5.064    0.0122 *
+   0.08854    -6.669   0.00491 *
+    0.1997    -7.896   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -2.291  -0.02904     0.432 *
+    -4.197   -0.3503     0.277 *
+    -4.614   -0.3834     0.268 *
+    -6.233   -0.4382     0.254
+    -9.472   -0.4519     0.251
+    -15.95   -0.4525     0.251
+    -28.90   -0.4525     0.251
+    -54.81   -0.4525     0.251
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.614   -0.3834     0.268
+    -4.197   -0.3503     0.277
+    -2.291  -0.02904     0.432
+    -1.967     0.000    0.0126
+    -1.643  -0.04843     0.413
+    -1.159   -0.4394     0.254
+   -0.8808   -0.9770     0.161
+   -0.7507    -1.347     0.123
+   -0.6296    -1.774    0.0914
+   -0.4025    -2.838    0.0460
+   -0.2311    -3.910    0.0240
+  -0.08192    -5.064    0.0122
+   0.08854    -6.669   0.00491
+    0.1997    -7.896   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 15 (tvlarge_1)
+
+            MLE     -1.967    exp(MLE)     0.1399
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -2.884      -1.537     0.05590      0.2151
+      50.0%        ????      -1.149        ????      0.3171
+      68.3%        ????     -0.8718        ????      0.4182
+      75.0%        ????     -0.7580        ????      0.4686
+      90.0%        ????     -0.4267        ????      0.6526
+      95.0%        ????     -0.2409        ????      0.7859
+      97.5%        ????    -0.08665        ????      0.9170
+      99.0%        ????     0.08527        ????       1.089
+      99.5%        ????      0.1983        ????       1.219
+
+
+
+
+
+
+! effect modification by goiter_df_pal
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n goiter_df_pal @ 
+line 1 dgy @ 
+logl 1 goiter_df_pal @  
+para 14=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6878.657
+             2     0     5720.359
+             3     0     5548.207
+             4     0     5536.256
+             5     0     5535.493
+             6     0     5535.369
+             7     0     5535.235
+             8     0     5535.233
+             9     0     5535.233
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.552      0.1451     -24.48    < 0.001
+ 3 SEX_L_1..................         0.3196     0.07593      4.209    < 0.001
+ 5 UR_RUR_1.................         0.1980     0.08096      2.446     0.0145
+ 7 obl_86n_2................         0.1236      0.1206      1.025      0.305
+ 8 obl_86n_3................        -0.2343      0.1725     -1.359      0.174
+10 goiter_df_pal_1..........          1.229      0.1205       10.2    < 0.001
+11 goiter_df_pal_2..........         -28.93     Aliased
+12 age21....................         0.3184     0.03642      8.743    < 0.001
+13 ex8......................        -0.2375     0.03795     -6.257    < 0.001
+
+Linear term 1
+14 dgy......................          1.000     Aliased
+
+Log-linear term 1
+15 goiter_df_pal_0..........         -1.444      0.4673      -3.09      0.002
+16 goiter_df_pal_1..........        -0.8025      0.4388     -1.829     0.0674
+17 goiter_df_pal_2..........          29.12       1.044      27.88    < 0.001
+
+            Records used        11169
+
+                Deviance     5535.233
+                     AIC     5557.233
+            Pearson Chi2     11106.49      Degrees of freedom   11158
+
+
+
+
+profile 15@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.351  -0.04434     0.417 *
+    -1.023    -1.121     0.145 *
+    -1.171   -0.4257     0.257 *
+    -1.044   -0.9964     0.159 *
+   -0.9906    -1.325     0.125 *
+   -0.8223    -2.770    0.0480 *
+   -0.7288    -3.882    0.0244 *
+   -0.6479    -5.051    0.0123 *
+   -0.5546    -6.660   0.00493 *
+   -0.4929    -7.893   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.538  -0.03903     0.422 *
+    -1.923   -0.7837     0.188 *
+    -1.804   -0.4824     0.244 *
+    -1.995   -0.9876     0.160 *
+    -2.105    -1.314     0.126 *
+    -2.498    -2.541    0.0555
+    -2.548    -2.695    0.0503 *
+    -2.934    -3.776    0.0260 *
+    -3.481    -4.952    0.0130 *
+    -3.948    -5.640   0.00878
+    -4.883    -6.406   0.00569
+    -6.752    -6.853   0.00442
+    -5.309    -6.587   0.00514 *
+    -9.047    -6.929   0.00424
+    -16.52    -6.937   0.00422
+    -31.48    -6.937   0.00422
+    -61.38    -6.937   0.00422
+    -121.2    -6.937   0.00422
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -5.309    -6.587   0.00514
+    -3.481    -4.952    0.0130
+    -2.934    -3.776    0.0260
+    -2.548    -2.695    0.0503
+    -2.105    -1.314     0.126
+    -1.995   -0.9876     0.160
+    -1.923   -0.7837     0.188
+    -1.804   -0.4824     0.244
+    -1.538  -0.03903     0.422
+    -1.444     0.000    0.0240
+    -1.351  -0.04434     0.417
+    -1.171   -0.4257     0.257
+    -1.044   -0.9964     0.159
+    -1.023    -1.121     0.145
+   -0.9906    -1.325     0.125
+   -0.8223    -2.770    0.0480
+   -0.7288    -3.882    0.0244
+   -0.6479    -5.051    0.0123
+   -0.5546    -6.660   0.00493
+   -0.4929    -7.893   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 15 (goiter_df_pal_0)
+
+            MLE     -1.444    exp(MLE)     0.2360
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.602      -1.307      0.2014      0.2707
+      50.0%      -1.792      -1.163      0.1666      0.3125
+      68.3%      -2.000      -1.043      0.1354      0.3523
+      75.0%      -2.108     -0.9908      0.1215      0.3713
+      90.0%      -2.552     -0.8283     0.07795      0.4368
+      95.0%      -2.960     -0.7319     0.05183      0.4810
+      97.5%      -3.520     -0.6496     0.02961      0.5223
+      99.0%        ????     -0.5559        ????      0.5735
+      99.5%        ????     -0.4935        ????      0.6105
+
+
+
+profile 16@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.7147  -0.03815     0.423 *
+   -0.3425    -1.251     0.132 *
+   -0.5217   -0.4294     0.256 *
+   -0.3881   -0.9947     0.159 *
+   -0.3306    -1.324     0.125 *
+   -0.1485    -2.749    0.0486 *
+  -0.04311    -3.869    0.0246 *
+   0.04902    -5.041    0.0124 *
+    0.1563    -6.650   0.00496 *
+    0.2285    -7.887   0.00249 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.8902  -0.03486     0.426 *
+    -1.306   -0.9140     0.170 *
+    -1.153   -0.4841     0.243 *
+    -1.332   -0.9963     0.159 *
+    -1.428    -1.318     0.125 *
+    -1.770    -2.578    0.0542 *
+    -2.069    -3.700    0.0272 *
+    -2.418    -4.886    0.0135 *
+    -3.021    -6.477   0.00546 *
+    -3.460    -7.273   0.00350
+    -4.079    -8.001   0.00234 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.079    -8.001   0.00234
+    -3.021    -6.477   0.00546
+    -2.418    -4.886    0.0135
+    -2.069    -3.700    0.0272
+    -1.770    -2.578    0.0542
+    -1.428    -1.318     0.125
+    -1.332   -0.9963     0.159
+    -1.306   -0.9140     0.170
+    -1.153   -0.4841     0.243
+   -0.8902  -0.03486     0.426
+   -0.8025     0.000     0.417
+   -0.7147  -0.03815     0.423
+   -0.5217   -0.4294     0.256
+   -0.3881   -0.9947     0.159
+   -0.3425    -1.251     0.132
+   -0.3306    -1.324     0.125
+   -0.1485    -2.749    0.0486
+  -0.04311    -3.869    0.0246
+   0.04902    -5.041    0.0124
+    0.1563    -6.650   0.00496
+    0.2285    -7.887   0.00249
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 16 (goiter_df_pal_1)
+
+            MLE    -0.8025    exp(MLE)     0.4482
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%     -0.9583     -0.6630      0.3835      0.5153
+      50.0%      -1.141     -0.5141      0.3194      0.5980
+      68.3%      -1.333     -0.3871      0.2637      0.6790
+      75.0%      -1.430     -0.3307      0.2393      0.7184
+      90.0%      -1.804     -0.1531      0.1647      0.8580
+      95.0%      -2.109    -0.04545      0.1214      0.9556
+      97.5%      -2.462     0.04776     0.08523       1.049
+      99.0%      -3.094      0.1554     0.04531       1.168
+      99.5%      -3.925      0.2281     0.01974       1.256
+
+
+
+profile 17@
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+     29.33  -0.04241     0.418 *
+     30.11    -1.176     0.139 *
+     29.75   -0.4233     0.258 *
+     30.04   -0.9945     0.159 *
+     30.16    -1.324     0.125 *
+     30.55    -2.773    0.0479 *
+     30.76    -3.883    0.0244 *
+     30.94    -5.051    0.0123 *
+     31.15    -6.659   0.00493 *
+     31.29    -7.892   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+     28.91  -0.03774     0.423 *
+     28.02   -0.8355     0.180 *
+     28.32   -0.4802     0.244 *
+     27.90   -0.9933     0.159 *
+     27.67    -1.318     0.125 *
+     26.89    -2.613    0.0530 *
+     26.26    -3.766    0.0261 *
+     25.62    -4.974    0.0129 *
+     24.79    -6.597   0.00511 *
+     24.15    -7.864   0.00252 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+     24.15    -7.864   0.00252
+     24.79    -6.597   0.00511
+     25.62    -4.974    0.0129
+     26.26    -3.766    0.0261
+     26.89    -2.613    0.0530
+     27.67    -1.318     0.125
+     27.90   -0.9933     0.159
+     28.02   -0.8355     0.180
+     28.32   -0.4802     0.244
+     28.91  -0.03774     0.423
+     29.12     0.000     0.417
+     29.33  -0.04241     0.418
+     29.75   -0.4233     0.258
+     30.04   -0.9945     0.159
+     30.11    -1.176     0.139
+     30.16    -1.324     0.125
+     30.55    -2.773    0.0479
+     30.76    -3.883    0.0244
+     30.94    -5.051    0.0123
+     31.15    -6.659   0.00493
+     31.29    -7.892   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 17 (goiter_df_pal_2)
+
+            MLE      29.12    exp(MLE)  4.449e+12
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%       28.77       29.44   3.111e+12   6.087e+12
+      50.0%       28.34       29.77   2.034e+12   8.459e+12
+      68.3%       27.89       30.04   1.301e+12   1.113e+13
+      75.0%       27.67       30.16   1.039e+12   1.255e+13
+      90.0%       26.84       30.53   4.515e+11   1.817e+13
+      95.0%       26.22       30.75   2.432e+11   2.263e+13
+      97.5%       25.60       30.94   1.310e+11   2.729e+13
+      99.0%       24.78       31.15   5.751e+10   3.377e+13
+      99.5%       24.15       31.29   3.067e+10   3.892e+13
+
+
+
+
+
+
+! effect modification by family hx of thyroid disease
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n any_fhf1 @ 
+line 1 dgy @ 
+logl 1 any_fhf1 @  
+para 14=1@
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    19357.299
+             1     0     6953.670
+             2     0     5858.567
+             3     0     5725.062
+             4     0     5719.411
+             5     0     5719.392
+             6     0     5719.392
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.289      0.1396     -23.57    < 0.001
+ 3 SEX_L_1..................         0.4239     0.07468      5.676    < 0.001
+ 5 UR_RUR_1.................         0.1917     0.08016      2.392     0.0168
+ 7 obl_86n_2................         0.1019      0.1197     0.8515      0.394
+ 8 obl_86n_3................        -0.1803      0.1707     -1.056      0.291
+10 ANY_FHF1_1...............         0.3738      0.1728      2.164     0.0305
+11 ANY_FHF1_2...............         0.4812      0.3521      1.366      0.172
+12 age21....................         0.1518      0.0337      4.504    < 0.001
+13 ex8......................       -0.06968     0.03537      -1.97     0.0488
+
+Linear term 1
+14 dgy......................          1.000     Aliased
+
+Log-linear term 1
+15 ANY_FHF1_0...............         -1.298      0.3788     -3.427    < 0.001
+16 ANY_FHF1_1...............        -0.2446      0.5326    -0.4592      > 0.5
+17 ANY_FHF1_2...............         -2.333       4.147    -0.5627      > 0.5
+
+            Records used        11169
+
+                Deviance     5719.392
+                     AIC     5743.392
+            Pearson Chi2     11016.35      Degrees of freedom   11157
+
+
+
+
+profile 15@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.222  -0.04250     0.418 *
+   -0.9417    -1.120     0.145 *
+    -1.068   -0.4313     0.256 *
+   -0.9600   -0.9971     0.159 *
+   -0.9138    -1.325     0.125 *
+   -0.7672    -2.758    0.0484 *
+   -0.6836    -3.876    0.0245 *
+   -0.6111    -5.047    0.0123 *
+   -0.5272    -6.657   0.00494 *
+   -0.4713    -7.891   0.00248 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.374  -0.03860     0.422 *
+    -1.691   -0.8410     0.180 *
+    -1.584   -0.4784     0.245 *
+    -1.730   -0.9934     0.159 *
+    -1.809    -1.318     0.126 *
+    -2.084    -2.591    0.0537 *
+    -2.317    -3.721    0.0269 *
+    -2.574    -4.914    0.0133 *
+    -2.968    -6.507   0.00537 *
+    -3.384    -7.820   0.00258 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -3.384    -7.820   0.00258
+    -2.968    -6.507   0.00537
+    -2.574    -4.914    0.0133
+    -2.317    -3.721    0.0269
+    -2.084    -2.591    0.0537
+    -1.809    -1.318     0.126
+    -1.730   -0.9934     0.159
+    -1.691   -0.8410     0.180
+    -1.584   -0.4784     0.245
+    -1.374  -0.03860     0.422
+    -1.298     0.000     0.417
+    -1.222  -0.04250     0.418
+    -1.068   -0.4313     0.256
+   -0.9600   -0.9971     0.159
+   -0.9417    -1.120     0.145
+   -0.9138    -1.325     0.125
+   -0.7672    -2.758    0.0484
+   -0.6836    -3.876    0.0245
+   -0.6111    -5.047    0.0123
+   -0.5272    -6.657   0.00494
+   -0.4713    -7.891   0.00248
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 15 (ANY_FHF1_0)
+
+            MLE     -1.298    exp(MLE)     0.2730
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%      -1.426      -1.184      0.2404      0.3061
+      50.0%      -1.576      -1.063      0.2068      0.3456
+      68.3%      -1.732     -0.9596      0.1769      0.3831
+      75.0%      -1.811     -0.9140      0.1636      0.4009
+      90.0%      -2.108     -0.7715      0.1214      0.4623
+      95.0%      -2.342     -0.6860     0.09611      0.5036
+      97.5%      -2.599     -0.6124     0.07437      0.5420
+      99.0%      -3.003     -0.5282     0.04962      0.5897
+      99.5%      -3.406     -0.4718     0.03316      0.6239
+
+
+
+ *** WARNING: Parameter ANY_FHF1_2 changed by 1.0% MLE may be infinite or may not exist
+
+
+profile 16@  
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.1381  -0.03864     0.422 *
+    0.3066    -1.203     0.136 *
+   0.09785   -0.4347     0.255 *
+    0.2606   -0.9967     0.159 *
+    0.3314    -1.324     0.125 *
+    0.5582    -2.734    0.0491 *
+    0.6937    -3.856    0.0248 *
+    0.8137    -5.031    0.0125 *
+    0.9552    -6.637   0.00499 *
+     1.052    -7.879   0.00250 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+   -0.3511  -0.03563     0.425 *
+   -0.8424   -0.9029     0.171 *
+   -0.6643   -0.4831     0.244 *
+   -0.8776   -0.9957     0.159 *
+   -0.9933    -1.318     0.126 *
+    -1.403    -2.567    0.0546 *
+    -1.773    -3.679    0.0276
+    -1.827    -3.833    0.0251 *
+    -2.283    -4.981    0.0128 *
+    -3.291    -6.593   0.00512 *
+    -3.823    -7.041   0.00398
+    -4.888    -7.487   0.00311
+    -7.019    -7.702   0.00276
+    -11.28    -7.732   0.00271 *
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -11.28    -7.732   0.00271
+    -3.291    -6.593   0.00512
+    -2.283    -4.981    0.0128
+    -1.827    -3.833    0.0251
+    -1.403    -2.567    0.0546
+   -0.9933    -1.318     0.126
+   -0.8776   -0.9957     0.159
+   -0.8424   -0.9029     0.171
+   -0.6643   -0.4831     0.244
+   -0.3511  -0.03563     0.425
+   -0.2446     0.000     0.417
+   -0.1381  -0.03864     0.422
+   0.09785   -0.4347     0.255
+    0.2606   -0.9967     0.159
+    0.3066    -1.203     0.136
+    0.3314    -1.324     0.125
+    0.5582    -2.734    0.0491
+    0.6937    -3.856    0.0248
+    0.8137    -5.031    0.0125
+    0.9552    -6.637   0.00499
+     1.052    -7.879   0.00250
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 16 (ANY_FHF1_1)
+
+            MLE    -0.2446    exp(MLE)     0.7830
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%     -0.4313    -0.07589      0.6496      0.9269
+      50.0%     -0.6501      0.1052      0.5220       1.111
+      68.3%     -0.8792      0.2614      0.4151       1.299
+      75.0%     -0.9953      0.3314      0.3696       1.393
+      90.0%      -1.449      0.5544      0.2348       1.741
+      95.0%      -1.831      0.6921      0.1603       1.998
+      97.5%      -2.302      0.8130      0.1001       2.255
+      99.0%      -3.320      0.9550     0.03615       2.599
+      99.5%      -4.302       1.052     0.01354       2.865
+
+
+
+profile 17@ 
+  Upper bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -1.504  -0.05599     0.406 *
+    0.6285    -2.803    0.0470 *
+   -0.8986   -0.2699     0.302
+   -0.6824   -0.4178     0.259 *
+   -0.1991   -0.9589     0.164 *
+   0.03383    -1.349     0.123 *
+    0.6203    -2.778    0.0478 *
+    0.9442    -3.848    0.0249 *
+     1.246    -5.004    0.0126 *
+     1.617    -6.587   0.00514 *
+     1.893    -7.839   0.00256 *
+
+  Lower bound trial values 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -3.163  -0.01477     0.452 *
+    -4.407  -0.03743     0.423 *
+    -8.554  -0.04991     0.412
+    -16.85  -0.05013     0.411
+    -33.43  -0.05013     0.411
+    -66.61  -0.05013     0.411
+    -133.0  -0.05013     0.411
+
+   Sorted list of profile likelihood points 
+
+             Deviance   One-Sided
+     Beta     Change     P-Value 
+     ____________________________
+
+    -4.407  -0.03743     0.423
+    -3.163  -0.01477     0.452
+    -2.333     0.000     0.417
+    -1.504  -0.05599     0.406
+   -0.6824   -0.4178     0.259
+   -0.1991   -0.9589     0.164
+   0.03383    -1.349     0.123
+    0.6203    -2.778    0.0478
+    0.6285    -2.803    0.0470
+    0.9442    -3.848    0.0249
+     1.246    -5.004    0.0126
+     1.617    -6.587   0.00514
+     1.893    -7.839   0.00256
+
+
+
+      Interpolated profile likelihood bounds
+       for parameter 17 (ANY_FHF1_2)
+
+            MLE     -2.333    exp(MLE)    0.09696
+
+      2-sided          Bounds                exp(Bounds)
+       Level      Lower       Upper      Lower        Upper
+      _______________________________________________________
+
+      25.0%        ????      -1.347        ????      0.2600
+      50.0%        ????     -0.6407        ????      0.5269
+      68.3%        ????     -0.1719        ????      0.8420
+      75.0%        ????     0.02003        ????       1.020
+      90.0%        ????      0.5958        ????       1.815
+      95.0%        ????      0.9424        ????       2.566
+      97.5%        ????       1.251        ????       3.494
+      99.0%        ????       1.628        ????       5.093
+      99.5%        ????       1.901        ????       6.695
+
+
+
+
+
+!Effect modification  P-values for <4Gy
+
+! effect modification by sex 
+
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n  @ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6509.795
+             2     0     5813.135
+             3     0     5746.884
+             4     0     5745.205
+             5     0     5745.203
+             6     0     5745.203
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.278      0.1389      -23.6    < 0.001
+ 3 SEX_L_1..................         0.4412     0.07445      5.926    < 0.001
+ 5 UR_RUR_1.................         0.2093     0.07997      2.617    0.00888
+ 7 obl_86n_2................         0.1250      0.1193      1.048      0.295
+ 8 obl_86n_3................        -0.1910      0.1705      -1.12      0.263
+ 9 age21....................         0.1556      0.0338      4.603    < 0.001
+10 ex8......................       -0.07576     0.03547     -2.136     0.0327
+
+Linear term 1
+11 dgy......................         0.3153      0.1017      3.099    0.00194
+
+            Records used        11169
+
+                Deviance     5745.203
+                     AIC     5761.203
+            Pearson Chi2     10987.32      Degrees of freedom   11161
+
+
+
+null@
+logl 1 sex_l@  
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     5745.203
+             1     0     5745.158
+             2     0     5745.158
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.288      0.1465     -22.44    < 0.001
+ 3 SEX_L_1..................         0.4569       0.105      4.352    < 0.001
+ 5 UR_RUR_1.................         0.2094     0.07997      2.618    0.00884
+ 7 obl_86n_2................         0.1257      0.1193      1.053      0.292
+ 8 obl_86n_3................        -0.1904      0.1706     -1.116      0.264
+ 9 age21....................         0.1557      0.0338      4.606    < 0.001
+10 ex8......................       -0.07595     0.03547     -2.141     0.0323
+
+Linear term 1
+11 dgy......................         0.3153     Aliased
+
+Log-linear term 1
+12 SEX_L_0..................        0.06681      0.4347     0.1537      > 0.5
+13 SEX_L_1..................       -0.05708      0.4345    -0.1314      > 0.5
+
+            Records used        11169
+
+                Deviance     5745.158
+                     AIC     5763.158
+            Pearson Chi2     10987.83      Degrees of freedom   11160
+
+
+
+lrt@
+
+
+! effect modification by age at accident 
+
+             LR statistic     0.04482      Degrees of freedom      1
+                  P value      > 0.50
+
+nomodel @
+logl 0 sex_l age21 exct ur_rur obl_86n  @ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6511.438
+             2     0     5816.546
+             3     0     5750.381
+             4     0     5748.529
+             5     0     5748.526
+             6     0     5748.526
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.289      0.1795     -18.32    < 0.001
+ 3 SEX_L_1..................         0.4370     0.07446      5.868    < 0.001
+ 5 exct_2...................        0.08284      0.1472     0.5628      > 0.5
+ 6 exct_3...................      -0.005224      0.2376   -0.02199      > 0.5
+ 8 UR_RUR_1.................         0.2129     0.07992      2.663    0.00773
+10 obl_86n_2................         0.1364      0.1193      1.143      0.253
+11 obl_86n_3................        -0.1562      0.1701    -0.9182      0.359
+12 age21....................        0.08729     0.01716      5.086    < 0.001
+
+Linear term 1
+13 dgy......................         0.2917     0.09803      2.976    0.00292
+
+            Records used        11169
+
+                Deviance     5748.526
+                     AIC     5766.526
+            Pearson Chi2     11013.78      Degrees of freedom   11160
+
+
+
+null@
+logl 1 exct@  
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5748.526
+             1     1     5742.866
+             2     0     5737.647
+             3     0     5736.165
+             4     0     5736.159
+             5     0     5736.159
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.595      0.2134     -16.84    < 0.001
+ 3 SEX_L_1..................         0.4250     0.07454      5.701    < 0.001
+ 5 exct_2...................         0.4549      0.1979      2.299     0.0215
+ 6 exct_3...................         0.3585      0.2694      1.331      0.183
+ 8 UR_RUR_1.................         0.2170     0.07993      2.715    0.00663
+10 obl_86n_2................         0.1300      0.1196      1.087      0.277
+11 obl_86n_3................        -0.1705      0.1706    -0.9996      0.318
+12 age21....................        0.09082     0.01723      5.272    < 0.001
+
+Linear term 1
+13 dgy......................         0.2917     Aliased
+
+Log-linear term 1
+14 exct_1...................          1.307      0.3517      3.716    < 0.001
+15 exct_2...................        -0.7644      0.9171    -0.8334      0.405
+16 exct_3...................         -1.052       1.195    -0.8811      0.378
+
+            Records used        11169
+
+                Deviance     5736.159
+                     AIC     5758.159
+            Pearson Chi2      11049.9      Degrees of freedom   11158
+
+
+
+lrt@
+
+! effect modification by age at screen 
+
+             LR statistic       12.37      Degrees of freedom      2
+                  P value     0.00206
+
+nomodel @
+logl 0 sex_l agect ex8 ur_rur obl_86n  @ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6516.910
+             2     0     5827.175
+             3     0     5762.837
+             4     0     5761.045
+             5     0     5761.042
+             6     0     5761.042
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.509      0.1893     -18.54    < 0.001
+ 3 SEX_L_1..................         0.4296     0.07439      5.775    < 0.001
+ 5 agect_2..................         0.3449      0.1459      2.364     0.0181
+ 6 agect_3..................         0.5304       0.237      2.238     0.0252
+ 8 UR_RUR_1.................         0.2147     0.07984       2.69    0.00715
+10 obl_86n_2................         0.1627       0.119      1.367      0.171
+11 obl_86n_3................        -0.1123      0.1696    -0.6623      > 0.5
+12 ex8......................        0.04962     0.01807      2.746    0.00603
+
+Linear term 1
+13 dgy......................         0.2526     0.09208      2.744    0.00608
+
+            Records used        11169
+
+                Deviance     5761.042
+                     AIC     5779.042
+            Pearson Chi2     11064.94      Degrees of freedom   11160
+
+
+
+null@
+logl 1 agect @  
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     5761.042
+             1     1     5755.579
+             2     0     5751.050
+             3     0     5749.279
+             4     0     5749.267
+             5     0     5749.267
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.838      0.2298      -16.7    < 0.001
+ 3 SEX_L_1..................         0.4193     0.07449      5.629    < 0.001
+ 5 agect_2..................         0.7480      0.2062      3.627    < 0.001
+ 6 agect_3..................         0.8943      0.2773      3.225    0.00126
+ 8 UR_RUR_1.................         0.2148     0.07978      2.692    0.00711
+10 obl_86n_2................         0.1645      0.1192       1.38      0.168
+11 obl_86n_3................        -0.1167        0.17    -0.6865      0.492
+12 ex8......................        0.05378     0.01812      2.968      0.003
+
+Linear term 1
+13 dgy......................         0.2526     Aliased
+
+Log-linear term 1
+14 agect_1..................          1.387      0.3751      3.697    < 0.001
+15 agect_2..................         -1.185       1.484    -0.7983      0.425
+16 agect_3..................        -0.8693       1.111    -0.7827      0.434
+
+            Records used        11169
+
+                Deviance     5749.267
+                     AIC     5771.267
+            Pearson Chi2     11123.23      Degrees of freedom   11158
+
+
+
+lrt@
+
+
+! effect modification by oblast in 1986 
+
+             LR statistic       11.77      Degrees of freedom      2
+                  P value     0.00277
+
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n @ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6509.795
+             2     0     5813.135
+             3     0     5746.884
+             4     0     5745.205
+             5     0     5745.203
+             6     0     5745.203
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.278      0.1389      -23.6    < 0.001
+ 3 SEX_L_1..................         0.4412     0.07445      5.926    < 0.001
+ 5 UR_RUR_1.................         0.2093     0.07997      2.617    0.00888
+ 7 obl_86n_2................         0.1250      0.1193      1.048      0.295
+ 8 obl_86n_3................        -0.1910      0.1705      -1.12      0.263
+ 9 age21....................         0.1556      0.0338      4.603    < 0.001
+10 ex8......................       -0.07576     0.03547     -2.136     0.0327
+
+Linear term 1
+11 dgy......................         0.3153      0.1017      3.099    0.00194
+
+            Records used        11169
+
+                Deviance     5745.203
+                     AIC     5761.203
+            Pearson Chi2     10987.32      Degrees of freedom   11161
+
+
+
+null@
+logl 1 obl_86n @  
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5745.203
+             1     0     5744.998
+             2     0     5743.192
+             3     0     5743.135
+             4     0     5743.062
+             5     0     5743.062
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.258      0.1375     -23.69    < 0.001
+ 3 SEX_L_1..................         0.4409     0.07444      5.924    < 0.001
+ 5 UR_RUR_1.................         0.2132     0.08005      2.664    0.00772
+ 7 obl_86n_2................         0.1037      0.1222     0.8491      0.396
+ 8 obl_86n_3................        -0.3503      0.2213     -1.583      0.113
+ 9 age21....................         0.1558     0.03377      4.613    < 0.001
+10 ex8......................       -0.07577     0.03544     -2.138     0.0325
+
+Linear term 1
+11 dgy......................         0.3153     Aliased
+
+Log-linear term 1
+12 obl_86n_1................     -2.801e+05           0          0      > 0.5
+13 obl_86n_2................       -0.01045      0.3347   -0.03123      > 0.5
+14 obl_86n_3................          1.111      0.7585      1.464      0.143
+
+            Records used        11169
+
+                Deviance     5743.062
+                     AIC     5761.062
+            Pearson Chi2     10996.49      Degrees of freedom   11160
+
+
+
+lrt@
+
+! effect modification by urbanicity at screen 
+
+             LR statistic       2.142      Degrees of freedom      1
+                  P value       0.143
+
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n @ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6509.795
+             2     0     5813.135
+             3     0     5746.884
+             4     0     5745.205
+             5     0     5745.203
+             6     0     5745.203
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.278      0.1389      -23.6    < 0.001
+ 3 SEX_L_1..................         0.4412     0.07445      5.926    < 0.001
+ 5 UR_RUR_1.................         0.2093     0.07997      2.617    0.00888
+ 7 obl_86n_2................         0.1250      0.1193      1.048      0.295
+ 8 obl_86n_3................        -0.1910      0.1705      -1.12      0.263
+ 9 age21....................         0.1556      0.0338      4.603    < 0.001
+10 ex8......................       -0.07576     0.03547     -2.136     0.0327
+
+Linear term 1
+11 dgy......................         0.3153      0.1017      3.099    0.00194
+
+            Records used        11169
+
+                Deviance     5745.203
+                     AIC     5761.203
+            Pearson Chi2     10987.32      Degrees of freedom   11161
+
+
+
+null@
+logl 1 ur_rur @  
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5745.203
+             1     0     5744.396
+             2     0     5744.376
+             3     0     5744.376
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.352      0.1621     -20.68    < 0.001
+ 3 SEX_L_1..................         0.4416     0.07446      5.931    < 0.001
+ 5 UR_RUR_1.................         0.2901      0.1205      2.407     0.0161
+ 7 obl_86n_2................         0.1480      0.1215      1.218      0.223
+ 8 obl_86n_3................        -0.1667      0.1723    -0.9671      0.333
+ 9 age21....................         0.1548     0.03381      4.578    < 0.001
+10 ex8......................       -0.07462     0.03548     -2.103     0.0354
+
+Linear term 1
+11 dgy......................         0.3153     Aliased
+
+Log-linear term 1
+12 UR_RUR_0.................         0.2724      0.3917     0.6953      0.487
+13 UR_RUR_1.................        -0.2991      0.5382    -0.5557      > 0.5
+
+            Records used        11169
+
+                Deviance     5744.376
+                     AIC     5762.376
+            Pearson Chi2     10983.36      Degrees of freedom   11160
+
+
+
+lrt@
+
+! effect modification by iodine concentration
+
+             LR statistic      0.8269      Degrees of freedom      1
+                  P value       0.363
+
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n iodct @ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6506.867
+             2     0     5807.319
+             3     0     5740.079
+             4     0     5738.351
+             5     0     5738.349
+             6     0     5738.349
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.037      0.1676     -18.12    < 0.001
+ 3 SEX_L_1..................         0.4476     0.07452      6.007    < 0.001
+ 5 UR_RUR_1.................         0.2344      0.0808      2.901    0.00372
+ 7 obl_86n_2................         0.1122      0.1194     0.9397      0.347
+ 8 obl_86n_3................        -0.2307      0.1714     -1.345      0.178
+10 iodct_2..................        -0.2757       0.112     -2.461     0.0138
+11 iodct_3..................        -0.6135      0.3816     -1.608      0.108
+12 age21....................         0.1546     0.03387      4.564    < 0.001
+13 ex8......................       -0.07421     0.03556     -2.087     0.0369
+
+Linear term 1
+14 dgy......................         0.3159      0.1017      3.105    0.00191
+
+            Records used        11169
+
+                Deviance     5738.349
+                     AIC     5758.349
+            Pearson Chi2     10984.35      Degrees of freedom   11159
+
+
+
+null@
+logl 1 iodct @  
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5738.349
+             1     0     5737.385
+             2     0     5736.006
+             3     0     5735.988
+             4     0     5735.988
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.203       0.212      -15.1    < 0.001
+ 3 SEX_L_1..................         0.4478     0.07454      6.008    < 0.001
+ 5 UR_RUR_1.................         0.2342     0.08095      2.893    0.00381
+ 7 obl_86n_2................         0.1259      0.1195      1.053      0.292
+ 8 obl_86n_3................        -0.2162      0.1716      -1.26      0.208
+10 iodct_2..................       -0.09651      0.1746    -0.5527      > 0.5
+11 iodct_3..................        -0.4885      0.5531    -0.8832      0.377
+12 age21....................         0.1538     0.03389      4.538    < 0.001
+13 ex8......................       -0.07323     0.03557     -2.059     0.0395
+
+Linear term 1
+14 dgy......................         0.3159     Aliased
+
+Log-linear term 1
+15 iodct_1..................         0.8045      0.5161      1.559      0.119
+16 iodct_2..................        -0.2283      0.4013    -0.5689      > 0.5
+17 iodct_3..................         0.2517       2.855    0.08818      > 0.5
+
+            Records used        11169
+
+                Deviance     5735.988
+                     AIC     5759.988
+            Pearson Chi2     10991.28      Degrees of freedom   11157
+
+
+
+lrt@
+
+
+! effect modification by thyroid enlargement
+
+             LR statistic       2.361      Degrees of freedom      2
+                  P value       0.307
+
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n   tvlarge@ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6466.707
+             2     0     5743.795
+             3     0     5672.753
+             4     0     5670.915
+             5     0     5670.913
+             6     0     5670.913
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.365      0.1402     -23.99    < 0.001
+ 3 SEX_L_1..................         0.3831     0.07517      5.096    < 0.001
+ 5 UR_RUR_1.................         0.2461     0.08054      3.056    0.00224
+ 7 obl_86n_2................         0.1531      0.1199      1.277      0.202
+ 8 obl_86n_3................        -0.2463      0.1718     -1.434      0.152
+10 tvlarge_1................          1.032      0.1112      9.282    < 0.001
+11 age21....................         0.1564     0.03391      4.611    < 0.001
+12 ex8......................       -0.08554      0.0356     -2.403     0.0163
+
+Linear term 1
+13 dgy......................         0.3048      0.1011      3.015    0.00257
+
+            Records used        11169
+
+                Deviance     5670.913
+                     AIC     5688.913
+            Pearson Chi2     10967.68      Degrees of freedom   11160
+
+
+
+null@
+logl 1 tvlarge @  
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5670.913
+             1     0     5670.496
+             2     0     5670.459
+             3     0     5670.459
+             4     0     5670.459
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.374      0.1412      -23.9    < 0.001
+ 3 SEX_L_1..................         0.3833     0.07517      5.098    < 0.001
+ 5 UR_RUR_1.................         0.2466     0.08052      3.063    0.00219
+ 7 obl_86n_2................         0.1548        0.12      1.291      0.197
+ 8 obl_86n_3................        -0.2501       0.172     -1.454      0.146
+10 tvlarge_1................          1.105      0.1492      7.406    < 0.001
+11 age21....................         0.1561     0.03391      4.603    < 0.001
+12 ex8......................       -0.08504      0.0356     -2.389     0.0169
+
+Linear term 1
+13 dgy......................         0.3048     Aliased
+
+Log-linear term 1
+14 tvlarge_0................        0.06432      0.3333      0.193      > 0.5
+15 tvlarge_1................        -0.7786       1.619    -0.4809      > 0.5
+
+            Records used        11169
+
+                Deviance     5670.459
+                     AIC     5690.459
+            Pearson Chi2     10968.56      Degrees of freedom   11159
+
+
+
+lrt@
+
+! effect modification by goiter
+
+             LR statistic      0.4545      Degrees of freedom      1
+                  P value      > 0.50
+
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n goiter_df_pal@ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6416.366
+             2     0     5635.783
+             3     0     5541.366
+             4     0     5538.027
+             5     0     5538.021
+             6     0     5538.021
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.576      0.1437     -24.88    < 0.001
+ 3 SEX_L_1..................         0.3189     0.07594        4.2    < 0.001
+ 5 UR_RUR_1.................         0.1991     0.08092       2.46     0.0139
+ 7 obl_86n_2................         0.1263      0.1207      1.046      0.296
+ 8 obl_86n_3................        -0.2317      0.1726     -1.342       0.18
+10 goiter_df_pal_1..........          1.313     0.08748         15    < 0.001
+11 goiter_df_pal_2..........        -0.6599       1.029    -0.6412      > 0.5
+12 age21....................         0.3157     0.03624       8.71    < 0.001
+13 ex8......................        -0.2350      0.0378     -6.217    < 0.001
+
+Linear term 1
+14 dgy......................         0.2984      0.1009      2.959    0.00309
+
+            Records used        11169
+
+                Deviance     5538.021
+                     AIC     5558.021
+            Pearson Chi2     11089.78      Degrees of freedom   11159
+
+
+
+null@
+logl 1 goiter_df_pal @  
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5538.021
+             1     2     5537.695
+             2     1     5537.219
+             3     0     5535.546
+             4     0     5535.375
+             5     0     5535.235
+             6     0     5535.233
+             7     0     5535.233
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.552      0.1451     -24.48    < 0.001
+ 3 SEX_L_1..................         0.3196     0.07593      4.209    < 0.001
+ 5 UR_RUR_1.................         0.1980     0.08096      2.446     0.0145
+ 7 obl_86n_2................         0.1236      0.1206      1.025      0.305
+ 8 obl_86n_3................        -0.2343      0.1725     -1.359      0.174
+10 goiter_df_pal_1..........          1.229      0.1205       10.2    < 0.001
+11 goiter_df_pal_2..........         -17.94     Aliased
+12 age21....................         0.3184     0.03642      8.743    < 0.001
+13 ex8......................        -0.2375     0.03795     -6.257    < 0.001
+
+Linear term 1
+14 dgy......................         0.2984     Aliased
+
+Log-linear term 1
+15 goiter_df_pal_0..........        -0.2349      0.4673    -0.5027      > 0.5
+16 goiter_df_pal_1..........         0.4067      0.4388      0.927      0.354
+17 goiter_df_pal_2..........          19.34       1.044      18.52    < 0.001
+
+            Records used        11169
+
+                Deviance     5535.233
+                     AIC     5557.233
+            Pearson Chi2     11106.49      Degrees of freedom   11158
+
+
+
+lrt@
+
+! effect modification by family hx of thyroid disease
+
+             LR statistic       2.788      Degrees of freedom      1
+                  P value      0.0950
+
+nomodel @
+logl 0 sex_l age21 ex8 ur_rur obl_86n  any_fhf1@ 
+line 1 dgy @ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15483.522
+             1     0     6498.974
+             2     0     5792.558
+             3     0     5723.400
+             4     0     5721.600
+             5     0     5721.598
+             6     0     5721.598
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.306      0.1391     -23.77    < 0.001
+ 3 SEX_L_1..................         0.4220     0.07467      5.651    < 0.001
+ 5 UR_RUR_1.................         0.1917     0.08017      2.391     0.0168
+ 7 obl_86n_2................         0.1050      0.1196     0.8778       0.38
+ 8 obl_86n_3................        -0.1781      0.1707     -1.043      0.297
+10 ANY_FHF1_1...............         0.5496      0.1112      4.941    < 0.001
+11 ANY_FHF1_2...............         0.3718      0.2448      1.518      0.129
+12 age21....................         0.1522     0.03369      4.518    < 0.001
+13 ex8......................       -0.07058     0.03535     -1.997     0.0459
+
+Linear term 1
+14 dgy......................         0.3133      0.1019      3.075     0.0021
+
+            Records used        11169
+
+                Deviance     5721.598
+                     AIC     5741.598
+            Pearson Chi2     11010.93      Degrees of freedom   11159
+
+
+
+null@
+logl 1 any_fhf1 @  
+fit @ 
+          Iter  Step      Deviance
+
+             0     0     5721.598
+             1     0     5720.314
+             2     0     5719.403
+             3     0     5719.392
+             4     0     5719.392
+             5     0     5719.392
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using dgy<4
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.289      0.1396     -23.57    < 0.001
+ 3 SEX_L_1..................         0.4239     0.07468      5.676    < 0.001
+ 5 UR_RUR_1.................         0.1917     0.08016      2.392     0.0168
+ 7 obl_86n_2................         0.1019      0.1197     0.8514      0.395
+ 8 obl_86n_3................        -0.1803      0.1707     -1.056      0.291
+10 ANY_FHF1_1...............         0.3738      0.1728      2.163     0.0305
+11 ANY_FHF1_2...............         0.4803      0.3523      1.363      0.173
+12 age21....................         0.1518      0.0337      4.504    < 0.001
+13 ex8......................       -0.06969     0.03537      -1.97     0.0488
+
+Linear term 1
+14 dgy......................         0.3133     Aliased
+
+Log-linear term 1
+15 ANY_FHF1_0...............        -0.1376      0.3788    -0.3632      > 0.5
+16 ANY_FHF1_1...............         0.9160      0.5326       1.72     0.0855
+17 ANY_FHF1_2...............         -1.159       4.099    -0.2828      > 0.5
+
+            Records used        11169
+
+                Deviance     5719.392
+                     AIC     5743.392
+            Pearson Chi2     11016.36      Degrees of freedom   11157
+
+
+
+
+ *** WARNING: Parameter ANY_FHF1_2 changed by 1.8% MLE may be infinite or may not exist
+
+lrt@
+
+
+             LR statistic       2.206      Degrees of freedom      2
+                  P value       0.332
+
