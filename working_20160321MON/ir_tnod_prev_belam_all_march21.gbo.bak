@@ -18,7 +18,7 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 
 skip 1 @
 
-input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -169,7 +169,7 @@ fit@ null@
 logl 0 +obl_mn  @ fit@ lrt@
 logl 0 -obl_mn +obl_86n  @ fit@ lrt@
 
-!Final background: sex_l lage21 ex8 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ex8 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex8 lage21 and shape of dose response
@@ -304,7 +304,7 @@ bounds 16@
 
 ! effect modification by age at screen 
 nomodel @
-logl 0 sex_l agect ex8 ur_rur obl_mn @ 
+logl 0 sex_l lagect ex8 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 agect @  
@@ -326,7 +326,7 @@ logl 1 obl_86n @
 fit @ lrt@
 para 11=1@
 fit @ 
-!bounds 12@ 
+bounds 12@ 
 bounds 13@ 
 bounds 14@
 
