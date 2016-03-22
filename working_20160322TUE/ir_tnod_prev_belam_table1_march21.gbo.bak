@@ -18,7 +18,7 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 
 skip 1 @
 
-input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -111,7 +111,7 @@ cases thnod_prev @
 
 logl 0 lage21 SEX_L @ fit@ bounds 3@
 logl 0 lage21 exct  @ fit@ bounds 3@ bounds 4@
-logl 0 lage21 agect @ fit@ bounds 3@ bounds 4@
+logl 0 lagect @ fit@ bounds 3@ bounds 4@
 logl 0 lage21 obl_86n@ fit@ bounds 3@ bounds 4@
 logl 0 lage21 UR_RUR@ fit@ bounds 3@
 logl 0 lage21 iod3ct@ fit@ bounds 3@ bounds 4@ 
