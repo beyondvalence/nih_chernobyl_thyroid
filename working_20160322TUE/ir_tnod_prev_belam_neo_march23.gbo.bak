@@ -332,9 +332,9 @@ logl 1 obl_86n @
 fit @ lrt@
 para 11=1@
 fit @ 
-bounds 12@ 
+!bounds 12@ 
 bounds 13@ 
-!bounds 14@
+bounds 14@
 
 
 
