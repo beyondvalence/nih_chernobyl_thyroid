@@ -135,13 +135,13 @@ logl 0 -obl_mn +obl_86n  @ fit@ lrt@
 
 
 !Iodine
-select  (thcount>1 or thnod_prev==0) and ismiss(iodine)==0@
+select  (thcount==1 or thnod_prev==0) and ismiss(iodine)==0@
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur  @
 line 1 dgy@
 fit@ null@
 logl 0 +iodine  @ fit@ lrt@
-select  (thcount>1 or thnod_prev==0)@
+select  (thcount==1 or thnod_prev==0)@
 
 !Thyroid volume enlargement
 nomodel @
@@ -180,7 +180,7 @@ logl 0 -obl_mn +obl_86n  @ fit@ lrt@
 
 !Interaction by ex5 and shape of dose response
 
-!Basic linear dose model 
+!Basic linear dose model **** Best model
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
@@ -189,7 +189,7 @@ logl 1 ex5 @
 fit@ null@
 
 
-!linear exponential dose-response **** Best model
+!linear exponential dose-response 
 
 logl 1 +dgy@ 
 fit@ lrt@ 
@@ -240,7 +240,7 @@ fit@ lrt@
 !Figure 3 dose response <4 Gy
 ! Note that age at exposure recentered at 2
 
-select  (thcount>1 or thnod_prev==0) and dgy<4@
+select  (thcount==1 or thnod_prev==0) and dgy<4@
 
 !Confirm linear dose-response <4 Gy
 !Basic linear dose model 
@@ -375,7 +375,7 @@ fit @ lrt@
 para 13=1@
 fit @ 
 bounds 14@ 
-bounds 15@ 
+!bounds 15@ 
 
 
 ! effect modification by goiter
