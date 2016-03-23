@@ -1,0 +1,407 @@
+! Model building for benign nodules
+
+new @
+
+names 
+IDN	
+byear AGE_EXM	AGE_EXP	YEAR_EXM 
+SEX_L	
+OBL_M	OBL_86	UR_RUR	ur_rur86
+thnod_prev	max_size nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+DOSE_GYAV_S		
+IODINE	tvolume TSH	TG	atg 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+@
+
+skip 1 @
+
+input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+
+tran dgy=dose_gyav_s;
+     dgysq=dgy*dgy;
+     ex2=(age_exp-2);
+     ex4=(age_exp-4);
+     ex5=(age_exp-5);
+     ex8=(age_exp-8);
+     ex8sq=ex8*ex8;
+     age21=(age_exm-21);
+     age21sq=age21*age21;
+     lage21 = log(age_exm/21) ;
+     lage21sq = lage21^2 ;
+     tvol13=(tvolume-13);
+     tvol13sq=tvol13*tvol13;
+     yob1983=(byear-1983);
+
+     if any_fhf1==-1 then any_fhf1=2 !2 recoded to missing
+     endif; 
+
+     if smoke_f==-1 then smoke_f=2
+     endif;
+     
+     if ismiss(goiter_df_pal)==1 then goiter_df_pal=2
+     endif;
+
+
+     if obl_m==1 then obl_mn=2 !Gomel
+     elif obl_m==2 or obl_m==4 then obl_mn=1 !Minsk
+     else obl_mn=3 !Mogilev and others
+     endif;
+
+     if obl_86==1 then obl_86n=2 !Gomel
+     elif obl_86==2 or obl_86==4 then obl_86n=1 !Minsk
+     else obl_86n=3 !Mogilev and others
+     endif;
+
+     if ur_rur86==1 then ur_rur86n=1 !Rural
+     elif ur_rur86==2 or ur_rur86==3 or ur_rur86==4 then ur_rur86n=2 !Urban
+     endif;
+
+     if tvolume>=18 and sex_l==1 then tvlarge=1 !Thyroid enlargement for women
+     elif tvolume>=25 and sex_l==0 then tvlarge=1  !Thyroid enlargement for men
+     else tvlarge=0 !Normal thyroid
+     endif;
+
+     iod100=(iodine-100);
+     iod60=(iodine-60);
+     iodinen=iodine;
+     if ismiss(iodine)==1 then iodinen=9999
+     endif; 
+
+
+@
+ 
+levels   
+SEX_L	 
+OBL_M	obl_mn OBL_86 obl_86n	UR_RUR	ur_rur86 ur_rur86n
+thnod_prev nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+tvlarge 
+@
+
+categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+categ age_exm as agect </ 18/ 25/ > @
+categ age_exp as exct </2/5/ > @ 
+categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+categ tvolume as tvct </ 8/ 10/ 14/ > @
+categ iodinen as iodct </20/9998> @
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+
+tran 
+if        dct7==1 then dct7num=1
+     elif dct7==2 then dct7num=2
+     elif dct7==3 then dct7num=3
+     elif dct7==4 then dct7num=4
+     elif dct7==5 then dct7num=5
+     elif dct7==6 then dct7num=6
+     else              dct7num=7
+     endif;
+
+@
+
+! Table 3 Cases
+cases thnod_prev @
+freq nod_sz thnod_prev @
+
+select (nod_neo==0 or thnod_prev==0)@
+
+freq nod_sz thnod_prev @
+
+
+! Background
+! A priori: sex, attained age, log age at exposure 
+! To examine: UR_RUR, oblast, iodine,  tvlarge, goiter_df_pal,any_fhf1, vitam_f
+
+!Urban rural
+nomodel @
+logl 0 sex_l lage21  ex5 @
+line 1 dgy@
+fit@ null@
+logl 0 +UR_RUR  @ fit@ lrt@
+logl 0 -UR_RUR +ur_rur86n  @ fit@ lrt@
+
+!Oblast
+nomodel @
+logl 0 sex_l lage21  ex5 UR_RUR@
+line 1 dgy@
+fit@ null@
+logl 0 +obl_mn  @ fit@ lrt@
+logl 0 -obl_mn +obl_86n  @ fit@ lrt@
+
+
+!Iodine
+select  (nod_neo==0 or thnod_prev==0) and ismiss(iodine)==0@
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur  @
+line 1 dgy@
+fit@ null@
+logl 0 +iodine  @ fit@ lrt@
+select  (nod_neo==0 or thnod_prev==0)@
+
+!Thyroid volume enlargement
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur@
+line 1 dgy@
+fit@ null@
+logl 0 +tvlarge @ fit@ lrt@
+
+
+!Presence of diffuse goiter as diagnosed at palpation (at 1st screening)
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur tvlarge@
+line 1 dgy@
+fit@ null@
+logl 0 +goiter_df_pal @ fit@ lrt@
+
+
+!Family history of any thyroid disease
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur tvlarge goiter_df_pal@
+line 1 dgy@
+fit@ null@
+logl 0 +any_fhf1 @ fit@ lrt@
+
+
+!Oblast again
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur tvlarge goiter_df_pal any_fhf1@
+line 1 dgy@
+fit@ null@
+logl 0 +obl_mn  @ fit@ lrt@
+logl 0 -obl_mn +obl_86n  @ fit@ lrt@
+
+!Final background: sex_l lage21  ex8 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
+
+
+!Interaction by ex5 and shape of dose response
+
+!Basic linear dose model 
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 ex5 @
+fit@ null@
+
+
+!linear exponential dose-response **** Best model
+
+logl 1 +dgy@ 
+fit@ lrt@ 
+
+!linear quadratic dose-response 
+
+logl 1 - dgy @
+line 1 +dgysq@
+fit@  lrt@
+
+
+! Final model for Figures 1, 2 
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 dgy ex5@
+fit@ 
+bounds 19@ !Figure 1 Dose reasponse plot at age 5
+bounds 20@ !Figure 1 Dose reasponse plot at age 5
+bounds 21@ !Figure 2 Age at exposure plot
+
+!Table 2 categorical dose response ORs
+!remember to add 1 to estimate and lower and upper cis
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1  @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 19=0@
+fit@
+bounds 20@ 
+bounds 21@ 
+bounds 22@  
+bounds 23@
+bounds 24@
+bounds 25@
+
+!Table 2 categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+
+!Figure 3 dose response <4 Gy
+! Note that age at exposure recentered at 2
+
+select  (nod_neo==0 or thnod_prev==0) and dgy<4@
+
+!Confirm linear dose-response <4 Gy
+!Basic linear dose model 
+nomodel@
+logl 0 sex_l lage21  ex2 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1  @
+line 1 dgy@
+logl 1 ex2 @
+fit@ null@
+
+!linear quadratic dose-response 
+line 1 +dgysq @ 
+fit @ lrt @
+
+!linear exponential dose-response
+line 1 -dgysq@
+logl 1 +dgy @
+fit@  lrt@
+
+!Final model Figure 3 <4 Gy
+nomodel@
+logl 0 sex_l lage21  ex2 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 ex2 @
+fit@
+bounds 19@
+
+!Effect modification  ORs for <4Gy
+
+freq thnod_prev @
+freq sex_l thnod_prev @
+freq exct thnod_prev @
+freq agect thnod_prev @
+freq obl_mn thnod_prev @
+freq ur_rur thnod_prev @
+freq iodct thnod_prev @
+freq tvlarge thnod_prev @
+freq goiter_df_pal thnod_prev @
+freq any_fhf1  thnod_prev @
+
+! effect modification by sex 
+
+nomodel @
+logl 0 sex_l lage21 ex8 ur_rur obl_mn @ 
+line 1 dgy @ 
+fit@ null@
+logl 1 sex_l@  
+fit @ lrt@
+para 11=1@
+fit @ 
+bounds 12@ 
+bounds 13@
+
+
+! effect modification by age at accident  
+nomodel @
+logl 0 sex_l lage21 exct ur_rur obl_mn @ 
+line 1 dgy @ 
+fit@ null@
+logl 1 exct@  
+fit @ lrt@
+para 13=1@
+fit @ 
+bounds 14@ 
+bounds 15@ 
+bounds 16@
+
+
+! effect modification by age at screen 
+nomodel @
+logl 0 sex_l agect ex8 ur_rur obl_mn @ 
+line 1 dgy @ 
+fit@ null@
+logl 1 agect @  
+fit @ lrt@
+para 13=1@
+fit @ 
+bounds 14@ 
+bounds 15@ 
+bounds 16@
+
+
+
+! effect modification by oblast 1986 
+nomodel @
+logl 0 sex_l lage21 ex8 ur_rur obl_86n  @ 
+line 1 dgy @ 
+fit@ null@
+logl 1 obl_86n @  
+fit @ lrt@
+para 11=1@
+fit @ 
+bounds 12@ 
+bounds 13@ 
+!bounds 14@
+
+
+
+! effect modification by urbanicity at screen 
+nomodel @
+logl 0 sex_l lage21 ex8 ur_rur obl_mn @ 
+line 1 dgy @
+fit@ null@ 
+logl 1 ur_rur @  
+fit @ lrt@
+para 11=1@
+fit @ 
+bounds 12@ 
+bounds 13@ 
+
+
+! effect modification by iodine concentration
+nomodel @
+logl 0 sex_l lage21 ex8 ur_rur obl_mn iodct @ 
+line 1 dgy @ 
+fit@ null@
+logl 1 iodct @  
+fit @ lrt@
+para 14=1@
+fit @ 
+bounds 15@ 
+bounds 16@ 
+bounds 17@ 
+
+
+! effect modification by thyroid enlargement
+nomodel @
+logl 0 sex_l lage21 ex8 ur_rur obl_mn tvlarge @ 
+line 1 dgy @
+fit@ null@ 
+logl 1 tvlarge @  
+fit @ lrt@
+para 13=1@
+fit @ 
+bounds 14@ 
+bounds 15@ 
+
+
+! effect modification by goiter
+nomodel @
+logl 0 sex_l lage21 ex8 ur_rur obl_mn goiter_df_pal @ 
+line 1 dgy @
+fit@ null@ 
+logl 1 goiter_df_pal @  
+fit @ lrt@
+para 14=1@
+fit @ 
+bounds 15@ 
+bounds 16@ 
+bounds 17@ 
+
+
+! effect modification by family hx of thyroid disease
+nomodel @
+logl 0 sex_l lage21 ex8 ur_rur obl_mn any_fhf1 @ 
+line 1 dgy @ 
+fit@ null@
+logl 1 any_fhf1 @  
+fit @ lrt@
+para 14=1@
+fit @ 
+bounds 15@ 
+bounds 16@  
+bounds 17@ 
+
