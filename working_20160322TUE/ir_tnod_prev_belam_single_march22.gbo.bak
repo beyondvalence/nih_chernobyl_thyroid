@@ -334,7 +334,7 @@ para 11=1@
 fit @ 
 !bounds 12@ 
 bounds 13@ 
-bounds 14@
+!bounds 14@
 
 
 
@@ -403,5 +403,5 @@ para 14=1@
 fit @ 
 bounds 15@ 
 bounds 16@  
-bounds 17@ 
+!bounds 17@ 
 

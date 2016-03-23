@@ -135,13 +135,13 @@ logl 0 -obl_mn +obl_86n  @ fit@ lrt@
 
 
 !Iodine
-select  (thcount>1 or thnod_prev==0) and ismiss(iodine)==0@
+select  (thcount==1 or thnod_prev==0) and ismiss(iodine)==0@
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur  @
 line 1 dgy@
 fit@ null@
 logl 0 +iodine  @ fit@ lrt@
-select  (thcount>1 or thnod_prev==0)@
+select  (thcount==1 or thnod_prev==0)@
 
 !Thyroid volume enlargement
 nomodel @
