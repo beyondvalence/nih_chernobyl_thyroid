@@ -1,4 +1,4 @@
-! Model building for small nodules
+ ! Model building for small nodules
 
 new @
 
@@ -318,7 +318,7 @@ fit @ lrt@
 para 13=1@
 fit @ 
 bounds 14@ 
-!bounds 15@ 
+bounds 15@ 
 bounds 16@
 
 
@@ -332,7 +332,7 @@ logl 1 obl_86n @
 fit @ lrt@
 para 11=1@
 fit @ 
-!bounds 12@ 
+bounds 12@ 
 bounds 13@ 
 bounds 14@
 
@@ -362,7 +362,7 @@ para 14=1@
 fit @ 
 bounds 15@ 
 bounds 16@ 
-!bounds 17@ 
+bounds 17@ 
 
 
 ! effect modification by thyroid enlargement
