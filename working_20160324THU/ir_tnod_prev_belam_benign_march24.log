@@ -864,7 +864,7 @@ lrt@
 
 !Interaction by ex5 and shape of dose response
 
-!Basic linear dose model 
+!Basic linear dose model  **** Best model LIN
 
 
              LR statistic       4.847      Degrees of freedom      2
@@ -934,7 +934,7 @@ Log-linear term 1
 null@
 
 
-!linear exponential dose-response **** Best model LE
+!linear exponential dose-response 
 
 logl 1 +dgy@ 
 
