@@ -88,6 +88,7 @@ tvlarge
 categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
 categ age_exm as agect </ 18/ 25/ > @
 categ age_exp as exct </2/5/ > @ 
+categ age_exp as exct4 </1/2/5 > @ 
 categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
 categ tvolume as tvct </ 8/ 10/ 14/ > @
 categ iodinen as iodct </20/9998> @
@@ -191,6 +192,20 @@ logl 1 ex5@
 para 19=0@
 fit@ 
 
+! Points and CIs for Figure 2 single 
+
+nomodel@
+logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 exct4@
+para 22=1@
+fit@ 
+bounds 23@ 
+bounds 24@ 
+bounds 25@ 
+bounds 26@
+
+
 
 !Multiple
 
@@ -288,4 +303,20 @@ line 1 dct7@
 logl 1 ex5@
 para 19=0@
 fit@ 
+
+
+! Points and CIs for Figure 2 multiple 
+
+nomodel@
+logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 exct4@
+para 22=1@
+fit@ 
+bounds 23@ 
+bounds 24@ 
+bounds 25@ 
+bounds 26@
+
+
 

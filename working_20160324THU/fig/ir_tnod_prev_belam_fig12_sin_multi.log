@@ -3,7 +3,6 @@
 
 new @
 
-
 names 
 IDN	
 byear AGE_EXM	AGE_EXP	YEAR_EXM 
@@ -18,12 +17,10 @@ AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
 Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 @
 
-
 skip 1 @
 
-input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
-
-Input from E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv
+input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+Input from C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv
 
        11422 records read       11421 records used
                                     1 records rejected
@@ -84,7 +81,6 @@ tran dgy=dose_gyav_s;
 
 
 @
-
  
 levels   
 SEX_L	 
@@ -129,45 +125,35 @@ fnb has 3 levels from 1 to 3
 tvlarge has 2 levels from 0 to 1
 
 categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
-
 dobyrct has 5 levels from 1 to 5
 
 categ age_exm as agect </ 18/ 25/ > @
-
 agect has 3 levels from 1 to 3
 
 categ age_exp as exct </2/5/ > @ 
-
 exct has 3 levels from 1 to 3
 
 categ age_exp as exct4 </1/2/5 > @ 
-
 exct4 has 4 levels from 1 to 4
 
 categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
-
 yearexmct has 5 levels from 1 to 5
 
 categ tvolume as tvct </ 8/ 10/ 14/ > @
-
 tvct has 4 levels from 1 to 4
 
 categ iodinen as iodct </20/9998> @
-
 iodct has 3 levels from 1 to 3
 
 categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
-
 dct7 has 7 levels from 1 to 7
 
 
 @
 
-
 ! Single
 
 select (thcount==1 or thnod_prev==0)@
-
 11188 records to be used
 
 
@@ -175,7 +161,6 @@ select (thcount==1 or thnod_prev==0)@
 cases thnod_prev @
 
 freq  thnod_prev @
-
 
 Using (thcount==1 or thnod_prev==0)
 
@@ -194,15 +179,12 @@ Using (thcount==1 or thnod_prev==0)
 
 !Iodine
 select (thcount==1 or thnod_prev==0) and ismiss(iodine)==0@
-
 11043 records to be used
 
 
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n @
-
 line 1 dgy@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -295,7 +277,6 @@ lrt@
                   P value      > 0.50
 
 select (thcount==1 or thnod_prev==0)@ 
-
 11188 records to be used
 
 
@@ -303,9 +284,7 @@ select (thcount==1 or thnod_prev==0)@
 !Thyroid volume enlargement
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n@
-
 line 1 dgy@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -404,9 +383,7 @@ lrt@
 
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge@
-
 line 1 dgy@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -508,9 +485,7 @@ lrt@
 
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal@
-
 line 1 dgy@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -622,11 +597,8 @@ lrt@
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-
 line 1 dgy@
-
 logl 1 ex5 @
-
 fit@ 
           Iter  Step      Deviance
 
@@ -684,7 +656,6 @@ null@
 
 !sex interaction 
 logl 1 +sex_l @
-
 fit@ 
           Iter  Step      Deviance
 
@@ -742,7 +713,6 @@ lrt@
                   P value       0.302
 
 logl 1 -sex_l @
-
 fit@
           Iter  Step      Deviance
 
@@ -795,7 +765,6 @@ null@
 !linear exponential dose-response 
 
 logl 1 +dgy@ 
-
 fit@ 
           Iter  Step      Deviance
 
@@ -855,9 +824,7 @@ lrt@
                   P value      > 0.50
 
 logl 1 - dgy @
-
 line 1 +dgysq@
-
 fit@  
           Iter  Step      Deviance
 
@@ -921,13 +888,9 @@ lrt@
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-
 line 1 dgy@
-
 logl 1 ex5@
-
 fit@ 
-
           Iter  Step      Deviance
 
              0     0    15509.861
@@ -982,7 +945,6 @@ Log-linear term 1
 
 
 bounds 19@ !Figure 1 Dose reasponse plot at age 5
-
       Profile likelihood bounds for parameter 19 (dgy)
 
                   MLE     0.5411
@@ -992,7 +954,6 @@ bounds 19@ !Figure 1 Dose reasponse plot at age 5
 
 
 bounds 20@ !Figure 2 Age at exposure plot
-
       Profile likelihood bounds for parameter 20 (ex5)
 
                   MLE    -0.2605    exp(MLE)     0.7707
@@ -1008,15 +969,10 @@ bounds 20@ !Figure 2 Age at exposure plot
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-
 line 1 dct7@
-
 logl 1 ex5@
-
 para 19=0@
-
 fit@ 
-
           Iter  Step      Deviance
 
              0     0    15509.861
@@ -1081,15 +1037,10 @@ Log-linear term 1
 
 nomodel@
 logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-
 line 1 dgy@
-
 logl 1 exct4@
-
 para 22=1@
-
 fit@ 
-
           Iter  Step      Deviance
 
              0     0    20012.186
@@ -1152,21 +1103,19 @@ Log-linear term 1
 
 
 bounds 23@ 
-
       Profile likelihood bounds for parameter 23 (exct4_1)
 
                   MLE     0.5009    exp(MLE)       1.65
 
                97.5% lower bound      -1.775
                        exp(bound)     0.1695
-               97.5% upper bound not found last estimate      31.63 Deviance 17036.137
+               97.5% upper bound not found last estimate      29.14 Deviance 11278.372
 
 
- *** WARNING: Parameter exct4_3 changed by -103372795.-6% MLE may be infinite or may not exist
+ *** WARNING: Parameter exct4_3 changed by -210348173.0% MLE may be infinite or may not exist
 
 
 bounds 24@ 
-
       Profile likelihood bounds for parameter 24 (exct4_2)
 
                   MLE     0.8251    exp(MLE)      2.282
@@ -1178,7 +1127,6 @@ bounds 24@
 
 
 bounds 25@ 
-
       Profile likelihood bounds for parameter 25 (exct4_3)
 
                   MLE     -1.131    exp(MLE)     0.3227
@@ -1190,7 +1138,6 @@ bounds 25@
 
 
 bounds 26@
-
       Profile likelihood bounds for parameter 26 (exct4_4)
 
                   MLE     -1.912    exp(MLE)     0.1477
@@ -1207,7 +1154,6 @@ bounds 26@
 !Multiple
 
 select (thcount>1 or thnod_prev==0)@
-
 10773 records to be used
 
 
@@ -1215,7 +1161,6 @@ select (thcount>1 or thnod_prev==0)@
 cases thnod_prev @
 
 freq  thnod_prev @
-
 
 Using (thcount>1 or thnod_prev==0)
 
@@ -1234,15 +1179,12 @@ Using (thcount>1 or thnod_prev==0)
 
 !Iodine
 select (thcount>1 or thnod_prev==0) and ismiss(iodine)==0@
-
 10634 records to be used
 
 
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n   @
-
 line 1 dgy@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -1337,7 +1279,6 @@ lrt@
                   P value       0.355
 
 select (thcount>1 or thnod_prev==0)@ 
-
 10773 records to be used
 
 
@@ -1345,9 +1286,7 @@ select (thcount>1 or thnod_prev==0)@
 !Thyroid volume enlargement
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n @
-
 line 1 dgy@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -1448,9 +1387,7 @@ lrt@
 
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge @
-
 line 1 dgy@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -1562,9 +1499,7 @@ lrt@
 
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal@
-
 line 1 dgy@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -1688,11 +1623,8 @@ lrt@ !Does not change risk estimate
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-
 line 1 dgy@
-
 logl 1 ex5 @
-
 fit@ 
           Iter  Step      Deviance
 
@@ -1757,7 +1689,6 @@ Log-linear term 1
 null@
 
 logl 1 +sex_l@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -1821,7 +1752,6 @@ lrt@
                   P value       0.107
 
 logl 1-sex_l@
-
 fit@ 
           Iter  Step      Deviance
 
@@ -1879,7 +1809,6 @@ null@
 !linear exponential dose-response **** Best model
 
 logl 1 +dgy@ 
-
 fit@ 
           Iter  Step      Deviance
 
@@ -1943,9 +1872,7 @@ lrt@
                   P value      0.0303
 
 logl 1 - dgy @
-
 line 1 +dgysq@
-
 fit@  
           Iter  Step      Deviance
 
@@ -2013,13 +1940,9 @@ lrt@
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-
 line 1 dgy@
-
 logl 1 dgy ex5@
-
 fit@ 
-
           Iter  Step      Deviance
 
              0     0    14934.549
@@ -2083,7 +2006,6 @@ Log-linear term 1
 
 
 bounds 19@ !Figure 1 Dose reasponse plot at age 5
-
       Profile likelihood bounds for parameter 19 (dgy)
 
                   MLE     0.2173
@@ -2096,7 +2018,6 @@ bounds 19@ !Figure 1 Dose reasponse plot at age 5
 
 
 bounds 20@
-
       Profile likelihood bounds for parameter 20 (dgy)
 
                   MLE    0.08468    exp(MLE)      1.088
@@ -2111,7 +2032,6 @@ bounds 20@
 
 
 bounds 21@ !Figure 2 Age at exposure plot
-
       Profile likelihood bounds for parameter 21 (ex5)
 
                   MLE    -0.6398    exp(MLE)     0.5274
@@ -2131,15 +2051,10 @@ bounds 21@ !Figure 2 Age at exposure plot
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-
 line 1 dct7@
-
 logl 1 ex5@
-
 para 19=0@
-
 fit@ 
-
           Iter  Step      Deviance
 
              0     0    14934.549
@@ -2223,15 +2138,10 @@ Log-linear term 1
 
 nomodel@
 logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-
 line 1 dgy@
-
 logl 1 exct4@
-
 para 22=1@
-
 fit@ 
-
           Iter  Step      Deviance
 
              0     0    19584.351
@@ -2300,21 +2210,19 @@ Log-linear term 1
 
 
 bounds 23@ 
-
       Profile likelihood bounds for parameter 23 (exct4_1)
 
                   MLE      10.63    exp(MLE)  4.115e+04
 
                97.5% lower bound       9.591
                        exp(bound)  1.463e+04
-               97.5% upper bound not found last estimate      26.96 Deviance  15040.07
+               97.5% upper bound not found last estimate      21.63 Deviance  8616.751
 
 
- *** WARNING: Parameter goiter_df_pal_2 changed by 12.4% MLE may be infinite or may not exist
+ *** WARNING: Parameter goiter_df_pal_2 changed by 1.3% MLE may be infinite or may not exist
 
 
 bounds 24@ 
-
       Profile likelihood bounds for parameter 24 (exct4_2)
 
                   MLE    -0.1888    exp(MLE)     0.8279
@@ -2329,7 +2237,6 @@ bounds 24@
 
 
 bounds 25@ 
-
       Profile likelihood bounds for parameter 25 (exct4_3)
 
                   MLE      1.244    exp(MLE)      3.471
@@ -2344,7 +2251,6 @@ bounds 25@
 
 
 bounds 26@
-
       Profile likelihood bounds for parameter 26 (exct4_4)
 
                   MLE     -2.069    exp(MLE)     0.1263
