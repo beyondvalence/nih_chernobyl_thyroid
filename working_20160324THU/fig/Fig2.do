@@ -50,9 +50,9 @@ scalar agecat4hib=-1.194
 gen ctpoint=.
 replace ctpoint=1 if age_exp10==6|age_exp10==15|age_exp10==35|age_exp10==109
 
-gen exct4rad=   exp((agecat1b*agecat1+agecat2b*agecat2  +agecat3b*agecat3  +agecat4b*agecat4)  *ctpoint)+1
-gen exct4hirad= exp((agecat1hib*agecat1+agecat2hib*agecat2+agecat3hib*agecat3+agecat4hib*agecat4)*ctpoint)+1
-gen exct4lorad= exp((agecat1lob*agecat1+agecat2lob*agecat2+agecat3lob*agecat3+agecat4lob*agecat4)*ctpoint)+1
+gen exct4rad=   exp((agecat1b  *agecat1 + agecat2b  *agecat2 + agecat3b  *agecat3 + agecat4b  *agecat4) * ctpoint) + 1
+gen exct4hirad= exp((agecat1hib*agecat1 + agecat2hib*agecat2 + agecat3hib*agecat3 + agecat4hib*agecat4) * ctpoint) + 1
+gen exct4lorad= exp((agecat1lob*agecat1 + agecat2lob*agecat2 + agecat3lob*agecat3 + agecat4lob*agecat4) * ctpoint) + 1
 
 !Modelled effect modification
 
@@ -71,9 +71,7 @@ yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0(1)10) ///
 legend(off) ///
 xti("{bf}Age at time of accident")  ///
 note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast of }" "{stSerif: residence at time of accident, thyroid enlargement, goiter detected at screening, and }" "{stSerif: family history of thyroid disease.}", size(medsmall))  ///
-name(Fig1, replace) graphregion(fc(white)) 
-
-
+name(Fig1A, replace) graphregion(fc(white)) 
 
 
 
