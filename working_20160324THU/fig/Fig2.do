@@ -294,7 +294,9 @@ xti("{bf}Age at time of accident")  ///
 note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast of }" "{stSerif: residence at time of accident, thyroid enlargement, goiter detected at screening, and }" "{stSerif: family history of thyroid disease.}", size(medsmall))  ///
 name(Fig2D, replace) graphregion(fc(white))
 
+graph combine Fig2A Fig2B Fig2C Fig2D, cols(2) xcommon
 
+/******
 legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) legend(col(1) pos(1) ring (0) size (small) ) ///
 scatter allrad age_exp
 
@@ -314,3 +316,5 @@ twoway (line allrad age_exp, ///
 	 
 grc1leg Fig3A Fig3B, legendfrom(Fig3A) 	 
 !graph combine Fig3A Fig3B
+*******/
+
