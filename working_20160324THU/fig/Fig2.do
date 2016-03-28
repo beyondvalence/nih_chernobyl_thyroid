@@ -169,45 +169,45 @@ replace agecat2=1 if age_exp10==15
 replace agecat3=1 if age_exp10==35
 replace agecat4=1 if age_exp10==109
 
-scalar agecat1_ben_b=0.6219
-scalar agecat1_mal_b=2.19722 ///9.898
+scalar agecat1_sma_b=-0.3522
+scalar agecat1_lar_b=2.19722 ///8.743
 
-scalar agecat2_ben_b=0.1198
-scalar agecat2_mal_b=2.19722 ///80.36 
+scalar agecat2_sma_b=-0.01155
+scalar agecat2_lar_b=1.821
 
-scalar agecat3_ben_b=-0.7143
-scalar agecat3_mal_b=0.279
+scalar agecat3_sma_b=-0.9415
+scalar agecat3_lar_b=0.6838
 
-scalar agecat4_ben_b=-2.068
-scalar agecat4_mal_b=-1.018
+scalar agecat4_sma_b=-2.663
+scalar agecat4_lar_b=-1.026
 
 gen ctpoint=.
 replace ctpoint=1 if age_exp10==6|age_exp10==15|age_exp10==35|age_exp10==109
 
-gen exct4_ben_rad= exp((agecat1_ben_b*agecat1 + agecat2_ben_b*agecat2 + agecat3_ben_b*agecat3 + agecat4_ben_b*agecat4) * ctpoint) + 1
-gen exct4_mal_rad= exp((agecat1_mal_b*agecat1 + agecat2_mal_b*agecat2 + agecat3_mal_b*agecat3 + agecat4_mal_b*agecat4) * ctpoint) + 1
+gen exct4_sma_rad= exp((agecat1_sma_b*agecat1 + agecat2_sma_b*agecat2 + agecat3_sma_b*agecat3 + agecat4_sma_b*agecat4) * ctpoint) + 1
+gen exct4_lar_rad= exp((agecat1_lar_b*agecat1 + agecat2_lar_b*agecat2 + agecat3_lar_b*agecat3 + agecat4_lar_b*agecat4) * ctpoint) + 1
 
 !Modelled effect modification
 
-scalar dgy_ben_b=0.5108
-scalar ex5_ben_b=-0.2916
-gen linrad_ben= dgy_ben_b*dose1*exp(ex5_ben_b*(age_exp-5))+1
+scalar dgy_sma_b=0.5108
+scalar ex5_sma_b=-0.2916
+gen linrad_sma= dgy_sma_b*dose1*exp(ex5_sma_b*(age_exp-5))+1
 
-scalar dgy_mal_b=1.142
-scalar ex5_mal_b=-0.3676
-gen linrad_mal= dgy_mal_b*dose1*exp(ex5_mal_b*(age_exp-5))+1
+scalar dgy_lar_b=1.142
+scalar ex5_lar_b=-0.3676
+gen linrad_lar= dgy_lar_b*dose1*exp(ex5_lar_b*(age_exp-5))+1
 
-twoway	(scatter exct4_ben_rad age_exp) ///
-		(line linrad_ben  age_exp, ///
+twoway	(scatter exct4_sma_rad age_exp) ///
+		(line linrad_sma  age_exp, ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )) ///
-		(scatter exct4_mal_rad age_exp, mc(red)) ///
-		(line linrad_mal  age_exp, ///
+		(scatter exct4_lar_rad age_exp, mc(purple)) ///
+		(line linrad_lar age_exp, ///
 		 lpattern( solid ) ///
-		 lcol(red*0.75 ) ///
+		 lcol(purple*0.75 ) ///
 		 lw(medthick )), ///
-ti("{bf}Nodules by behavior ")  ///
+ti("{bf}Nodules by size ")  ///
 yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0(1)10) ///
 legend(off) ///
 xti("{bf}Age at time of accident")  ///
