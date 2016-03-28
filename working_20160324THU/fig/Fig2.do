@@ -215,6 +215,81 @@ note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanici
 name(Fig1C, replace) graphregion(fc(white))
 
 
+!!!!!!!!!! Nodules by singularity: single / multiple
+
+clear
+set obs 190
+gen age_exp10= _n-1
+gen age_exp=age_exp10/10
+scalar dose1=1
+
+
+! dgycat cutoffs:
+! 1:0-1.9, 2:2-4.9, 3: 5-9.9, 4: 10-18;
+
+*gen dgycat1=0
+gen agecat1=0
+gen agecat2=0
+gen agecat3=0
+gen agecat4=0
+
+
+*Based on means
+replace agecat1=1 if age_exp10==6
+replace agecat2=1 if age_exp10==15
+replace agecat3=1 if age_exp10==35
+replace agecat4=1 if age_exp10==109
+
+scalar agecat1_sin_b=0.5009
+scalar agecat1_mul_b=2.19722 ///10.63
+
+scalar agecat2_sin_b=0.8251
+scalar agecat2_mul_b=-0.1888
+
+scalar agecat3_sin_b=-1.131
+scalar agecat3_mul_b=1.244
+
+scalar agecat4_sin_b=-1.912
+scalar agecat4_mul_b=-2.069
+
+gen ctpoint=.
+replace ctpoint=1 if age_exp10==6|age_exp10==15|age_exp10==35|age_exp10==109
+
+gen exct4_sin_rad= exp((agecat1_sin_b*agecat1 + agecat2_sin_b*agecat2 + agecat3_sin_b*agecat3 + agecat4_sin_b*agecat4) * ctpoint) + 1
+gen exct4_mul_rad= exp((agecat1_mul_b*agecat1 + agecat2_mul_b*agecat2 + agecat3_mul_b*agecat3 + agecat4_mul_b*agecat4) * ctpoint) + 1
+
+!Modelled effect modification
+
+scalar dgy_sin_b=0.5411
+scalar ex5_sin_b=-0.2605
+gen linrad_sin= dgy_sin_b*dose1*exp(ex5_sin_b*(age_exp-5))+1
+
+scalar dgy_mul_b=0.4869
+scalar ex5_mul_b=-0.5874
+gen linrad_mul= dgy_mul_b*dose1*exp(ex5_mul_b*(age_exp-5))+1
+
+scalar dgyLE_mul_b=0.2173
+scalar dgyLE_mul_LEb=0.08468
+scalar ex5LE_mul_b=-0.6398
+gen linErad_mul= dgy_mul_b*dose1*exp(ex5_mul_b*(age_exp-5))+1
+
+twoway	(scatter exct4_sin_rad age_exp) ///
+		(line linrad_sin age_exp, ///
+		 lpattern( solid ) ///
+		 lcol(black*0.75 ) ///
+		 lw(medthick )) ///
+		(scatter exct4_mul_rad age_exp, mc(emerald)) ///
+		(line linrad_mul age_exp, ///
+		 lpattern( solid ) ///
+		 lcol(emerald*0.75 ) ///
+		 lw(medthick )), ///
+ti("{bf}Nodules by size ")  ///
+yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0(1)10) ///
+legend(off) ///
+xti("{bf}Age at time of accident")  ///
+note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast of }" "{stSerif: residence at time of accident, thyroid enlargement, goiter detected at screening, and }" "{stSerif: family history of thyroid disease.}", size(medsmall))  ///
+name(Fig1D, replace) graphregion(fc(white))
+
 
 legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) legend(col(1) pos(1) ring (0) size (small) ) ///
 scatter allrad age_exp
