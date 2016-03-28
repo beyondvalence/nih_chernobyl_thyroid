@@ -71,13 +71,13 @@ twoway	(rcap dct7hirad dct7lorad dgy) ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )), ///
-ti("{bf}All nodules ")  ///
-yti("{bf}Odds ratio* ")  ///
-yla(0 (2) 10,ang(1)) ///
-xti("{bf} Thyroid dose (Gy)")  ///
-legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) ///
-legend(col(1) pos(10) ring (0) size (small) ) ///
-name(Fig1A, replace) graphregion(fc(white)) 
+			ti("{bf}All nodules ")  ///
+			yti("{bf}Odds ratio* ")  ///
+			yla(0 (2) 10,ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)")  ///
+			legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) ///
+			legend(col(1) pos(10) ring (0) size (small) ) ///
+			name(Fig1A, replace) graphregion(fc(white)) 
 
 !!!!!!! Nodules by behavior: non-neoplastic, neoplastic
 
@@ -148,13 +148,13 @@ twoway	(scatter dct7_ben_rad dgy, mc(black)) ///
 		 lpattern( solid ) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)), ///
-ti("{bf}Nodules by Behavior ")  ///
-yti("{bf}Odds ratio* ")  ///
-yla(0 (2) 10,ang(1)) ///
-xti("{bf} Thyroid dose (Gy)")  ///
-legend(region(lwidth(none)) order(2 "Benign" 4 "Malignant" )) ///
-legend(col(1) pos(10) ring (0) size (small) ) ///
-name(Fig1B, replace) graphregion(fc(white)) 
+			ti("{bf}Behavior ")  ///
+			yti("{bf}Odds ratio* ")  ///
+			yla(0 (2) 10,ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)")  ///
+			legend(region(lwidth(none)) order(2 "Benign" 4 "Malignant" )) ///
+			legend(col(1) pos(10) ring (0) size (small) ) ///
+			name(Fig1B, replace) graphregion(fc(white)) 
 
 !!!!!!! Nodules by size: small, large
 
@@ -225,13 +225,13 @@ twoway	(scatter dct7_sma_rad dgy, mc(black)) ///
 		 lpattern( solid ) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)), ///
-ti("{bf}Nodules by Size ")  ///
-yti("{bf}Odds ratio* ")  ///
-yla(0 (2) 16,ang(1)) ///
-xti("{bf} Thyroid dose (Gy)")  ///
-legend(region(lwidth(none)) order(2 "Small" 4 "Large" )) ///
-legend(col(1) pos(10) ring (0) size (small) ) ///
-name(Fig1C, replace) graphregion(fc(white)) 
+			ti("{bf}Size ")  ///
+			yti("{bf}Odds ratio* ")  ///
+			yla(0 (2) 16,ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)")  ///
+			legend(region(lwidth(none)) order(2 "Small" 4 "Large" )) ///
+			legend(col(1) pos(10) ring (0) size (small) ) ///
+			name(Fig1C, replace) graphregion(fc(white)) 
 
 !!!!!!! Nodules by singularity: single, multiple
 
@@ -296,7 +296,8 @@ gen linrad_mul= lin_dgy_mul_b*dgy+1
 scalar le_dgy_mul_b=0.2168
 scalar le_dgy_mul_exb=0.08473
 
-gen lerad_mul= le_dgy_mul_b*dgy*exp(le_dgy_mul_exb*dgy)+1
+gen lerad_mul= 1+le_dgy_mul_b*dgy*exp(le_dgy_mul_exb*dgy)
+*gen lerad_mul1= (le_dgy_mul_b*dgy+1)*exp(le_dgy_mul_exb*dgy)
 
 twoway	(scatter dct7_sin_rad dgy, mc(black)) ///
 		(line linrad_sin dgy, ///
@@ -312,17 +313,23 @@ twoway	(scatter dct7_sin_rad dgy, mc(black)) ///
 		 lpattern(dash) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)), ///
-ti("{bf}Nodules by Singularity ")  ///
-yti("{bf}Odds ratio* ")  ///
-yla(0 (2) 10,ang(1)) ///
-xti("{bf} Thyroid dose (Gy)")  ///
-legend(region(lwidth(none)) order(2 "Single" 4 "Multiple" 5 "Multiple, L-E")) ///
-legend(col(1) pos(10) ring (0) size (small) ) ///
-name(Fig1D, replace) graphregion(fc(white)) 
+			ti("{bf}Singularity ")  ///
+			yti("{bf}Odds ratio* ")  ///
+			yla(0 (2) 6, ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)")  ///
+			legend(region(lwidth(none)) order(2 "Single" 4 "Multiple" 5 "Multiple, L-E")) ///
+			legend(col(1) pos(10) ring (0) size (small) ) ///
+			name(Fig1D, replace) graphregion(fc(white)) 
 
-graph combine Fig1A Fig1B Fig1C Fig1D, cols(2) xcommon ///
-note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid , }" "{stSerif:  enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small))  ///
-
+graph combine Fig1A Fig1B Fig1C Fig1D, ///
+	cols(2) ///
+	xcommon ///
+	imargin(0 0 0 0) ///
+	title("Figure 1. Thyroid nodule risk by thyroid dose (Gy) by nodule type", size(medium)) ///
+	note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid , }" "{stSerif:  enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small))  ///
+	iscale(*0.75) ///
+	name(Fig1all, replace) ///
+	
 
 /***
 ! Example
