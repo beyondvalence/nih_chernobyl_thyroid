@@ -71,7 +71,7 @@ yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0(1)10) ///
 legend(off) ///
 xti("{bf}Age at time of accident")  ///
 note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast of }" "{stSerif: residence at time of accident, thyroid enlargement, goiter detected at screening, and }" "{stSerif: family history of thyroid disease.}", size(medsmall))  ///
-name(Fig1A, replace) graphregion(fc(white)) 
+name(Fig2A, replace) graphregion(fc(white)) 
 
 !!!!!!!!!! Nodules by behavior: benign / malignant
 
@@ -141,7 +141,7 @@ yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0(1)10) ///
 legend(off) ///
 xti("{bf}Age at time of accident")  ///
 note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast of }" "{stSerif: residence at time of accident, thyroid enlargement, goiter detected at screening, and }" "{stSerif: family history of thyroid disease.}", size(medsmall))  ///
-name(Fig1B, replace) graphregion(fc(white))
+name(Fig2B, replace) graphregion(fc(white))
 
 
 !!!!!!!!!! Nodules by size : small / large
@@ -212,7 +212,7 @@ yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0(1)10) ///
 legend(off) ///
 xti("{bf}Age at time of accident")  ///
 note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast of }" "{stSerif: residence at time of accident, thyroid enlargement, goiter detected at screening, and }" "{stSerif: family history of thyroid disease.}", size(medsmall))  ///
-name(Fig1C, replace) graphregion(fc(white))
+name(Fig2C, replace) graphregion(fc(white))
 
 
 !!!!!!!!!! Nodules by singularity: single / multiple
@@ -271,24 +271,28 @@ gen linrad_mul= dgy_mul_b*dose1*exp(ex5_mul_b*(age_exp-5))+1
 scalar dgyLE_mul_b=0.2173
 scalar dgyLE_mul_LEb=0.08468
 scalar ex5LE_mul_b=-0.6398
-gen linErad_mul= dgy_mul_b*dose1*exp(ex5_mul_b*(age_exp-5))+1
+gen linErad_mul= dgyLE_mul_b*dose1*exp(ex5LE_mul_b*(age_exp-5)+dgyLE_mul_LEb)+1
 
 twoway	(scatter exct4_sin_rad age_exp) ///
 		(line linrad_sin age_exp, ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )) ///
-		(scatter exct4_mul_rad age_exp, mc(emerald)) ///
+		(scatter exct4_mul_rad age_exp, mc(green)) ///
 		(line linrad_mul age_exp, ///
 		 lpattern( solid ) ///
+		 lcol(green*0.75 ) ///
+		 lw(medthick )) ///
+		(line linErad_mul age_exp, ///
+		 lpattern( dash ) ///
 		 lcol(emerald*0.75 ) ///
 		 lw(medthick )), ///
-ti("{bf}Nodules by size ")  ///
+ti("{bf}Nodules by singularity ")  ///
 yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0(1)10) ///
 legend(off) ///
 xti("{bf}Age at time of accident")  ///
 note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast of }" "{stSerif: residence at time of accident, thyroid enlargement, goiter detected at screening, and }" "{stSerif: family history of thyroid disease.}", size(medsmall))  ///
-name(Fig1D, replace) graphregion(fc(white))
+name(Fig2D, replace) graphregion(fc(white))
 
 
 legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) legend(col(1) pos(1) ring (0) size (small) ) ///
