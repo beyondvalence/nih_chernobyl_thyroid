@@ -71,7 +71,7 @@ twoway	(rcap dct7hirad dct7lorad dgy) ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )), ///
-			ti("{bf}All nodules ")  ///
+			ti("{bf}All nodules ", pos(11) ring(1) ) ///
 			yti("{bf}Odds ratio* ")  ///
 			yla(0 (2) 10,ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
@@ -148,7 +148,7 @@ twoway	(scatter dct7_ben_rad dgy, mc(black)) ///
 		 lpattern( solid ) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)), ///
-			ti("{bf}Behavior ")  ///
+			ti("{bf}Behavior ", pos(11) ring(1))  ///
 			yti("{bf}Odds ratio* ")  ///
 			yla(0 (2) 10,ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
@@ -225,7 +225,7 @@ twoway	(scatter dct7_sma_rad dgy, mc(black)) ///
 		 lpattern( solid ) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)), ///
-			ti("{bf}Size ")  ///
+			ti("{bf}Size ", pos(11) ring(1))  ///
 			yti("{bf}Odds ratio* ")  ///
 			yla(0 (2) 16,ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
@@ -297,7 +297,6 @@ scalar le_dgy_mul_b=0.2168
 scalar le_dgy_mul_exb=0.08473
 
 gen lerad_mul= 1+le_dgy_mul_b*dgy*exp(le_dgy_mul_exb*dgy)
-*gen lerad_mul1= (le_dgy_mul_b*dgy+1)*exp(le_dgy_mul_exb*dgy)
 
 twoway	(scatter dct7_sin_rad dgy, mc(black)) ///
 		(line linrad_sin dgy, ///
@@ -313,7 +312,7 @@ twoway	(scatter dct7_sin_rad dgy, mc(black)) ///
 		 lpattern(dash) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)), ///
-			ti("{bf}Singularity ")  ///
+			ti("{bf}Singularity ", pos(11) ring(1))  ///
 			yti("{bf}Odds ratio* ")  ///
 			yla(0 (2) 6, ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
