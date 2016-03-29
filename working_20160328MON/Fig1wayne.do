@@ -236,11 +236,13 @@ twoway	(scatter dct7_sma_rad dgy, mc(black)) ///
 !!!!!!! Nodules by singularity: single, multiple
 
 clear
-set obs 8001
+set obs 11001
 gen dose1000 = _n-1
 gen dgy=dose1000/1000
 
 ! dgycat cutoffs:
+! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4-38.9, 8:0/NIC;
+
 ! new test 20160329TUES to look for low point estimates to justify L-E curve
 ! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4-5.99, 8:6-38.9 9:0/NIC; 
 
@@ -279,7 +281,6 @@ scalar dgycat6_mul_b=2.268
 scalar dgycat7_sin_b=5.216
 scalar dgycat7_mul_b=4.43
 
-
 gen ctpoint=.
 replace ctpoint=1 if dose1000==117|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
 
@@ -299,6 +300,36 @@ scalar le_dgy_mul_exb=0.08473
 
 gen lerad_mul= 1+le_dgy_mul_b*dgy*exp(le_dgy_mul_exb*dgy)
 
+*new dcat8 to investgate multiple L-E curve
+gen dct8_2=0
+gen dct8_3=0
+gen dct8_4=0
+gen dct8_5=0
+gen dct8_6=0
+gen dct8_7=0
+gen dct8_8=0
+
+replace dct8_2=1 if dose1000==167
+replace dct8_3=1 if dose1000==363
+replace dct8_4=1 if dose1000==708
+replace dct8_5=1 if dose1000==1387
+replace dct8_6=1 if dose1000==2745
+replace dct8_7=1 if dose1000==4953
+replace dct8_8=1 if dose1000==10302
+
+scalar dct82_mul_b=0.98285
+scalar dct83_mul_b=1.03052
+scalar dct84_mul_b=1.2552
+scalar dct85_mul_b=1.8227
+scalar dct86_mul_b=1.9211
+scalar dct87_mul_b=1.4256
+scalar dct88_mul_b=5.002
+
+gen ctpoint8=.
+replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
+
+gen dct8_mul_rad= (dct82_mul_b*dct8_2+dct83_mul_b*dct8_3+dct84_mul_b*dct8_4+dct85_mul_b*dct8_5+dct86_mul_b*dct8_6+dct87_mul_b*dct8_7+dct88_mul_b*dct8_8)*ctpoint8
+
 twoway	(scatter dct7_sin_rad dgy, mc(black)) ///
 		(line linrad_sin dgy, ///
 		 lpattern( solid ) ///
@@ -312,12 +343,13 @@ twoway	(scatter dct7_sin_rad dgy, mc(black)) ///
 		(line lerad_mul dgy, ///
 		 lpattern(dash) ///
 		 lcol(gray*0.75 ) ///
-		 lw(medthick)), ///
+		 lw(medthick)) ///
+		 (scatter dct8_mul_rad dgy, mc(red)), ///
 			ti("{bf}Singularity ", pos(11) ring(1))  ///
 			yti("{bf}Odds ratio* ")  ///
-			yla(0 (2) 6, ang(1)) ///
+			yla(0 (2) 8, ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
-			legend(region(lwidth(none)) order(2 "Single" 4 "Multiple" 5 "Multiple, L-E")) ///
+			legend(region(lwidth(none)) order(2 "Single" 4 "Multiple" 5 "Multiple, L-E" 6 "dct8" )) ///
 			legend(col(1) pos(10) ring (0) size (small) ) ///
 			name(Fig1D, replace) graphregion(fc(white) margin( 3 1 14 2 )) 
 
