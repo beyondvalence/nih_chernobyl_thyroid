@@ -19,7 +19,7 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 
 skip 1 @
 
-input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
+input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -93,6 +93,7 @@ categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
 categ tvolume as tvct </ 8/ 10/ 14/ > @
 categ iodinen as iodct </20/9998> @
 categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+categ dgy as dct8  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/ 6.000/ > @
 
 @
 
@@ -188,6 +189,15 @@ bounds 20@ !Figure 2 Age at exposure plot
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct7@
+logl 1 ex5@
+para 19=0@
+fit@ 
+
+!Figure 1 points (bounds not needed) but add 1 to estimates
+! test dct8
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dct8@
 logl 1 ex5@
 para 19=0@
 fit@ 
@@ -304,6 +314,17 @@ logl 1 ex5@
 para 19=0@
 fit@ 
 
+!Figure 1 points (bounds not needed) but add 1 to estimates
+! test dcat8
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dct8@
+logl 1 ex5@
+para 19=0@
+fit@ 
+
+mean dgy by dct8 @
 
 ! Points and CIs for Figure 2 multiple 
 
