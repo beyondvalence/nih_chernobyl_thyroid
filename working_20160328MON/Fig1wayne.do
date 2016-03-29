@@ -77,7 +77,7 @@ twoway	(rcap dct7hirad dct7lorad dgy) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
 			legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) ///
 			legend(col(1) pos(10) ring (0) size (small) ) ///
-			name(Fig1A, replace) graphregion(fc(white)) 
+			name(Fig1A, replace) graphregion(fc(white) margin( 1 1 2 1 )) 
 
 !!!!!!! Nodules by behavior: non-neoplastic, neoplastic
 
@@ -154,7 +154,7 @@ twoway	(scatter dct7_ben_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
 			legend(region(lwidth(none)) order(2 "Benign" 4 "Malignant" )) ///
 			legend(col(1) pos(10) ring (0) size (small) ) ///
-			name(Fig1B, replace) graphregion(fc(white)) 
+			name(Fig1B, replace) graphregion(fc(white) margin( 1 1 2 1 ))
 
 !!!!!!! Nodules by size: small, large
 
@@ -231,7 +231,7 @@ twoway	(scatter dct7_sma_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
 			legend(region(lwidth(none)) order(2 "Small" 4 "Large" )) ///
 			legend(col(1) pos(10) ring (0) size (small) ) ///
-			name(Fig1C, replace) graphregion(fc(white)) 
+			name(Fig1C, replace) graphregion(fc(white) margin( 1 1 14 2 )) 
 
 !!!!!!! Nodules by singularity: single, multiple
 
@@ -241,7 +241,8 @@ gen dose1000 = _n-1
 gen dgy=dose1000/1000
 
 ! dgycat cutoffs:
-! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4-38.9, 8:0/NIC;
+! new test 20160329TUES to look for low point estimates to justify L-E curve
+! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4-5.99, 8:6-38.9 9:0/NIC; 
 
 *gen dgycat1=0
 gen dgycat2=0
@@ -318,16 +319,15 @@ twoway	(scatter dct7_sin_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)")  ///
 			legend(region(lwidth(none)) order(2 "Single" 4 "Multiple" 5 "Multiple, L-E")) ///
 			legend(col(1) pos(10) ring (0) size (small) ) ///
-			name(Fig1D, replace) graphregion(fc(white)) 
+			name(Fig1D, replace) graphregion(fc(white) margin( 3 1 14 2 )) 
 
 graph combine Fig1A Fig1B Fig1C Fig1D, ///
 	cols(2) ///
 	xcommon ///
-	imargin(0 0 0 0) ///
 	/// title("Figure 1. Thyroid nodule risk by thyroid dose (Gy) by nodule type", size(medium)) ///
-	note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid}" "{stSerif: enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small))  ///
+	note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid}" "{stSerif: enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small) ring(0))  ///
 	iscale(*0.75) ///
-	name(Fig1all, replace) ///
+	name(Fig1all, replace) graphregion(ic(white)) ///
 	
 
 /***
