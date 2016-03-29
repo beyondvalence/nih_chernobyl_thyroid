@@ -324,8 +324,8 @@ graph combine Fig1A Fig1B Fig1C Fig1D, ///
 	cols(2) ///
 	xcommon ///
 	imargin(0 0 0 0) ///
-	title("Figure 1. Thyroid nodule risk by thyroid dose (Gy) by nodule type", size(medium)) ///
-	note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid , }" "{stSerif:  enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small))  ///
+	/// title("Figure 1. Thyroid nodule risk by thyroid dose (Gy) by nodule type", size(medium)) ///
+	note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid}" "{stSerif: enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small))  ///
 	iscale(*0.75) ///
 	name(Fig1all, replace) ///
 	
