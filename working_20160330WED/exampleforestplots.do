@@ -87,4 +87,10 @@ gen logub= log(HRUpperCL)
 replace loglb=-.5 if missing(loglb)
 replace Label=Parameter if missing(Label)
 
-metan     loghr loglb logub if  loghr !=. ,  eform fixed xlabel(0.35, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2.01) force xtick(0.35, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2.01) effect(HazardRatio) label(namevar=Label) nowt nooverall nobox textsize(140) astext(40)
+metan     loghr loglb logub if  loghr !=. ,  ///
+	eform fixed xlabel(0.35, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2.01) ///
+	force xtick(0.35, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2.01) ///
+	effect(HazardRatio) ///
+	label(namevar=Label) ///
+	nowt nooverall nobox ///
+	textsize(140) astext(40)
