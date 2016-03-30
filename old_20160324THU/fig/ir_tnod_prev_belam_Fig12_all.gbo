@@ -93,6 +93,7 @@ categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
 categ tvolume as tvct </ 8/ 10/ 14/ > @
 categ iodinen as iodct </20/9998> @
 categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+categ dgy as dct8  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/ 6.000/ > @
 
 @
 
@@ -213,6 +214,22 @@ bounds 22@
 bounds 23@ 
 bounds 24@ 
 bounds 25@ 
+
+! Points and CIs for Figure 1 all - add 1 to estimate and CIs
+! dcat8
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dct8@
+logl 1 ex5@
+para 19=0@
+fit@ 
+bounds 20@ 
+bounds 21@ 
+bounds 22@ 
+bounds 23@ 
+bounds 24@ 
+bounds 25@ 
+bounds 26@
 
 
 ! Points and CIs for Figure 2 all - add 1 to estimate and CIs

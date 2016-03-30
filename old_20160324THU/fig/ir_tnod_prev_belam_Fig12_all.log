@@ -148,6 +148,9 @@ iodct has 3 levels from 1 to 3
 categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
 dct7 has 7 levels from 1 to 7
 
+categ dgy as dct8  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/ 6.000/ > @
+dct8 has 8 levels from 1 to 8
+
 
 @
 
@@ -1346,6 +1349,136 @@ bounds 25@
 
                97.5% lower bound       1.992
                97.5% upper bound        8.09
+
+
+
+! Points and CIs for Figure 1 all - add 1 to estimate and CIs
+! dcat8
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dct8@
+logl 1 ex5@
+para 19=0@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15832.868
+             1     0     6618.730
+             2     0     5812.716
+             3     0     5689.930
+             4     0     5681.962
+             5     0     5681.876
+             6     0     5681.876
+             7     0     5681.876
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -2.997      0.1684     -17.79    < 0.001
+ 3 SEX_L_1..................         0.2668     0.07454       3.58    < 0.001
+ 5 UR_RUR_1.................         0.2149     0.07949      2.704    0.00685
+ 7 obl_86n_2................         0.1268      0.1246      1.017      0.309
+ 8 obl_86n_3................        -0.2544      0.1753     -1.451      0.147
+10 tvlarge_1................         0.6105      0.1172       5.21    < 0.001
+12 goiter_df_pal_1..........          1.163     0.08913      13.04    < 0.001
+13 goiter_df_pal_2..........        -0.7348       1.032    -0.7117      0.477
+15 ANY_FHF1_1...............         0.4708      0.1107      4.252    < 0.001
+16 ANY_FHF1_2...............         0.2380      0.2392     0.9949       0.32
+17 lage21...................          6.605      0.7034      9.391    < 0.001
+18 ex5......................        -0.1826     0.03123     -5.846    < 0.001
+
+Linear term 1
+19 dct8_1...................          0.000       Fixed     -0.2366      > 0.5
+20 dct8_2...................        0.02642      0.1337     0.1977      > 0.5
+21 dct8_3...................         0.2803      0.1882      1.489      0.136
+22 dct8_4...................         0.4089      0.2243      1.823     0.0683
+23 dct8_5...................          1.400        0.46      3.043    0.00235
+24 dct8_6...................          1.103      0.4666      2.363     0.0181
+25 dct8_7...................          3.112        1.31      2.377     0.0175
+26 dct8_8...................          5.570       2.038      2.733    0.00627
+
+Log-linear term 1
+27 ex5......................        -0.3076     0.05946     -5.174    < 0.001
+
+            Records used        11421
+
+                Deviance     5681.876
+                     AIC     5721.876
+            Pearson Chi2     11374.95      Degrees of freedom   11401
+
+
+
+
+bounds 20@ 
+      Profile likelihood bounds for parameter 20 (dct8_2)
+
+                  MLE    0.02642
+
+               97.5% lower bound     -0.1867
+               97.5% upper bound      0.4011
+
+
+bounds 21@ 
+      Profile likelihood bounds for parameter 21 (dct8_3)
+
+                  MLE     0.2803
+
+               97.5% lower bound    0.005455
+               97.5% upper bound      0.7477
+
+
+bounds 22@ 
+      Profile likelihood bounds for parameter 22 (dct8_4)
+
+                  MLE     0.4089
+
+               97.5% lower bound     0.06883
+               97.5% upper bound      0.9736
+
+
+bounds 23@ 
+      Profile likelihood bounds for parameter 23 (dct8_5)
+
+                  MLE        1.4
+
+               97.5% lower bound      0.5915
+               97.5% upper bound       2.532
+
+
+bounds 24@ 
+      Profile likelihood bounds for parameter 24 (dct8_6)
+
+                  MLE      1.103
+
+               97.5% lower bound      0.4312
+               97.5% upper bound       2.219
+
+
+bounds 25@ 
+      Profile likelihood bounds for parameter 25 (dct8_7)
+
+                  MLE      3.112
+
+               97.5% lower bound       1.053
+               97.5% upper bound       6.989
+
+
+bounds 26@
+      Profile likelihood bounds for parameter 26 (dct8_8)
+
+                  MLE       5.57
+
+               97.5% lower bound       2.384
+               97.5% upper bound       11.03
 
 
 
