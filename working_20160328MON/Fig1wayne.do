@@ -4,12 +4,15 @@
 !!!!!!! All nodules 
 
 clear
-set obs 8001
+set obs 12001
 gen dose1000 = _n-1
 gen dgy=dose1000/1000
 
 ! dgycat cutoffs:
 ! 1:0-0.099, 2:0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4-38.9, 8:0/NIC;
+
+! new test 20160329TUES to look for low point estimates to justify L-E curve
+! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4.00-5.99, 8:6-38.9 9:0/NIC; 
 
 *gen dgycat1=0
 gen dgycat2=0
@@ -52,7 +55,6 @@ scalar dgycat7b=5.406
 scalar dgycat7lob=2.992
 scalar dgycat7hib=9.09
 
-
 gen ctpoint=.
 replace ctpoint=1 if dose1000==117|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
 
@@ -60,21 +62,71 @@ gen dct7rad=   (dgycat2b*dgycat2+dgycat3b*dgycat3+dgycat4b*dgycat4+dgycat5b*dgyc
 gen dct7hirad= (dgycat2hib*dgycat2+dgycat3hib*dgycat3+dgycat4hib*dgycat4+dgycat5hib*dgycat5+dgycat6hib*dgycat6+dgycat7hib*dgycat7)*ctpoint
 gen dct7lorad= (dgycat2lob*dgycat2+dgycat3lob*dgycat3+dgycat4lob*dgycat4+dgycat5lob*dgycat5+dgycat6lob*dgycat6+dgycat7lob*dgycat7)*ctpoint
 
+*new dcat8 for all nodules
+gen dct8_2=0
+gen dct8_3=0
+gen dct8_4=0
+gen dct8_5=0
+gen dct8_6=0
+gen dct8_7=0
+gen dct8_8=0
+
+replace dct8_2=1 if dose1000==167
+replace dct8_3=1 if dose1000==363
+replace dct8_4=1 if dose1000==708
+replace dct8_5=1 if dose1000==1387
+replace dct8_6=1 if dose1000==2745
+replace dct8_7=1 if dose1000==4953
+replace dct8_8=1 if dose1000==10302
+
+scalar dct82_all_b=1.02642
+scalar dct83_all_b=1.2803
+scalar dct84_all_b=1.4089
+scalar dct85_all_b=2.400
+scalar dct86_all_b=2.103
+scalar dct87_all_b=4.112
+scalar dct88_all_b=6.570
+
+scalar dct82_low_b=0.8133
+scalar dct83_low_b=1.005455
+scalar dct84_low_b=1.06883
+scalar dct85_low_b=1.5915
+scalar dct86_low_b=1.4312
+scalar dct87_low_b=2.053
+scalar dct88_low_b=3.384
+
+scalar dct82_upp_b=1.4011
+scalar dct83_upp_b=1.7477
+scalar dct84_upp_b=1.9736
+scalar dct85_upp_b=3.532
+scalar dct86_upp_b=3.219
+scalar dct87_upp_b=7.989
+scalar dct88_upp_b=12.03
+
+gen ctpoint8=.
+replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
+
+gen dct8_all_rad= (dct82_all_b*dct8_2+dct83_all_b*dct8_3+dct84_all_b*dct8_4+dct85_all_b*dct8_5+dct86_all_b*dct8_6+dct87_all_b*dct8_7+dct88_all_b*dct8_8)*ctpoint8
+gen dct8_low_rad= (dct82_low_b*dct8_2+dct83_low_b*dct8_3+dct84_low_b*dct8_4+dct85_low_b*dct8_5+dct86_low_b*dct8_6+dct87_low_b*dct8_7+dct88_low_b*dct8_8)*ctpoint8
+gen dct8_upp_rad= (dct82_upp_b*dct8_2+dct83_upp_b*dct8_3+dct84_upp_b*dct8_4+dct85_upp_b*dct8_5+dct86_upp_b*dct8_6+dct87_upp_b*dct8_7+dct88_upp_b*dct8_8)*ctpoint8
+
+
 !Linear model
 scalar lin_dgyb=0.576
 
 gen linrad= lin_dgyb*dgy+1
 
-twoway	(rcap dct7hirad dct7lorad dgy) ///
-		(scatter dct7rad dgy) ///
-		(line linrad  dgy, ///
+twoway	(rcap dct8_upp_rad dct8_low_rad dgy) ///
+		(scatter dct8_all_rad dgy) ///
+		(line linrad dgy, ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )), ///
 			ti("{bf}All nodules ", pos(11) ring(1) ) ///
 			yti("{bf}Odds ratio* ")  ///
-			yla(0 (2) 10,ang(1)) ///
-			xti("{bf} Thyroid dose (Gy)")  ///
+			yla(0 (2) 12,ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)") ///
+			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) ///
 			legend(col(1) pos(10) ring (0) size (small) ) ///
 			name(Fig1A, replace) graphregion(fc(white) margin( 1 1 2 1 )) 
@@ -88,6 +140,9 @@ gen dgy=dose1000/1000
 
 ! dgycat cutoffs:
 ! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4-38.9, 8:0/NIC;
+
+! new test 20160329TUES to look for low point estimates to justify L-E curve
+! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4.00-5.99, 8:6-38.9 9:0/NIC; 
 
 *gen dgycat1=0
 gen dgycat2=0
@@ -200,12 +255,15 @@ twoway	(scatter dct8_ben_rad dgy, mc(black)) ///
 !!!!!!! Nodules by size: small, large
 
 clear
-set obs 8001
+set obs 12001
 gen dose1000 = _n-1
 gen dgy=dose1000/1000
 
 ! dgycat cutoffs:
 ! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4-38.9, 8:0/NIC;
+
+! new test 20160329TUES to look for low point estimates to justify L-E curve
+! 1: 0-0.099, 2: 0.1-0.2499, 3: 0.25-0.499, 4: 0.50-0.999, 5:1.0-1.999, 6: 2-3.99 7:4.00-5.99, 8:6-38.9 9:0/NIC; 
 
 *gen dgycat1=0
 gen dgycat2=0
@@ -242,12 +300,52 @@ scalar dgycat6_lar_b=4.992
 scalar dgycat7_sma_b=3.777
 scalar dgycat7_lar_b=12.46
 
-
 gen ctpoint=.
 replace ctpoint=1 if dose1000==117|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
 
 gen dct7_sma_rad= (dgycat2_sma_b*dgycat2+dgycat3_sma_b*dgycat3+dgycat4_sma_b*dgycat4+dgycat5_sma_b*dgycat5+dgycat6_sma_b*dgycat6+dgycat7_sma_b*dgycat7)*ctpoint
 gen dct7_lar_rad= (dgycat2_lar_b*dgycat2+dgycat3_lar_b*dgycat3+dgycat4_lar_b*dgycat4+dgycat5_lar_b*dgycat5+dgycat6_lar_b*dgycat6+dgycat7_lar_b*dgycat7)*ctpoint
+
+
+*new dcat8 for small large
+gen dct8_2=0
+gen dct8_3=0
+gen dct8_4=0
+gen dct8_5=0
+gen dct8_6=0
+gen dct8_7=0
+gen dct8_8=0
+
+replace dct8_2=1 if dose1000==167
+replace dct8_3=1 if dose1000==363
+replace dct8_4=1 if dose1000==708
+replace dct8_5=1 if dose1000==1387
+replace dct8_6=1 if dose1000==2745
+replace dct8_7=1 if dose1000==4953
+replace dct8_8=1 if dose1000==10302
+
+scalar dct82_sma_b=1.02798
+scalar dct83_sma_b=1.1505
+scalar dct84_sma_b=1.4476
+scalar dct85_sma_b=1.9499
+scalar dct86_sma_b=1.4418
+scalar dct87_sma_b=3.074
+scalar dct88_sma_b=4.613
+
+scalar dct82_lar_b=1.07482
+scalar dct83_lar_b=1.9497
+scalar dct84_lar_b=1.4620
+scalar dct85_lar_b=4.445
+scalar dct86_lar_b=4.918
+scalar dct87_lar_b=9.512
+scalar dct88_lar_b=15.04
+
+gen ctpoint8=.
+replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
+
+gen dct8_sma_rad= (dct82_sma_b*dct8_2+dct83_sma_b*dct8_3+dct84_sma_b*dct8_4+dct85_sma_b*dct8_5+dct86_sma_b*dct8_6+dct87_sma_b*dct8_7+dct88_sma_b*dct8_8)*ctpoint8
+gen dct8_lar_rad= (dct82_lar_b*dct8_2+dct83_lar_b*dct8_3+dct84_lar_b*dct8_4+dct85_lar_b*dct8_5+dct86_lar_b*dct8_6+dct87_lar_b*dct8_7+dct88_lar_b*dct8_8)*ctpoint8
+
 
 !Linear model
 scalar lin_dgy_sma_b=0.2949
@@ -256,20 +354,21 @@ scalar lin_dgy_lar_b=1.689
 gen linrad_sma= lin_dgy_sma_b*dgy+1
 gen linrad_lar= lin_dgy_lar_b*dgy+1
 
-twoway	(scatter dct7_sma_rad dgy, mc(black)) ///
+twoway	(scatter dct8_sma_rad dgy, mc(black)) ///
 		(line linrad_sma dgy, ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick)) ///
-		(scatter dct7_lar_rad dgy, mc(gray)) ///
+		(scatter dct8_lar_rad dgy, mc(gray)) ///
 		(line linrad_lar dgy, ///
 		 lpattern( solid ) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)), ///
 			ti("{bf}Size ", pos(11) ring(1))  ///
 			yti("{bf}Odds ratio* ")  ///
-			yla(0 (2) 16,ang(1)) ///
-			xti("{bf} Thyroid dose (Gy)")  ///
+			yla(0 (2) 20, ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)") ///
+			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Small" 4 "Large" )) ///
 			legend(col(1) pos(10) ring (0) size (small) ) ///
 			name(Fig1C, replace) graphregion(fc(white) margin( 1 1 14 2 )) 
