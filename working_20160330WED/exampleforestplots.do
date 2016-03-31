@@ -74,23 +74,13 @@ metan     loghr loglb logub if  loghr !=. ,  eform fixed xlabel(0.35, 0.5, 0.75,
 
 //for lisa
 
-use "H:\My Documents\uvr_thyroid_usrt\data\combined_40plus_forest.dta", clear
+use "C:\REB\Chernobyl_Thyroid\Data\thyroid.dta", clear
 
-drop in 1/9
-drop in 15/32
 
-replace HRLowerCL=.5 if HRLowerCL==.1
-
-gen loghr = log(HazardRatio)
-gen loglb= log(HRLowerCL)
-gen logub= log(HRUpperCL)
-replace loglb=-.5 if missing(loglb)
-replace Label=Parameter if missing(Label)
-
-metan     loghr loglb logub if  loghr !=. ,  ///
-	eform fixed xlabel(0.35, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2.01) ///
-	force xtick(0.35, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2.01) ///
-	effect(HazardRatio) ///
+metan     loghr loglb logub,  ///
+	fixed xlabel (-3, -1, 0, 1, 2, 4, 8) ///
+	force xtick  (-3, -1, 0, 1, 2, 4, 8) ///
+	effect(EOR) ///
 	label(namevar=Label) ///
 	nowt nooverall nobox ///
 	textsize(140) astext(40)
