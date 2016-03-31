@@ -75,12 +75,15 @@ metan     loghr loglb logub if  loghr !=. ,  eform fixed xlabel(0.35, 0.5, 0.75,
 //for lisa
 
 use "C:\REB\Chernobyl_Thyroid\Data\thyroid.dta", clear
-
+sort(order)
 
 metan     loghr loglb logub,  ///
-	fixed xlabel (-3, -1, 0, 1, 2, 4, 8) ///
-	force xtick  (-3, -1, 0, 1, 2, 4, 8) ///
+	fixed xlabel (0, 1, 2, 3, 4, 6, 8) ///
+	force xtick  (0, 1, 2, 3, 4, 6, 8) ///
 	effect(EOR) ///
+	by(subgroup) ///
 	label(namevar=Label) ///
-	nowt nooverall nobox ///
-	textsize(140) astext(40)
+	nowt nooverall nobox nosubgroup ///
+	textsize(100) astext(50) ///
+	rcols(Parameter) ///
+	ti("Figure 3. EOR/Gy for thyroid nodules", size(medium))
