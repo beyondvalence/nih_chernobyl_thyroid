@@ -1,5 +1,5 @@
 ! Figure 1 and 2
-! Model building for single and multiple nodules, whole dose range
+! Model building for small and large nodules, whole dose range
 
 new @
 
@@ -19,7 +19,7 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 
 skip 1 @
 
-input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+input 'C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -97,9 +97,9 @@ categ dgy as dct8  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/ 6.000/ > @
 
 @
 
-! Single
+!Small
 
-select (thcount==1 or thnod_prev==0)@
+select (nod_sz==1 or thnod_prev==0)@
 
 cases thnod_prev @
 
@@ -111,13 +111,13 @@ freq  thnod_prev @
 
 
 !Iodine
-select (thcount==1 or thnod_prev==0) and ismiss(iodine)==0@
+select (nod_sz==1 or thnod_prev==0) and ismiss(iodine)==0@
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n @
 line 1 dgy@
 fit@ null@
 logl 0 +iodine  @ fit@ lrt@
-select (thcount==1 or thnod_prev==0)@ 
+select (nod_sz==1 or thnod_prev==0)@ 
 
 !Thyroid volume enlargement
 nomodel @
@@ -157,11 +157,7 @@ line 1 dgy@
 logl 1 ex5 @
 fit@ null@
 
-!sex interaction 
-logl 1 +sex_l @
-fit@ lrt@
-logl 1 -sex_l @
-fit@null@
+
 !linear exponential dose-response 
 
 logl 1 +dgy@ 
@@ -174,7 +170,7 @@ line 1 +dgysq@
 fit@  lrt@
 
 
-! Final model for Figures 1, 2 single
+! Final model for Figures 1, 2 small
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
@@ -194,16 +190,7 @@ para 19=0@
 fit@ 
 
 !Figure 1 points (bounds not needed) but add 1 to estimates
-! test dct8
-nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-line 1 dct8@
-logl 1 ex5@
-para 19=0@
-fit@ 
-
-!Figure 1 points (bounds not needed) but add 1 to estimates
-! test dcat8
+! dcat8
 
 nomodel@
 logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
@@ -212,7 +199,9 @@ logl 1 ex5@
 para 19=0@
 fit@ 
 
-! Points and CIs for Figure 2 single 
+
+
+! Points and CIs for Figure 2 small 
 
 nomodel@
 logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
@@ -225,11 +214,9 @@ bounds 24@
 bounds 25@ 
 bounds 26@
 
+!Large
 
-
-!Multiple
-
-select (thcount>1 or thnod_prev==0)@
+select (nod_sz==2 or thnod_prev==0)@
 
 cases thnod_prev @
 
@@ -241,13 +228,13 @@ freq  thnod_prev @
 
 
 !Iodine
-select (thcount>1 or thnod_prev==0) and ismiss(iodine)==0@
+select (nod_sz==2 or thnod_prev==0) and ismiss(iodine)==0@
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n   @
 line 1 dgy@
 fit@ null@
 logl 0 +iodine  @ fit@ lrt@
-select (thcount>1 or thnod_prev==0)@ 
+select (nod_sz==2 or thnod_prev==0)@ !Does not change risk estimate
 
 !Thyroid volume enlargement
 nomodel @
@@ -278,20 +265,16 @@ logl 0 +any_fhf1 @ fit@ lrt@ !Does not change risk estimate
 
 !Interaction by ex5 and shape of dose response
 
-!Basic linear dose model 
+!Basic linear dose model **** Best model
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n  @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 ex5 @
 fit@ null@
 
-logl 1 +sex_l@
-fit@ lrt@
-logl 1-sex_l@
-fit@ null@
 
-!linear exponential dose-response **** Best model
+!linear exponential dose-response 
 
 logl 1 +dgy@ 
 fit@ lrt@ 
@@ -303,50 +286,47 @@ line 1 +dgysq@
 fit@  lrt@
 
 
-! Final model for Figures 1, 2 multiple
+! Final model for Figures 1, 2 large
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
-logl 1 dgy ex5@
+logl 1 ex5@
 fit@ 
-bounds 11@ !Figure 1 Dose reasponse plot at age 5
-bounds 12@
+bounds 19@ !Figure 1 Dose reasponse plot at age 5
+bounds 20@ !Figure 2 Age at exposure plot
 
 
 !Figure 1 points (bounds not needed) but add 1 to estimates
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n  @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct7@
 logl 1 ex5@
-para 11=0@
+para 19=0@
 fit@ 
 
 !Figure 1 points (bounds not needed) but add 1 to estimates
-! test dcat8
+! dcat8
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct8@
 logl 1 ex5@
-para 11=0@
+para 19=0@
 fit@ 
 
-mean dgy by dct8 @
 
-! Points and CIs for Figure 2 multiple 
+
+! Points and CIs for Figure 2 large 
 
 nomodel@
-logl 0 sex_l lage21  exct4 ur_rur obl_86n @
+logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 exct4@
-para 14=1@
+para 22=1@
 fit@ 
-bounds 15@ 
-bounds 16@ 
-bounds 17@ 
-bounds 18@
-
-
-
+bounds 23@ 
+bounds 24@ 
+bounds 25@ 
+bounds 26@

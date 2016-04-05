@@ -20,7 +20,7 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 
 skip 1 @
 
-input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -378,7 +378,7 @@ para 14=1@
 fit @ 
 bounds 15@ 
 bounds 16@  
-!bounds 17@ 
+bounds 17@ 
 
 
 
@@ -450,7 +450,7 @@ para 11=1@
 fit @ 
 !bounds 12@ 
 bounds 13@ 
-!bounds 14@
+bounds 14@
 
 
 
@@ -491,7 +491,7 @@ fit @ lrt@
 para 13=1@
 fit @ 
 bounds 14@ 
-!bounds 15@ 
+bounds 15@ 
 
 
 ! effect modification by goiter
@@ -563,7 +563,7 @@ para 13=1@
 fit @ 
 bounds 14@ 
 bounds 15@ 
-!bounds 16 force@
+bounds 16 force@
 
 
 ! effect modification by age at screen 
@@ -576,7 +576,7 @@ fit @ lrt@
 para 13=1@
 fit @ 
 bounds 14@ 
-!bounds 15@ 
+bounds 15@ 
 bounds 16@
 
 
@@ -619,7 +619,7 @@ para 14=1@
 fit @ 
 bounds 15@ 
 bounds 16 force@ 
-!bounds 17@ 
+bounds 17@ 
 
 
 ! effect modification by thyroid enlargement
@@ -660,7 +660,7 @@ para 14=1@
 fit @ 
 bounds 15@ 
 bounds 16@  
-!bounds 17@ 
+bounds 17@ 
 
 
 
@@ -918,7 +918,7 @@ fit @ lrt@
 para 13=1@
 fit @ 
 bounds 14@ 
-!bounds 15@ 
+bounds 15@ 
 
 
 ! effect modification by goiter
@@ -1018,7 +1018,7 @@ para 11=1@
 fit @ 
 !bounds 12@ 
 bounds 13@ 
-!bounds 14@
+bounds 14@
 
 
 
@@ -1087,6 +1087,6 @@ para 14=1@
 fit @ 
 bounds 15@ 
 bounds 16@  
-!bounds 17@ 
+bounds 17@ 
 
 

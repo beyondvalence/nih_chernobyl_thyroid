@@ -154,6 +154,8 @@ dct8 has 8 levels from 1 to 8
 
 @
 
+! Single
+
 select (thcount==1 or thnod_prev==0)@
 11188 records to be used
 
@@ -170,6 +172,868 @@ Using (thcount==1 or thnod_prev==0)
       0       10540   94.21    94.21
       1         648    5.79   100.00
   Total       11188
+
+
+
+! Background
+! A priori: sex,log  attained age, age at exposure , obl_86n , UR_RUR
+! To examine: iodine,  tvlarge, goiter_df_pal,any_fhf1, vitam_f
+
+
+!Iodine
+select (thcount==1 or thnod_prev==0) and ismiss(iodine)==0@
+11043 records to be used
+
+
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n @
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15308.849
+             1     0     5689.473
+             2     0     4839.124
+             3     0     4740.467
+             4     0     4736.469
+             5     0     4736.462
+             6     0     4736.462
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0) and ismiss(iodine)==0
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.448      0.1903     -18.12    < 0.001
+ 3 SEX_L_1..................         0.5015     0.08447      5.937    < 0.001
+ 5 UR_RUR_1.................         0.1420     0.08932       1.59      0.112
+ 7 obl_86n_2................         0.2416      0.1432      1.688     0.0914
+ 8 obl_86n_3................       -0.07627       0.201    -0.3795      > 0.5
+ 9 lage21...................          2.480      0.6918      3.584    < 0.001
+10 ex5......................       -0.04631     0.03347     -1.383      0.167
+
+Linear term 1
+11 dgy......................         0.4061      0.1042      3.896    < 0.001
+
+            Records used        11043
+
+                Deviance     4736.462
+                     AIC     4752.462
+            Pearson Chi2     10883.94      Degrees of freedom   11035
+
+
+
+null@
+logl 0 +iodine  @ fit@ 
+          Iter  Step      Deviance
+
+             0     0     4736.462
+             1     0     4736.446
+             2     0     4736.446
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0) and ismiss(iodine)==0
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.454      0.1964     -17.59    < 0.001
+ 3 SEX_L_1..................         0.5014     0.08448      5.936    < 0.001
+ 5 UR_RUR_1.................         0.1407     0.08988      1.566      0.117
+ 7 obl_86n_2................         0.2424      0.1433      1.692     0.0907
+ 8 obl_86n_3................       -0.07404      0.2018     -0.367      > 0.5
+ 9 lage21...................          2.474      0.6933      3.568    < 0.001
+10 ex5......................       -0.04605     0.03354     -1.373       0.17
+11 IODINE...................      5.304e-05   0.0004235     0.1252      > 0.5
+
+Linear term 1
+12 dgy......................         0.4061      0.1042      3.896    < 0.001
+
+            Records used        11043
+
+                Deviance     4736.446
+                     AIC     4754.446
+            Pearson Chi2     10883.92      Degrees of freedom   11034
+
+
+
+lrt@
+
+             LR statistic     0.01559      Degrees of freedom      1
+                  P value      > 0.50
+
+select (thcount==1 or thnod_prev==0)@ 
+11188 records to be used
+
+
+
+!Thyroid volume enlargement
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n@
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15509.861
+             1     0     5758.221
+             2     0     4894.770
+             3     0     4794.035
+             4     0     4789.882
+             5     0     4789.874
+             6     0     4789.874
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.461      0.1893     -18.28    < 0.001
+ 3 SEX_L_1..................         0.4912       0.084      5.848    < 0.001
+ 5 UR_RUR_1.................         0.1467     0.08886      1.651     0.0988
+ 7 obl_86n_2................         0.2528      0.1421      1.779     0.0752
+ 8 obl_86n_3................       -0.07480      0.2003    -0.3734      > 0.5
+ 9 lage21...................          2.489      0.6874      3.621    < 0.001
+10 ex5......................       -0.04535     0.03324     -1.364      0.172
+
+Linear term 1
+11 dgy......................         0.4033      0.1033      3.903    < 0.001
+
+            Records used        11188
+
+                Deviance     4789.874
+                     AIC     4805.874
+            Pearson Chi2     11026.56      Degrees of freedom   11180
+
+
+
+null@
+logl 0 +tvlarge @ fit@ 
+          Iter  Step      Deviance
+
+             0     0     4789.874
+             1     0     4762.539
+             2     0     4758.351
+             3     0     4758.328
+             4     0     4758.328
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.500      0.1894     -18.48    < 0.001
+ 3 SEX_L_1..................         0.4476     0.08459      5.291    < 0.001
+ 5 UR_RUR_1.................         0.1744     0.08919      1.956     0.0505
+ 7 obl_86n_2................         0.2705      0.1424      1.899     0.0575
+ 8 obl_86n_3................        -0.1127       0.201    -0.5609      > 0.5
+10 tvlarge_1................         0.8035      0.1333      6.029    < 0.001
+11 lage21...................          2.491      0.6885      3.619    < 0.001
+12 ex5......................       -0.05208     0.03331     -1.563      0.118
+
+Linear term 1
+13 dgy......................         0.4020      0.1034      3.886    < 0.001
+
+            Records used        11188
+
+                Deviance     4758.328
+                     AIC     4776.328
+            Pearson Chi2     10991.88      Degrees of freedom   11179
+
+
+
+lrt@ 
+
+
+!Presence of diffuse goiter as diagnosed at palpation (at 1st screening)
+
+             LR statistic       31.55      Degrees of freedom      1
+                  P value     < 0.001
+
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge@
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15509.861
+             1     0     5743.606
+             2     0     4867.154
+             3     0     4762.619
+             4     0     4758.336
+             5     0     4758.328
+             6     0     4758.328
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.500      0.1894     -18.48    < 0.001
+ 3 SEX_L_1..................         0.4476     0.08459      5.291    < 0.001
+ 5 UR_RUR_1.................         0.1744     0.08919      1.956     0.0505
+ 7 obl_86n_2................         0.2705      0.1424      1.899     0.0575
+ 8 obl_86n_3................        -0.1127       0.201    -0.5608      > 0.5
+10 tvlarge_1................         0.8035      0.1333      6.029    < 0.001
+11 lage21...................          2.491      0.6885      3.618    < 0.001
+12 ex5......................       -0.05208     0.03331     -1.563      0.118
+
+Linear term 1
+13 dgy......................         0.4020      0.1034      3.886    < 0.001
+
+            Records used        11188
+
+                Deviance     4758.328
+                     AIC     4776.328
+            Pearson Chi2     10991.87      Degrees of freedom   11179
+
+
+
+null@
+logl 0 +goiter_df_pal @ fit@ 
+          Iter  Step      Deviance
+
+             0     0     4758.328
+             1     0     4666.367
+             2     0     4654.746
+             3     0     4654.672
+             4     0     4654.672
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.363      0.1902     -17.68    < 0.001
+ 3 SEX_L_1..................         0.3690     0.08552      4.315    < 0.001
+ 5 UR_RUR_1.................         0.1546     0.08967      1.724     0.0848
+ 7 obl_86n_2................         0.2694      0.1434      1.879     0.0603
+ 8 obl_86n_3................        -0.1017      0.2019    -0.5037      > 0.5
+10 tvlarge_1................         0.4137      0.1401      2.953    0.00315
+12 goiter_df_pal_1..........          1.067      0.1005      10.61    < 0.001
+13 goiter_df_pal_2..........        -0.3305       1.026     -0.322      > 0.5
+14 lage21...................          4.633      0.7335      6.317    < 0.001
+15 ex5......................        -0.1450     0.03505     -4.136    < 0.001
+
+Linear term 1
+16 dgy......................         0.4114      0.1061      3.878    < 0.001
+
+            Records used        11188
+
+                Deviance     4654.672
+                     AIC     4676.672
+            Pearson Chi2     11017.99      Degrees of freedom   11177
+
+
+
+lrt@ 
+
+
+!Family history of any thyroid disease
+
+             LR statistic       103.7      Degrees of freedom      2
+                  P value     < 0.001
+
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal@
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15509.861
+             1     0     5706.477
+             2     0     4787.604
+             3     0     4661.285
+             4     0     4654.695
+             5     0     4654.672
+             6     0     4654.672
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.363      0.1902     -17.68    < 0.001
+ 3 SEX_L_1..................         0.3690     0.08552      4.315    < 0.001
+ 5 UR_RUR_1.................         0.1546     0.08967      1.724     0.0848
+ 7 obl_86n_2................         0.2694      0.1434      1.879     0.0603
+ 8 obl_86n_3................        -0.1017      0.2019    -0.5037      > 0.5
+10 tvlarge_1................         0.4137      0.1401      2.953    0.00315
+12 goiter_df_pal_1..........          1.067      0.1005      10.61    < 0.001
+13 goiter_df_pal_2..........        -0.3305       1.026     -0.322      > 0.5
+14 lage21...................          4.633      0.7335      6.317    < 0.001
+15 ex5......................        -0.1450     0.03505     -4.136    < 0.001
+
+Linear term 1
+16 dgy......................         0.4114      0.1061      3.878    < 0.001
+
+            Records used        11188
+
+                Deviance     4654.672
+                     AIC     4676.672
+            Pearson Chi2     11017.99      Degrees of freedom   11177
+
+
+
+null@
+logl 0 +any_fhf1 @ fit@ 
+          Iter  Step      Deviance
+
+             0     0     4654.672
+             1     0     4643.895
+             2     0     4643.581
+             3     0     4643.581
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.400      0.1909     -17.81    < 0.001
+ 3 SEX_L_1..................         0.3594     0.08561      4.198    < 0.001
+ 5 UR_RUR_1.................         0.1450     0.08984      1.614      0.107
+ 7 obl_86n_2................         0.2559      0.1436      1.782     0.0747
+ 8 obl_86n_3................       -0.09367      0.2021    -0.4635      > 0.5
+10 tvlarge_1................         0.4094      0.1402       2.92     0.0035
+12 goiter_df_pal_1..........          1.054      0.1007      10.46    < 0.001
+13 goiter_df_pal_2..........        -0.3690       1.028     -0.359      > 0.5
+15 ANY_FHF1_1...............         0.4352      0.1268      3.433    < 0.001
+16 ANY_FHF1_2...............         0.1914        0.28     0.6836      0.494
+17 lage21...................          4.589       0.733      6.261    < 0.001
+18 ex5......................        -0.1412     0.03504     -4.031    < 0.001
+
+Linear term 1
+19 dgy......................         0.4104      0.1061      3.867    < 0.001
+
+            Records used        11188
+
+                Deviance     4643.581
+                     AIC     4669.581
+            Pearson Chi2     11042.03      Degrees of freedom   11175
+
+
+
+lrt@ 
+
+
+
+!Final background: sex_l lage21  ex5 ur_rur obl_86n  tvlarge goiter_df_pal any_fhf1
+
+
+!Interaction by ex5 and shape of dose response
+
+!Basic linear dose model **** Best model
+
+
+             LR statistic       11.09      Degrees of freedom      2
+                  P value     0.00390
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 ex5 @
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15509.861
+             1     0     5702.785
+             2     0     4778.842
+             3     0     4632.897
+             4     0     4621.957
+             5     0     4621.663
+             6     0     4621.657
+             7     0     4621.657
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.409      0.1936      -17.6    < 0.001
+ 3 SEX_L_1..................         0.3434     0.08557      4.013    < 0.001
+ 5 UR_RUR_1.................         0.1405     0.08989      1.563      0.118
+ 7 obl_86n_2................         0.2550      0.1434      1.778     0.0753
+ 8 obl_86n_3................        -0.1291      0.2029    -0.6361      > 0.5
+10 tvlarge_1................         0.4077      0.1406      2.899    0.00375
+12 goiter_df_pal_1..........          1.096      0.1018      10.77    < 0.001
+13 goiter_df_pal_2..........        -0.3647       1.029    -0.3545      > 0.5
+15 ANY_FHF1_1...............         0.4232      0.1272      3.328    < 0.001
+16 ANY_FHF1_2...............         0.1838      0.2807     0.6547      > 0.5
+17 lage21...................          5.567       0.782      7.119    < 0.001
+18 ex5......................        -0.1504     0.03517     -4.276    < 0.001
+
+Linear term 1
+19 dgy......................         0.5411      0.1733      3.123    0.00179
+
+Log-linear term 1
+20 ex5......................        -0.2605     0.07082     -3.678    < 0.001
+
+            Records used        11188
+
+                Deviance     4621.657
+                     AIC     4649.657
+            Pearson Chi2     11115.89      Degrees of freedom   11174
+
+
+
+null@
+
+!sex interaction 
+logl 1 +sex_l @
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     4621.657
+             1     0     4620.599
+             2     0     4620.593
+             3     0     4620.593
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.444      0.1976     -17.43    < 0.001
+ 3 SEX_L_1..................         0.4018      0.1032      3.894    < 0.001
+ 5 UR_RUR_1.................         0.1391      0.0899      1.548      0.122
+ 7 obl_86n_2................         0.2546      0.1434      1.776     0.0758
+ 8 obl_86n_3................        -0.1306       0.203    -0.6435      > 0.5
+10 tvlarge_1................         0.4058      0.1407      2.883    0.00393
+12 goiter_df_pal_1..........          1.095      0.1017      10.76    < 0.001
+13 goiter_df_pal_2..........        -0.3671       1.029    -0.3569      > 0.5
+15 ANY_FHF1_1...............         0.4207      0.1271      3.309    < 0.001
+16 ANY_FHF1_2...............         0.1876      0.2805     0.6687      > 0.5
+17 lage21...................          5.565      0.7813      7.123    < 0.001
+18 ex5......................        -0.1503     0.03515     -4.276    < 0.001
+
+Linear term 1
+19 dgy......................         0.5411     Aliased
+
+Log-linear term 1
+20 SEX_L_0..................         0.2126       0.355     0.5989      > 0.5
+21 SEX_L_1..................        -0.1588      0.3698    -0.4294      > 0.5
+22 ex5......................        -0.2577     0.06922     -3.722    < 0.001
+
+            Records used        11188
+
+                Deviance     4620.593
+                     AIC     4650.593
+            Pearson Chi2     11097.73      Degrees of freedom   11173
+
+
+
+lrt@
+
+             LR statistic       1.063      Degrees of freedom      1
+                  P value       0.302
+
+logl 1 -sex_l @
+fit@
+          Iter  Step      Deviance
+
+             0     0     4622.134
+             1     0     4621.657
+             2     0     4621.657
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.409      0.1936     -17.61    < 0.001
+ 3 SEX_L_1..................         0.3434     0.08557      4.013    < 0.001
+ 5 UR_RUR_1.................         0.1405     0.08989      1.563      0.118
+ 7 obl_86n_2................         0.2550      0.1434      1.778     0.0755
+ 8 obl_86n_3................        -0.1291      0.2029    -0.6362      > 0.5
+10 tvlarge_1................         0.4077      0.1406      2.899    0.00375
+12 goiter_df_pal_1..........          1.096      0.1018      10.77    < 0.001
+13 goiter_df_pal_2..........        -0.3647       1.029    -0.3545      > 0.5
+15 ANY_FHF1_1...............         0.4232      0.1272      3.328    < 0.001
+16 ANY_FHF1_2...............         0.1838      0.2807     0.6546      > 0.5
+17 lage21...................          5.567       0.782      7.119    < 0.001
+18 ex5......................        -0.1504     0.03517     -4.276    < 0.001
+
+Linear term 1
+19 dgy......................         0.5416      0.1733      3.125    0.00178
+
+Log-linear term 1
+20 ex5......................        -0.2602     0.07075     -3.678    < 0.001
+
+            Records used        11188
+
+                Deviance     4621.657
+                     AIC     4649.657
+            Pearson Chi2     11116.04      Degrees of freedom   11174
+
+
+
+null@
+!linear exponential dose-response 
+
+logl 1 +dgy@ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     4621.657
+             1     0     4621.328
+             2     0     4621.326
+             3     0     4621.326
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.402      0.1936     -17.57    < 0.001
+ 3 SEX_L_1..................         0.3424      0.0856          4    < 0.001
+ 5 UR_RUR_1.................         0.1407     0.08992      1.565      0.118
+ 7 obl_86n_2................         0.2654      0.1438      1.846     0.0649
+ 8 obl_86n_3................        -0.1212      0.2031    -0.5966      > 0.5
+10 tvlarge_1................         0.4079      0.1406        2.9    0.00373
+12 goiter_df_pal_1..........          1.097      0.1018      10.78    < 0.001
+13 goiter_df_pal_2..........        -0.3590       1.029     -0.349      > 0.5
+15 ANY_FHF1_1...............         0.4223      0.1272      3.319    < 0.001
+16 ANY_FHF1_2...............         0.1750      0.2824     0.6198      > 0.5
+17 lage21...................          5.522      0.7832       7.05    < 0.001
+18 ex5......................        -0.1506     0.03522     -4.276    < 0.001
+
+Linear term 1
+19 dgy......................         0.4701      0.1842      2.552     0.0107
+
+Log-linear term 1
+20 ex5......................        -0.2588     0.07363     -3.515    < 0.001
+21 dgy......................        0.01913     0.03232     0.5919      > 0.5
+
+            Records used        11188
+
+                Deviance     4621.326
+                     AIC     4651.326
+            Pearson Chi2     11133.36      Degrees of freedom   11173
+
+
+
+lrt@ 
+
+!linear quadratic dose-response 
+
+
+             LR statistic      0.3306      Degrees of freedom      1
+                  P value      > 0.50
+
+logl 1 - dgy @
+line 1 +dgysq@
+fit@  
+          Iter  Step      Deviance
+
+             0     0     4622.063
+             1     0     4621.474
+             2     0     4621.450
+             3     0     4621.445
+             4     0     4621.445
+             5     0     4621.444
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.404      0.1937     -17.57    < 0.001
+ 3 SEX_L_1..................         0.3428     0.08559      4.005    < 0.001
+ 5 UR_RUR_1.................         0.1406     0.08991      1.564      0.118
+ 7 obl_86n_2................         0.2621      0.1441      1.819     0.0689
+ 8 obl_86n_3................        -0.1236      0.2033    -0.6082      > 0.5
+10 tvlarge_1................         0.4079      0.1406        2.9    0.00373
+12 goiter_df_pal_1..........          1.096      0.1018      10.77    < 0.001
+13 goiter_df_pal_2..........        -0.3607       1.029    -0.3506      > 0.5
+15 ANY_FHF1_1...............         0.4226      0.1272      3.322    < 0.001
+16 ANY_FHF1_2...............         0.1787      0.2817     0.6343      > 0.5
+17 lage21...................          5.536      0.7842       7.06    < 0.001
+18 ex5......................        -0.1506     0.03521     -4.276    < 0.001
+
+Linear term 1
+19 dgy......................         0.4907      0.2007      2.445     0.0145
+20 dgysq....................       0.007097     0.01926     0.3684      > 0.5
+
+Log-linear term 1
+21 ex5......................        -0.2594     0.07275     -3.565    < 0.001
+
+            Records used        11188
+
+                Deviance     4621.444
+                     AIC     4651.444
+            Pearson Chi2     11127.72      Degrees of freedom   11173
+
+
+
+lrt@
+
+
+! Final model for Figures 1, 2 single
+
+
+             LR statistic      0.2121      Degrees of freedom      1
+                  P value      > 0.50
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 ex5@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15509.861
+             1     0     5702.785
+             2     0     4778.842
+             3     0     4632.897
+             4     0     4621.957
+             5     0     4621.663
+             6     0     4621.657
+             7     0     4621.657
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.409      0.1936      -17.6    < 0.001
+ 3 SEX_L_1..................         0.3434     0.08557      4.013    < 0.001
+ 5 UR_RUR_1.................         0.1405     0.08989      1.563      0.118
+ 7 obl_86n_2................         0.2550      0.1434      1.778     0.0753
+ 8 obl_86n_3................        -0.1291      0.2029    -0.6361      > 0.5
+10 tvlarge_1................         0.4077      0.1406      2.899    0.00375
+12 goiter_df_pal_1..........          1.096      0.1018      10.77    < 0.001
+13 goiter_df_pal_2..........        -0.3647       1.029    -0.3545      > 0.5
+15 ANY_FHF1_1...............         0.4232      0.1272      3.328    < 0.001
+16 ANY_FHF1_2...............         0.1838      0.2807     0.6547      > 0.5
+17 lage21...................          5.567       0.782      7.119    < 0.001
+18 ex5......................        -0.1504     0.03517     -4.276    < 0.001
+
+Linear term 1
+19 dgy......................         0.5411      0.1733      3.123    0.00179
+
+Log-linear term 1
+20 ex5......................        -0.2605     0.07082     -3.678    < 0.001
+
+            Records used        11188
+
+                Deviance     4621.657
+                     AIC     4649.657
+            Pearson Chi2     11115.89      Degrees of freedom   11174
+
+
+
+
+bounds 19@ !Figure 1 Dose reasponse plot at age 5
+      Profile likelihood bounds for parameter 19 (dgy)
+
+                  MLE     0.5411
+
+               97.5% lower bound      0.2026
+               97.5% upper bound      0.9733
+
+
+bounds 20@ !Figure 2 Age at exposure plot
+      Profile likelihood bounds for parameter 20 (ex5)
+
+                  MLE    -0.2605    exp(MLE)     0.7707
+
+               97.5% lower bound     -0.4867
+                       exp(bound)     0.6146
+               97.5% upper bound     -0.1367
+                       exp(bound)     0.8722
+
+
+
+!Figure 1 points (bounds not needed) but add 1 to estimates
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dct7@
+logl 1 ex5@
+para 19=0@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15509.861
+             1     0     5706.684
+             2     0     4778.872
+             3     0     4633.263
+             4     0     4621.970
+             5     0     4621.777
+             6     0     4621.775
+             7     0     4621.775
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.404      0.1979      -17.2    < 0.001
+ 3 SEX_L_1..................         0.3502     0.08554      4.094    < 0.001
+ 5 UR_RUR_1.................         0.1379     0.08997      1.533      0.125
+ 7 obl_86n_2................         0.2327      0.1501      1.551      0.121
+ 8 obl_86n_3................        -0.1441      0.2062     -0.699      0.485
+10 tvlarge_1................         0.4075      0.1407      2.896    0.00378
+12 goiter_df_pal_1..........          1.092      0.1018      10.72    < 0.001
+13 goiter_df_pal_2..........        -0.4282        1.03    -0.4155      > 0.5
+15 ANY_FHF1_1...............         0.4258      0.1272      3.349    < 0.001
+16 ANY_FHF1_2...............         0.2135      0.2792     0.7648      0.444
+17 lage21...................          5.693      0.7907      7.199    < 0.001
+18 ex5......................        -0.1534     0.03543     -4.329    < 0.001
+
+Linear term 1
+19 dct7_1...................          0.000       Fixed     -0.1819      > 0.5
+20 dct7_2...................        0.09989      0.1846     0.5412      > 0.5
+21 dct7_3...................         0.2170      0.2115      1.026      0.305
+22 dct7_4...................         0.4245      0.2663      1.594      0.111
+23 dct7_5...................          1.346      0.4997      2.693    0.00709
+24 dct7_6...................         0.9186      0.4805      1.912     0.0559
+25 dct7_7...................          4.213       1.483      2.842    0.00449
+
+Log-linear term 1
+26 ex5......................        -0.2592     0.06294     -4.118    < 0.001
+
+            Records used        11188
+
+                Deviance     4621.775
+                     AIC     4659.775
+            Pearson Chi2     11125.63      Degrees of freedom   11169
+
+
+
 
 
 !Figure 1 points (bounds not needed) but add 1 to estimates
@@ -236,6 +1100,1323 @@ Log-linear term 1
                 Deviance     4621.485
                      AIC     4661.485
             Pearson Chi2     11121.91      Degrees of freedom   11168
+
+
+
+
+
+!Figure 1 points (bounds not needed) but add 1 to estimates
+! test dcat8
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dct8@
+logl 1 ex5@
+para 19=0@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15509.861
+             1     0     5706.399
+             2     0     4778.571
+             3     0     4632.945
+             4     0     4621.676
+             5     0     4621.486
+             6     0     4621.485
+             7     0     4621.485
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.408       0.198     -17.21    < 0.001
+ 3 SEX_L_1..................         0.3484     0.08559      4.071    < 0.001
+ 5 UR_RUR_1.................         0.1396     0.09007       1.55      0.121
+ 7 obl_86n_2................         0.2338      0.1501      1.557      0.119
+ 8 obl_86n_3................        -0.1427      0.2062    -0.6917      0.489
+10 tvlarge_1................         0.4090      0.1407      2.906    0.00366
+12 goiter_df_pal_1..........          1.092      0.1018      10.72    < 0.001
+13 goiter_df_pal_2..........        -0.4270        1.03    -0.4144      > 0.5
+15 ANY_FHF1_1...............         0.4268      0.1272      3.356    < 0.001
+16 ANY_FHF1_2...............         0.2131      0.2792     0.7634      0.445
+17 lage21...................          5.670      0.7918      7.162    < 0.001
+18 ex5......................        -0.1525     0.03548     -4.298    < 0.001
+
+Linear term 1
+19 dct8_1...................          0.000       Fixed     -0.1882      > 0.5
+20 dct8_2...................        0.09909      0.1846     0.5369      > 0.5
+21 dct8_3...................         0.2160      0.2114      1.021      0.307
+22 dct8_4...................         0.4232      0.2662       1.59      0.112
+23 dct8_5...................          1.343      0.4995      2.689    0.00718
+24 dct8_6...................         0.9166      0.4804      1.908     0.0564
+25 dct8_7...................          3.697       1.599      2.312     0.0208
+26 dct8_8...................          4.779       2.001      2.389     0.0169
+
+Log-linear term 1
+27 ex5......................        -0.2586     0.06335     -4.082    < 0.001
+
+            Records used        11188
+
+                Deviance     4621.485
+                     AIC     4661.485
+            Pearson Chi2     11121.91      Degrees of freedom   11168
+
+
+
+
+
+! Points and CIs for Figure 2 single 
+
+nomodel@
+logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 exct4@
+para 22=1@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    20012.186
+             1     0     6523.674
+             2     1     5939.062
+             3     0     4828.399
+             4     0     4657.629
+             5     0     4642.338
+             6     0     4641.593
+             7     0     4641.551
+             8     0     4641.548
+             9     0     4641.548
+            10     0     4641.548
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.360       0.651     -6.697    < 0.001
+ 3 SEX_L_1..................         0.3581     0.08568      4.179    < 0.001
+ 5 exct4_2..................       -0.05704      0.8372   -0.06813      > 0.5
+ 6 exct4_3..................         0.6349      0.6405     0.9912      0.322
+ 7 exct4_4..................         0.5695      0.6447     0.8834      0.377
+ 9 UR_RUR_1.................         0.1370     0.08959      1.529      0.126
+11 obl_86n_2................         0.2545      0.1431      1.779     0.0753
+12 obl_86n_3................       -0.06839      0.2025    -0.3378      > 0.5
+14 tvlarge_1................         0.4288      0.1401      3.061     0.0022
+16 goiter_df_pal_1..........         0.9580     0.09697      9.879    < 0.001
+17 goiter_df_pal_2..........        -0.2258       1.027      -0.22      > 0.5
+19 ANY_FHF1_1...............         0.4393       0.127      3.459    < 0.001
+20 ANY_FHF1_2...............         0.2133      0.2821     0.7562       0.45
+21 lage21...................          2.055      0.2961      6.942    < 0.001
+
+Linear term 1
+22 dgy......................          1.000     Aliased
+
+Log-linear term 1
+23 exct4_1..................         0.5009      0.9152     0.5473      > 0.5
+24 exct4_2..................         0.8251      0.7469      1.105      0.269
+25 exct4_3..................         -1.131      0.5595     -2.021     0.0432
+26 exct4_4..................         -1.912      0.5918     -3.231    0.00123
+
+            Records used        11188
+
+                Deviance     4641.548
+                     AIC     4677.548
+            Pearson Chi2      11110.9      Degrees of freedom   11170
+
+
+
+
+bounds 23@ 
+      Profile likelihood bounds for parameter 23 (exct4_1)
+
+                  MLE     0.5009    exp(MLE)       1.65
+
+               97.5% lower bound      -1.775
+                       exp(bound)     0.1695
+               97.5% upper bound not found last estimate      29.14 Deviance 11278.372
+
+
+ *** WARNING: Parameter exct4_3 changed by -210348173.0% MLE may be infinite or may not exist
+
+
+bounds 24@ 
+      Profile likelihood bounds for parameter 24 (exct4_2)
+
+                  MLE     0.8251    exp(MLE)      2.282
+
+               97.5% lower bound     -0.4234
+                       exp(bound)     0.6548
+               97.5% upper bound       3.105
+                       exp(bound)      22.31
+
+
+bounds 25@ 
+      Profile likelihood bounds for parameter 25 (exct4_3)
+
+                  MLE     -1.131    exp(MLE)     0.3227
+
+               97.5% lower bound      -3.076
+                       exp(bound)    0.04613
+               97.5% upper bound       -0.14
+                       exp(bound)     0.8694
+
+
+bounds 26@
+      Profile likelihood bounds for parameter 26 (exct4_4)
+
+                  MLE     -1.912    exp(MLE)     0.1477
+
+               97.5% lower bound      -4.859
+                       exp(bound)   0.007755
+               97.5% upper bound       -1.06
+                       exp(bound)     0.3463
+
+
+
+
+
+!Multiple
+
+select (thcount>1 or thnod_prev==0)@
+10773 records to be used
+
+
+
+cases thnod_prev @
+
+freq  thnod_prev @
+
+Using (thcount>1 or thnod_prev==0)
+
+  FOR: thnod_prev
+  Level     Freq     %      Cum %
+      0       10540   97.84    97.84
+      1         233    2.16   100.00
+  Total       10773
+
+
+
+! Background
+! A priori: sex_l lage21  ex5 ur_rur obl_86n  
+! To examine: iodine,  tvlarge, goiter_df_pal,any_fhf1, vitam_f
+
+
+!Iodine
+select (thcount>1 or thnod_prev==0) and ismiss(iodine)==0@
+10634 records to be used
+
+
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n   @
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14741.854
+             1     0     3797.202
+             2     0     2459.843
+             3     0     2172.513
+             4     0     2126.974
+             5     0     2124.016
+             6     0     2123.996
+             7     0     2123.996
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0) and ismiss(iodine)==0
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.073      0.2911     -13.99    < 0.001
+ 3 SEX_L_1..................         0.2990      0.1355      2.207     0.0273
+ 5 UR_RUR_1.................         0.4309      0.1526      2.824    0.00474
+ 7 obl_86n_2................        -0.2440       0.207     -1.179      0.239
+ 8 obl_86n_3................        -0.4126      0.3004     -1.374       0.17
+ 9 lage21...................          5.153       1.246      4.135    < 0.001
+10 ex5......................        -0.1253      0.0578     -2.169     0.0301
+
+Linear term 1
+11 dgy......................         0.6662      0.2405      2.769    0.00561
+
+            Records used        10634
+
+                Deviance     2123.996
+                     AIC     2139.996
+            Pearson Chi2     10039.04      Degrees of freedom   10626
+
+
+
+null@
+logl 0 +iodine  @ fit@ 
+          Iter  Step      Deviance
+
+             0     0     2123.996
+             1     0     2123.148
+             2     0     2123.140
+             3     0     2123.140
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0) and ismiss(iodine)==0
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.999      0.3017     -13.26    < 0.001
+ 3 SEX_L_1..................         0.2989      0.1355      2.206     0.0274
+ 5 UR_RUR_1.................         0.4472      0.1537       2.91    0.00361
+ 7 obl_86n_2................        -0.2542      0.2073     -1.226       0.22
+ 8 obl_86n_3................        -0.4393      0.3018     -1.455      0.146
+ 9 lage21...................          5.213       1.247       4.18    < 0.001
+10 ex5......................        -0.1279     0.05783     -2.212      0.027
+11 IODINE...................     -0.0006855   0.0007621    -0.8996      0.368
+
+Linear term 1
+12 dgy......................         0.6677      0.2409      2.772    0.00557
+
+            Records used        10634
+
+                Deviance      2123.14
+                     AIC      2141.14
+            Pearson Chi2     10020.18      Degrees of freedom   10625
+
+
+
+lrt@
+
+             LR statistic      0.8562      Degrees of freedom      1
+                  P value       0.355
+
+select (thcount>1 or thnod_prev==0)@ 
+10773 records to be used
+
+
+
+!Thyroid volume enlargement
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n @
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14934.549
+             1     0     3837.690
+             2     0     2479.580
+             3     0     2186.846
+             4     0     2139.947
+             5     0     2136.787
+             6     0     2136.765
+             7     0     2136.765
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.061      0.2902     -13.99    < 0.001
+ 3 SEX_L_1..................         0.2979      0.1352      2.203     0.0276
+ 5 UR_RUR_1.................         0.4407      0.1524      2.893    0.00382
+ 7 obl_86n_2................        -0.2196      0.2067     -1.063      0.288
+ 8 obl_86n_3................        -0.3955      0.3002     -1.317      0.188
+ 9 lage21...................          5.459       1.243      4.391    < 0.001
+10 ex5......................        -0.1408     0.05755     -2.446     0.0144
+
+Linear term 1
+11 dgy......................         0.6703      0.2411       2.78    0.00543
+
+            Records used        10773
+
+                Deviance     2136.765
+                     AIC     2152.765
+            Pearson Chi2     10168.62      Degrees of freedom   10765
+
+
+
+null@
+logl 0 +tvlarge @ fit@ 
+          Iter  Step      Deviance
+
+             0     0     2136.765
+             1     1     2097.887
+             2     0     2078.183
+             3     0     2075.306
+             4     0     2075.285
+             5     0     2075.285
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.162      0.2908     -14.31    < 0.001
+ 3 SEX_L_1..................         0.1906      0.1371       1.39      0.164
+ 5 UR_RUR_1.................         0.5035      0.1534      3.283    0.00103
+ 7 obl_86n_2................        -0.1805       0.208    -0.8677      0.386
+ 8 obl_86n_3................        -0.5075      0.3028     -1.676     0.0938
+10 tvlarge_1................          1.516       0.172      8.814    < 0.001
+11 lage21...................          5.417       1.244      4.355    < 0.001
+12 ex5......................        -0.1552     0.05757     -2.696    0.00702
+
+Linear term 1
+13 dgy......................         0.6389      0.2356      2.711    0.00671
+
+            Records used        10773
+
+                Deviance     2075.285
+                     AIC     2093.285
+            Pearson Chi2     10289.66      Degrees of freedom   10764
+
+
+
+lrt@ 
+
+
+!Presence of diffuse goiter as diagnosed at palpation (at 1st screening)
+
+             LR statistic       61.48      Degrees of freedom      1
+                  P value     < 0.001
+
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge @
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14934.549
+             1     0     3822.740
+             2     0     2442.615
+             3     0     2130.846
+             4     0     2078.813
+             5     0     2075.315
+             6     0     2075.285
+             7     0     2075.285
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.162      0.2908     -14.31    < 0.001
+ 3 SEX_L_1..................         0.1906      0.1371       1.39      0.164
+ 5 UR_RUR_1.................         0.5035      0.1534      3.283    0.00103
+ 7 obl_86n_2................        -0.1806       0.208     -0.868      0.385
+ 8 obl_86n_3................        -0.5075      0.3028     -1.676     0.0938
+10 tvlarge_1................          1.516       0.172      8.814    < 0.001
+11 lage21...................          5.418       1.244      4.355    < 0.001
+12 ex5......................        -0.1552     0.05757     -2.696    0.00702
+
+Linear term 1
+13 dgy......................         0.6391      0.2357      2.711     0.0067
+
+            Records used        10773
+
+                Deviance     2075.285
+                     AIC     2093.285
+            Pearson Chi2     10289.85      Degrees of freedom   10764
+
+
+
+null@
+logl 0 +goiter_df_pal @ fit@ 
+          Iter  Step      Deviance
+
+             0     0     2075.285
+             1     0     2025.379
+             2     0     2013.024
+             3     0     2012.738
+             4     0     2012.708
+             5     0     2012.697
+             6     0     2012.693
+             7     0     2012.692
+             8     0     2012.691
+             9     0     2012.691
+            10     0     2012.691
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.010      0.2908     -13.79    < 0.001
+ 3 SEX_L_1..................        0.08583      0.1389      0.618      > 0.5
+ 5 UR_RUR_1.................         0.4600      0.1539      2.989     0.0028
+ 7 obl_86n_2................        -0.1680      0.2093    -0.8027      0.422
+ 8 obl_86n_3................        -0.4757      0.3047     -1.561      0.119
+10 tvlarge_1................         0.9779      0.1871      5.227    < 0.001
+12 goiter_df_pal_1..........          1.325      0.1609      8.236    < 0.001
+13 goiter_df_pal_2..........         -9.917       215.2   -0.04608      > 0.5
+14 lage21...................          8.131       1.307      6.219    < 0.001
+15 ex5......................        -0.2695     0.05985     -4.504    < 0.001
+
+Linear term 1
+16 dgy......................         0.6231      0.2325       2.68    0.00736
+
+            Records used        10773
+
+                Deviance     2012.691
+                     AIC     2034.691
+            Pearson Chi2     10445.79      Degrees of freedom   10762
+
+
+
+
+ *** WARNING: Parameter goiter_df_pal_2 changed by 11.2% MLE may be infinite or may not exist
+
+lrt@ 
+
+
+!Family history of any thyroid disease
+
+             LR statistic       62.59      Degrees of freedom      2
+                  P value     < 0.001
+
+nomodel @
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal@
+line 1 dgy@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14934.549
+             1     0     3813.616
+             2     0     2416.894
+             3     0     2083.226
+             4     0     2018.562
+             5     0     2012.870
+             6     0     2012.730
+             7     0     2012.705
+             8     0     2012.696
+             9     0     2012.693
+            10     0     2012.692
+            11     0     2012.691
+            12     0     2012.691
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.010      0.2908     -13.79    < 0.001
+ 3 SEX_L_1..................        0.08583      0.1389      0.618      > 0.5
+ 5 UR_RUR_1.................         0.4600      0.1539      2.989     0.0028
+ 7 obl_86n_2................        -0.1680      0.2093    -0.8027      0.422
+ 8 obl_86n_3................        -0.4757      0.3047     -1.561      0.119
+10 tvlarge_1................         0.9779      0.1871      5.227    < 0.001
+12 goiter_df_pal_1..........          1.325      0.1609      8.236    < 0.001
+13 goiter_df_pal_2..........         -9.111       143.8   -0.06335      > 0.5
+14 lage21...................          8.131       1.307      6.219    < 0.001
+15 ex5......................        -0.2695     0.05985     -4.504    < 0.001
+
+Linear term 1
+16 dgy......................         0.6231      0.2325       2.68    0.00736
+
+            Records used        10773
+
+                Deviance     2012.691
+                     AIC     2034.691
+            Pearson Chi2     10445.79      Degrees of freedom   10762
+
+
+
+
+ *** WARNING: Parameter goiter_df_pal_2 changed by 12.3% MLE may be infinite or may not exist
+
+null@
+logl 0 +any_fhf1 @ fit@ 
+          Iter  Step      Deviance
+
+             0     0     2012.691
+             1     0     2003.985
+             2     0     2003.270
+             3     0     2003.268
+             4     0     2003.268
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.084      0.2927     -13.95    < 0.001
+ 3 SEX_L_1..................        0.06739      0.1392     0.4842      > 0.5
+ 5 UR_RUR_1.................         0.4481      0.1543      2.903    0.00369
+ 7 obl_86n_2................        -0.1887      0.2097    -0.8997      0.368
+ 8 obl_86n_3................        -0.4804      0.3059      -1.57      0.116
+10 tvlarge_1................         0.9783      0.1874      5.219    < 0.001
+12 goiter_df_pal_1..........          1.296      0.1614      8.034    < 0.001
+13 goiter_df_pal_2..........         -13.17        1030   -0.01278      > 0.5
+15 ANY_FHF1_1...............         0.6235      0.1961      3.179    0.00148
+16 ANY_FHF1_2...............         0.3699      0.4059     0.9113      0.362
+17 lage21...................          7.949       1.302      6.105    < 0.001
+18 ex5......................        -0.2582     0.05962     -4.331    < 0.001
+
+Linear term 1
+19 dgy......................         0.6205      0.2321      2.674     0.0075
+
+            Records used        10773
+
+                Deviance     2003.268
+                     AIC     2029.268
+            Pearson Chi2     10504.71      Degrees of freedom   10760
+
+
+
+
+ *** WARNING: Parameter goiter_df_pal_2 changed by 8.2% MLE may be infinite or may not exist
+
+lrt@ !Does not change risk estimate
+
+
+!Final background: sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1
+
+
+!Interaction by ex5 and shape of dose response
+
+!Basic linear dose model 
+
+
+             LR statistic       9.423      Degrees of freedom      2
+                  P value     0.00899
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n  @
+line 1 dgy@
+logl 1 ex5 @
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14934.549
+             1     0     3837.690
+             2     0     2482.171
+             3     0     2182.286
+             4     0     2127.544
+             5     0     2122.408
+             6     0     2122.330
+             7     0     2122.330
+             8     0     2122.330
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.066      0.2985     -13.63    < 0.001
+ 3 SEX_L_1..................         0.2717      0.1349      2.014      0.044
+ 5 UR_RUR_1.................         0.4095      0.1515      2.703    0.00688
+ 7 obl_86n_2................        -0.1804      0.2018    -0.8941      0.371
+ 8 obl_86n_3................        -0.4325      0.3009     -1.437      0.151
+ 9 lage21...................          6.923       1.339      5.169    < 0.001
+10 ex5......................        -0.1553     0.05816     -2.671    0.00756
+
+Linear term 1
+11 dgy......................         0.7783      0.4397       1.77     0.0767
+
+Log-linear term 1
+12 ex5......................        -0.3858      0.1249     -3.088    0.00201
+
+            Records used        10773
+
+                Deviance      2122.33
+                     AIC      2140.33
+            Pearson Chi2     10263.97      Degrees of freedom   10764
+
+
+
+null@
+
+logl 1 +sex_l@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     2122.330
+             1     0     2120.265
+             2     0     2120.075
+             3     0     2120.016
+             4     0     2119.995
+             5     0     2119.988
+             6     0     2119.986
+             7     0     2119.985
+             8     0     2119.985
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.056      0.2986     -13.59    < 0.001
+ 3 SEX_L_1..................         0.1456      0.1589     0.9161       0.36
+ 5 UR_RUR_1.................         0.4345      0.1522      2.855     0.0043
+ 7 obl_86n_2................        -0.2146      0.2041     -1.052      0.293
+ 8 obl_86n_3................        -0.4425      0.3011     -1.469      0.142
+ 9 lage21...................          6.867       1.334      5.149    < 0.001
+10 ex5......................        -0.1488     0.05771     -2.579    0.00991
+
+Linear term 1
+11 dgy......................         0.7783     Aliased
+
+Log-linear term 1
+12 SEX_L_0..................        -0.1527      0.6079    -0.2511      > 0.5
+13 SEX_L_1..................         0.6621      0.4844      1.367      0.172
+14 ex5......................        -0.3041     0.09061     -3.356    < 0.001
+
+            Records used        10773
+
+                Deviance     2119.985
+                     AIC     2139.985
+            Pearson Chi2     10215.86      Degrees of freedom   10763
+
+
+
+lrt@
+
+             LR statistic       2.345      Degrees of freedom      1
+                  P value       0.126
+
+logl 1-sex_l@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     2125.338
+             1     0     2122.410
+             2     0     2122.346
+             3     0     2122.337
+             4     0     2122.333
+             5     0     2122.331
+             6     0     2122.330
+             7     0     2122.330
+             8     0     2122.330
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.068      0.2985     -13.63    < 0.001
+ 3 SEX_L_1..................         0.2719      0.1349      2.015     0.0439
+ 5 UR_RUR_1.................         0.4101      0.1516      2.706    0.00681
+ 7 obl_86n_2................        -0.1814      0.2019    -0.8985      0.369
+ 8 obl_86n_3................        -0.4327      0.3009     -1.438       0.15
+ 9 lage21...................          6.920       1.339      5.167    < 0.001
+10 ex5......................        -0.1551     0.05814     -2.667    0.00765
+
+Linear term 1
+11 dgy......................         0.7889       0.442      1.785     0.0743
+
+Log-linear term 1
+12 ex5......................        -0.3821      0.1235     -3.094    0.00197
+
+            Records used        10773
+
+                Deviance      2122.33
+                     AIC      2140.33
+            Pearson Chi2     10264.28      Degrees of freedom   10764
+
+
+
+null@
+
+!linear exponential dose-response **** Best model
+
+logl 1 +dgy@ 
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     2122.330
+             1     0     2117.690
+             2     0     2116.500
+             3     0     2116.482
+             4     0     2116.478
+             5     0     2116.476
+             6     0     2116.475
+             7     0     2116.474
+             8     0     2116.474
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.012      0.2942     -13.64    < 0.001
+ 3 SEX_L_1..................         0.2813      0.1355      2.076     0.0379
+ 5 UR_RUR_1.................         0.4167      0.1525      2.733    0.00627
+ 7 obl_86n_2................        -0.1225      0.1988    -0.6161      > 0.5
+ 8 obl_86n_3................        -0.3888      0.3004     -1.294      0.196
+ 9 lage21...................          6.794       1.342      5.064    < 0.001
+10 ex5......................        -0.1627     0.05884     -2.765    0.00568
+
+Linear term 1
+11 dgy......................         0.2643      0.2185       1.21      0.226
+
+Log-linear term 1
+12 ex5......................        -0.4701       0.188     -2.501     0.0124
+13 dgy......................        0.09468      0.0394      2.403     0.0163
+
+            Records used        10773
+
+                Deviance     2116.474
+                     AIC     2136.474
+            Pearson Chi2     10442.84      Degrees of freedom   10763
+
+
+
+lrt@ 
+
+!linear quadratic dose-response 
+
+
+             LR statistic       5.856      Degrees of freedom      1
+                  P value      0.0155
+
+logl 1 - dgy @
+line 1 +dgysq@
+fit@  
+          Iter  Step      Deviance
+
+             0     0     2127.436
+             1     0     2119.218
+             2     0     2118.818
+             3     0     2118.777
+             4     0     2118.770
+             5     0     2118.768
+             6     0     2118.767
+             7     0     2118.767
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.017      0.2948     -13.63    < 0.001
+ 3 SEX_L_1..................         0.2750      0.1351      2.036     0.0418
+ 5 UR_RUR_1.................         0.4123      0.1519      2.714    0.00666
+ 7 obl_86n_2................        -0.1359      0.2003    -0.6788      0.497
+ 8 obl_86n_3................        -0.3987       0.301     -1.325      0.185
+ 9 lage21...................          6.826        1.34      5.093    < 0.001
+10 ex5......................        -0.1613     0.05857     -2.753     0.0059
+
+Linear term 1
+11 dgy......................         0.3281      0.3048      1.077      0.282
+12 dgysq....................        0.04489     0.04195       1.07      0.285
+
+Log-linear term 1
+13 ex5......................        -0.4460      0.1668     -2.673    0.00751
+
+            Records used        10773
+
+                Deviance     2118.767
+                     AIC     2138.767
+            Pearson Chi2      10393.2      Degrees of freedom   10763
+
+
+
+lrt@
+
+
+! Final model for Figures 1, 2 multiple
+
+
+             LR statistic       3.563      Degrees of freedom      1
+                  P value      0.0591
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n @
+line 1 dgy@
+logl 1 dgy ex5@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14934.549
+             1     0     3837.690
+             2     0     2487.518
+             3     0     2178.874
+             4     0     2124.572
+             5     0     2116.983
+             6     0     2116.525
+             7     0     2116.495
+             8     0     2116.484
+             9     0     2116.478
+            10     0     2116.476
+            11     0     2116.475
+            12     0     2116.474
+            13     0     2116.474
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.012      0.2942     -13.64    < 0.001
+ 3 SEX_L_1..................         0.2813      0.1355      2.076     0.0379
+ 5 UR_RUR_1.................         0.4167      0.1525      2.733    0.00627
+ 7 obl_86n_2................        -0.1226      0.1988    -0.6163      > 0.5
+ 8 obl_86n_3................        -0.3888      0.3004     -1.294      0.196
+ 9 lage21...................          6.794       1.342      5.064    < 0.001
+10 ex5......................        -0.1627     0.05884     -2.765    0.00569
+
+Linear term 1
+11 dgy......................         0.2647      0.2187       1.21      0.226
+
+Log-linear term 1
+12 dgy......................        0.09466      0.0394      2.402     0.0163
+13 ex5......................        -0.4698      0.1878     -2.501     0.0124
+
+            Records used        10773
+
+                Deviance     2116.474
+                     AIC     2136.474
+            Pearson Chi2     10442.85      Degrees of freedom   10763
+
+
+
+
+
+bounds 19@ !Figure 1 Dose reasponse plot at age 5
+
+ ***   ERROR: Parameter number out of range
+
+bounds 11@ !Figure 1 Dose reasponse plot at age 5
+      Profile likelihood bounds for parameter 11 (dgy)
+
+                  MLE     0.2647
+
+               97.5% lower bound not found last estimate    -0.2381 Deviance  1956.476
+               97.5% upper bound       1.402
+
+
+bounds 12@
+      Profile likelihood bounds for parameter 12 (dgy)
+
+                  MLE    0.09466    exp(MLE)      1.099
+
+               97.5% lower bound     0.01775
+                       exp(bound)      1.018
+               97.5% upper bound      0.1865
+                       exp(bound)      1.205
+
+
+
+
+!Figure 1 points (bounds not needed) but add 1 to estimates
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n  @
+line 1 dct7@
+logl 1 ex5@
+para 11=0@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14934.549
+             1     0     3842.688
+             2     0     2485.132
+             3     0     2191.319
+             4     0     2136.631
+             5     0     2128.487
+             6     0     2128.154
+             7     0     2128.154
+             8     0     2128.154
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.066      0.3002     -13.54    < 0.001
+ 3 SEX_L_1..................         0.2743      0.1349      2.033     0.0421
+ 5 UR_RUR_1.................         0.4314      0.1518      2.842    0.00448
+ 7 obl_86n_2................        -0.1948      0.2096    -0.9295      0.353
+ 8 obl_86n_3................        -0.4202      0.3043     -1.381      0.167
+ 9 lage21...................          6.736       1.324      5.086    < 0.001
+10 ex5......................        -0.1538     0.05759      -2.67    0.00758
+
+Linear term 1
+11 dct7_1...................          0.000       Fixed     -0.1566      > 0.5
+12 dct7_2...................        -0.2657      0.1994     -1.332      0.183
+13 dct7_3...................         0.7041      0.5375       1.31       0.19
+14 dct7_4...................         0.3910      0.4659     0.8391      0.401
+15 dct7_5...................          2.078       1.086      1.913     0.0557
+16 dct7_6...................          2.013        1.28      1.573      0.116
+17 dct7_7...................          7.359       3.714      1.982     0.0475
+
+Log-linear term 1
+18 ex5......................        -0.2754     0.07961     -3.459    < 0.001
+
+            Records used        10773
+
+                Deviance     2128.154
+                     AIC     2156.154
+            Pearson Chi2     10267.66      Degrees of freedom   10759
+
+
+
+
+
+!Figure 1 points (bounds not needed) but add 1 to estimates
+! test dcat8
+
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n @
+line 1 dct8@
+logl 1 ex5@
+para 11=0@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14934.549
+             1     0     3842.122
+             2     0     2484.218
+             3     0     2187.411
+             4     0     2131.062
+             5     0     2131.062
+             6     0     2131.062
+             7     0     2131.062
+             8     0     2131.062
+             9     0     2131.062
+            10     0     2131.062
+            11     0     2131.062
+            12     0     2131.062
+            13     0     2131.062
+            14     0     2131.062
+            15     0     2131.062
+            16     0     2131.062
+            17     0     2131.062
+            18     0     2131.062
+            19     0     2131.062
+            20     0     2131.062
+            21     0     2131.062
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -4.008      0.2877     -13.93    < 0.001
+ 3 SEX_L_1..................         0.2264      0.1301      1.741     0.0818
+ 5 UR_RUR_1.................         0.3768      0.1462      2.578    0.00995
+ 7 obl_86n_2................        -0.1602      0.2017    -0.7944      0.427
+ 8 obl_86n_3................        -0.3449      0.2903     -1.188      0.235
+ 9 lage21...................          4.912       1.233      3.984    < 0.001
+10 ex5......................       -0.09701     0.05458     -1.777     0.0755
+
+Linear term 1
+11 dct8_1...................          0.000       Fixed      -1.451      0.147
+12 dct8_2...................       -0.04543      0.2072    -0.2192      > 0.5
+13 dct8_3...................         0.4875      0.4199      1.161      0.246
+14 dct8_4...................         0.3126      0.3682      0.849      0.396
+15 dct8_5...................          1.153      0.7607      1.516       0.13
+16 dct8_6...................          1.180      0.8926      1.322      0.186
+17 dct8_7...................          1.016       1.377     0.7374      0.461
+18 dct8_8...................          5.408        3.58      1.511      0.131
+
+Log-linear term 1
+19 ex5......................        -0.3146      0.1185     -2.655    0.00793
+
+            Records used        10773
+
+                Deviance     2131.062
+                     AIC     2161.062
+            Pearson Chi2     8919.434      Degrees of freedom   10758
+
+
+
+ *** WARNING: The total score at the last iteration is 6.56876
+
+ *** WARNING: Parameter dct8_8 changed by 50.2% MLE may be infinite or may not exist
+
+
+
+mean dgy by dct8 @
+Using (thcount>1 or thnod_prev==0)
+
+           Summary for dgy
+
+ dct8          Mean      Std. Dev.        Count      Minimum      Maximum
+    1     0.0432056      0.028382          3036   0.00054000     0.099950
+    2      0.166604      0.043235          2182      0.10006      0.24998
+    3      0.363441      0.071346          2007      0.25000      0.49963
+    4      0.707604       0.13988          1710      0.50035      0.99980
+    5       1.38684       0.26964          1105       1.0006       1.9991
+    6       2.74491       0.54469           514       2.0042       3.9880
+    7       4.95338       0.56123           122       4.0111       5.9905
+    8       10.3018        5.1413            97       6.0108       38.900
+
+
+
+! Points and CIs for Figure 2 multiple 
+
+nomodel@
+logl 0 sex_l lage21  exct4 ur_rur obl_86n @
+line 1 dgy@
+logl 1 exct4@
+para 14=1@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    19584.351
+             1     0     4849.282
+             2     0     3151.723
+             3     0     2331.930
+             4     0     2159.397
+             5     0     2128.175
+             6     0     2124.695
+             7     0     2124.462
+             8     0     2124.417
+             9     0     2124.400
+            10     0     2124.393
+            11     0     2124.389
+            12     0     2124.388
+            13     0     2124.387
+            14     0     2124.386
+            15     0     2124.386
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (thcount>1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -21.76     Aliased
+ 3 SEX_L_1..................         0.2828      0.1354      2.089     0.0367
+ 5 exct4_2..................          17.59      0.7128      24.69    < 0.001
+ 6 exct4_3..................          16.29      0.6464       25.2    < 0.001
+ 7 exct4_4..................          17.37      0.2537      68.47    < 0.001
+ 9 UR_RUR_1.................         0.4364      0.1519      2.874    0.00405
+11 obl_86n_2................        -0.2380      0.2049     -1.161      0.246
+12 obl_86n_3................        -0.3874      0.3005     -1.289      0.197
+13 lage21...................          2.965       0.476      6.229    < 0.001
+
+Linear term 1
+14 dgy......................          1.000     Aliased
+
+Log-linear term 1
+15 exct4_1..................          18.47      0.4942      37.37    < 0.001
+16 exct4_2..................        0.06859       1.116    0.06145      > 0.5
+17 exct4_3..................          1.342       0.824      1.629      0.103
+18 exct4_4..................         -1.626      0.8005     -2.031     0.0423
+
+            Records used        10773
+
+                Deviance     2124.386
+                     AIC     2148.386
+            Pearson Chi2     10349.73      Degrees of freedom   10761
+
+
+
+
+ *** WARNING: Parameter exct4_3 changed by 172.2% MLE may be infinite or may not exist
+
+
+bounds 15@ 
+      Profile likelihood bounds for parameter 15 (exct4_1)
+
+                  MLE      18.47    exp(MLE)   1.05e+08
+
+               97.5% lower bound       17.45
+                       exp(bound)  3.779e+07
+               97.5% upper bound not found last estimate      37.31 Deviance 18354.955
+
+
+ *** WARNING: Parameter obl_86n_3 changed by -18299791.0% MLE may be infinite or may not exist
+
+
+bounds 16@ 
+      Profile likelihood bounds for parameter 16 (exct4_2)
+
+                  MLE    0.06859    exp(MLE)      1.071
+
+               97.5% lower bound      -2.149
+                       exp(bound)     0.1166
+               97.5% upper bound       2.537
+                       exp(bound)      12.64
+
+
+bounds 17@ 
+      Profile likelihood bounds for parameter 17 (exct4_3)
+
+                  MLE      1.342    exp(MLE)      3.826
+
+               97.5% lower bound     -0.2026
+                       exp(bound)     0.8166
+               97.5% upper bound       3.555
+                       exp(bound)         35
+
+
+bounds 18@
+      Profile likelihood bounds for parameter 18 (exct4_4)
+
+                  MLE     -1.626    exp(MLE)     0.1968
+
+               97.5% lower bound  -5.036e+06
+                       exp(bound)          0
+               97.5% upper bound       -0.51
+                       exp(bound)     0.6005
+
+
 
 
 

@@ -1,0 +1,358 @@
+! Figure 1 and 2
+! Model building for benign and neoplastic nodules, whole dose range
+
+new @
+
+names 
+IDN	
+byear AGE_EXM	AGE_EXP	YEAR_EXM 
+SEX_L	
+OBL_M	OBL_86	UR_RUR	ur_rur86
+thnod_prev	max_size nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+DOSE_GYAV_S		
+IODINE	tvolume TSH	TG	atg 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+@
+
+skip 1 @
+
+input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+Input from C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv
+
+       11422 records read       11421 records used
+                                    1 records rejected
+
+40 variables defined  At least 500 additional variables can be created.
+
+
+
+tran dgy=dose_gyav_s;
+     dgysq=dgy*dgy;
+     ex2=(age_exp-2);
+     ex4=(age_exp-4);
+     ex5=(age_exp-5);
+     ex8=(age_exp-8);
+     ex8sq=ex8*ex8;
+     age21=(age_exm-21);
+     age21sq=age21*age21;
+     lage21 = log(age_exm/21) ;
+     lage21sq = lage21^2 ;
+     tvol13=(tvolume-13);
+     tvol13sq=tvol13*tvol13;
+     yob1983=(byear-1983);
+
+     if any_fhf1==-1 then any_fhf1=2 !2 recoded to missing
+     endif; 
+
+     if smoke_f==-1 then smoke_f=2
+     endif;
+     
+     if ismiss(goiter_df_pal)==1 then goiter_df_pal=2
+     endif;
+
+
+     if obl_m==1 then obl_mn=2 !Gomel
+     elif obl_m==2 or obl_m==4 then obl_mn=1 !Minsk
+     else obl_mn=3 !Mogilev and others
+     endif;
+
+     if obl_86==1 then obl_86n=2 !Gomel
+     elif obl_86==2 or obl_86==4 then obl_86n=1 !Minsk
+     else obl_86n=3 !Mogilev and others
+     endif;
+
+     if ur_rur86==1 then ur_rur86n=1 !Rural
+     elif ur_rur86==2 or ur_rur86==3 or ur_rur86==4 then ur_rur86n=2 !Urban
+     endif;
+
+     if tvolume>=18 and sex_l==1 then tvlarge=1 !Thyroid enlargement for women
+     elif tvolume>=25 and sex_l==0 then tvlarge=1  !Thyroid enlargement for men
+     else tvlarge=0 !Normal thyroid
+     endif;
+
+     iod100=(iodine-100);
+     iod60=(iodine-60);
+     iodinen=iodine;
+     if ismiss(iodine)==1 then iodinen=9999
+     endif; 
+
+
+@
+ 
+levels   
+SEX_L	 
+OBL_M	obl_mn OBL_86 obl_86n	UR_RUR	ur_rur86 ur_rur86n
+thnod_prev nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+tvlarge 
+@
+
+SEX_L has 2 levels from 0 to 1
+OBL_M has 5 levels from 1 to 5
+obl_mn has 3 levels from 1 to 3
+OBL_86 has 8 levels from 1 to 8
+obl_86n has 3 levels from 1 to 3
+UR_RUR has 2 levels from 0 to 1
+ur_rur86 has 4 levels from 1 to 4
+ur_rur86n has 2 levels from 1 to 2
+thnod_prev has 2 levels from 0 to 1
+nod_sz has 3 levels from 0 to 2
+nod_sz3 has 4 levels from 0 to 3
+thcount has 5 levels from 0 to 4
+nod_neohc has 2 levels from 0 to 1
+nod_neo has 2 levels from 0 to 1
+tc has 4 levels from 0 to 3
+prevcases has 2 levels from 0 to 1
+FA_PREV has 2 levels from 0 to 1
+SMOKE_F has 3 levels from 0 to 2
+VITAM_F has 2 levels from 0 to 1
+AIT_TOTF has 3 levels from -1 to 1
+goiter_df_pal has 3 levels from 0 to 2
+NDG_RELF has 3 levels from -1 to 1
+ANY_FHF1 has 3 levels from 0 to 2
+Cytology has 2 levels from 1 to 2
+CytologyRecomend has 2 levels from 0 to 1
+Operat has 2 levels from 1 to 2
+OperatRecomend has 2 levels from 0 to 1
+RefOnko has 4 levels from 0 to 3
+fnb has 3 levels from 1 to 3
+tvlarge has 2 levels from 0 to 1
+
+categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+dobyrct has 5 levels from 1 to 5
+
+categ age_exm as agect </ 18/ 25/ > @
+agect has 3 levels from 1 to 3
+
+categ age_exp as exct </2/5/ > @ 
+exct has 3 levels from 1 to 3
+
+categ age_exp as exct4 </1/2/5 > @ 
+exct4 has 4 levels from 1 to 4
+
+categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+yearexmct has 5 levels from 1 to 5
+
+categ tvolume as tvct </ 8/ 10/ 14/ > @
+tvct has 4 levels from 1 to 4
+
+categ iodinen as iodct </20/9998> @
+iodct has 3 levels from 1 to 3
+
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+dct7 has 7 levels from 1 to 7
+
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/ 6.000/ > @
+dct7 has 8 levels from 1 to 8
+
+
+@
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+dct7 has 7 levels from 1 to 7
+
+categ dgy as dct8  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/ 6.000/ > @
+dct8 has 8 levels from 1 to 8
+
+
+@
+select (nod_neo==1 or thnod_prev==0)@
+10641 records to be used
+
+
+
+cases thnod_prev @
+
+freq  thnod_prev @
+
+Using (nod_neo==1 or thnod_prev==0)
+
+  FOR: thnod_prev
+  Level     Freq     %      Cum %
+      0       10540   99.05    99.05
+      1         101    0.95   100.00
+  Total       10641
+
+
+
+! Background
+! A priori: sex_l lage21  ex5 ur_rur obl_86n  
+! To examine: iodine,  tvlarge, goiter_df_pal,any_fhf1, vitam_f
+
+
+!Iodine
+select (nod_neo==1 or thnod_prev==0) and ismiss(iodine)==0@
+10503 records to be used
+
+
+select (nod_neo==1 or thnod_prev==0)@ !Does not change risk estimate
+10641 records to be used
+
+
+! dcat8 test
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dct8@
+logl 1 ex5@
+para 19=0@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    14751.558
+             1     0     3185.862
+             2     0     1597.803
+             3     0     1161.430
+             4     0     1046.717
+             5     0     1023.494
+             6     0     1020.873
+             7     0     1020.590
+             8     0     1020.472
+             9     0     1020.412
+            10     0     1020.382
+            11     0     1020.369
+            12     0     1020.366
+            13     0     1020.364
+            14     0     1020.364
+            15     0     1020.364
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (nod_neo==1 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -5.460      0.5466      -9.99    < 0.001
+ 3 SEX_L_1..................         0.1319      0.2085     0.6327      > 0.5
+ 5 UR_RUR_1.................        -0.4229      0.2161     -1.957     0.0504
+ 7 obl_86n_2................         0.4264      0.4557     0.9357      0.349
+ 8 obl_86n_3................        -0.5025      0.6672    -0.7531      0.451
+10 tvlarge_1................         0.5435      0.3218      1.689     0.0912
+12 goiter_df_pal_1..........          1.614      0.2338      6.904    < 0.001
+13 goiter_df_pal_2..........         -9.572       236.4   -0.04049      > 0.5
+15 ANY_FHF1_1...............         0.8247      0.2651      3.111    0.00186
+16 ANY_FHF1_2...............         0.4369      0.6013     0.7265      0.468
+17 lage21...................          5.288       1.755      3.014    0.00258
+18 ex5......................        -0.1400     0.08196     -1.708     0.0876
+
+Linear term 1
+19 dct8_1...................          0.000       Fixed     -0.8252      0.409
+20 dct8_2...................        -0.1223      0.1133     -1.079      0.281
+21 dct8_3...................         0.2134       0.359     0.5944      > 0.5
+22 dct8_4...................         0.9585      0.7894      1.214      0.225
+23 dct8_5...................          1.975       1.399      1.412      0.158
+24 dct8_6...................          2.042       1.569      1.301      0.193
+25 dct8_7...................          5.506       4.234        1.3      0.193
+26 dct8_8...................          3.510       3.092      1.135      0.256
+
+Log-linear term 1
+27 ex5......................        -0.4367      0.1264     -3.454    < 0.001
+
+            Records used        10641
+
+                Deviance     1020.364
+                     AIC     1060.364
+            Pearson Chi2      9923.42      Degrees of freedom   10621
+
+
+
+
+ *** WARNING: Parameter goiter_df_pal_2 changed by 10.4% MLE may be infinite or may not exist
+
+
+select (nod_neo==0 or thnod_prev==0)@
+11320 records to be used
+
+
+
+cases thnod_prev @
+
+freq  thnod_prev @
+
+Using (nod_neo==0 or thnod_prev==0)
+
+  FOR: thnod_prev
+  Level     Freq     %      Cum %
+      0       10540   93.11    93.11
+      1         780    6.89   100.00
+  Total       11320
+
+
+!Figure 1 points (bounds not needed) but add 1 to estimates
+! dcat8 test
+nomodel@
+logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dct8@
+logl 1 ex5@
+para 19=0@
+fit@ 
+          Iter  Step      Deviance
+
+             0     0    15692.852
+             1     0     6221.867
+             2     0     5356.358
+             3     0     5218.294
+             4     0     5208.155
+             5     0     5208.036
+             6     0     5208.036
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using (nod_neo==0 or thnod_prev==0)
+
+thnod_prev is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................         -3.095      0.1766     -17.52    < 0.001
+ 3 SEX_L_1..................         0.2839     0.07877      3.604    < 0.001
+ 5 UR_RUR_1.................         0.3026     0.08484      3.566    < 0.001
+ 7 obl_86n_2................         0.1107      0.1291     0.8574      0.391
+ 8 obl_86n_3................        -0.2191      0.1803     -1.215      0.224
+10 tvlarge_1................         0.6116      0.1229      4.976    < 0.001
+12 goiter_df_pal_1..........          1.106      0.0952      11.61    < 0.001
+13 goiter_df_pal_2..........        -0.6106       1.031     -0.592      > 0.5
+15 ANY_FHF1_1...............         0.4067      0.1191      3.415    < 0.001
+16 ANY_FHF1_2...............         0.2201      0.2542     0.8658      0.387
+17 lage21...................          6.907      0.7566      9.128    < 0.001
+18 ex5......................        -0.1946     0.03337     -5.831    < 0.001
+
+Linear term 1
+19 dct8_1...................          0.000       Fixed     0.06866      > 0.5
+20 dct8_2...................        0.03257      0.1531     0.2127      > 0.5
+21 dct8_3...................         0.2817      0.2081      1.353      0.176
+22 dct8_4...................         0.2907      0.2214      1.313      0.189
+23 dct8_5...................          1.263      0.4614      2.736    0.00621
+24 dct8_6...................         0.8300      0.4433      1.872     0.0611
+25 dct8_7...................          2.177       1.156      1.883     0.0597
+26 dct8_8...................          6.187       2.372      2.608    0.00911
+
+Log-linear term 1
+27 ex5......................        -0.2791     0.06654     -4.195    < 0.001
+
+            Records used        11320
+
+                Deviance     5208.036
+                     AIC     5248.036
+            Pearson Chi2     11300.04      Degrees of freedom   11300
+
+
+
