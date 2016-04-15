@@ -116,8 +116,8 @@ scalar lin_dgyb=0.576
 
 gen linrad= lin_dgyb*dgy+1
 
-twoway	(rcap dct8_upp_rad dct8_low_rad dgy) ///
-		(scatter dct8_all_rad dgy) ///
+twoway	(rcap dct8_upp_rad dct8_low_rad dgy)  ///
+		(scatter dct8_all_rad dgy, mc(black)) ///
 		(line linrad dgy, ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
@@ -128,8 +128,8 @@ twoway	(rcap dct8_upp_rad dct8_low_rad dgy) ///
 			xti("{bf} Thyroid dose (Gy)") ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) ///
-			legend(col(1) pos(10) ring (0) size (small) ) ///
-			name(Fig1A, replace) graphregion(fc(white) margin( 1 1 2 1 )) 
+			legend(col(1) pos(10) ring (0) size (medsmall) ) ///
+			name(Fig1A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
 
 !!!!!!! Nodules by behavior: non-neoplastic, neoplastic
 
@@ -232,10 +232,11 @@ scalar lin_dgy_mal_b=1.142
 
 gen linrad_ben= lin_dgy_ben_b*dgy+1
 gen linrad_mal= lin_dgy_mal_b*dgy+1
+replace linrad_mal=. if linrad_mal > 12
 
 twoway	(scatter dct8_ben_rad dgy, mc(black)) ///
 		(line linrad_ben dgy, ///
-		 lpattern( solid ) ///
+		 lpattern( solid ) /// 
 		 lcol(black*0.75 ) ///
 		 lw(medthick)) ///
 		(scatter dct8_mal_rad dgy, mc(gray)) ///
@@ -245,12 +246,12 @@ twoway	(scatter dct8_ben_rad dgy, mc(black)) ///
 		 lw(medthick)) , ///
 			ti("{bf}Behavior ", pos(11) ring(1))  ///
 			yti("{bf}Odds ratio* ")  ///
-			yla(0 (2) 14,ang(1)) ///
+			yla(0 (2) 12,ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)") ///
 			xla(0 (2) 12) ///
-			legend(region(lwidth(none)) order(2 "Benign" 4 "Malignant")) ///
-			legend(col(1) pos(10) ring (0) size (small) ) ///
-			name(Fig1B, replace) graphregion(fc(white) margin( 1 1 2 1 ))
+			legend(region(lwidth(none)) order(2 "Non-neoplastic" 4 "Neoplastic")) ///
+			legend(col(1) pos(10) ring (0) size (medsmall) ) ///
+			name(Fig1B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 !!!!!!! Nodules by size: small, large
 
@@ -353,6 +354,7 @@ scalar lin_dgy_lar_b=1.689
 
 gen linrad_sma= lin_dgy_sma_b*dgy+1
 gen linrad_lar= lin_dgy_lar_b*dgy+1
+replace linrad_lar=. if linrad_lar > 16
 
 twoway	(scatter dct8_sma_rad dgy, mc(black)) ///
 		(line linrad_sma dgy, ///
@@ -366,12 +368,12 @@ twoway	(scatter dct8_sma_rad dgy, mc(black)) ///
 		 lw(medthick)), ///
 			ti("{bf}Size ", pos(11) ring(1))  ///
 			yti("{bf}Odds ratio* ")  ///
-			yla(0 (2) 20, ang(1)) ///
+			yla(0 (2) 16, ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)") ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Small" 4 "Large" )) ///
-			legend(col(1) pos(10) ring (0) size (small) ) ///
-			name(Fig1C, replace) graphregion(fc(white) margin( 1 1 14 2 )) 
+			legend(col(1) pos(10) ring (0) size (medsmall) ) ///
+			name(Fig1C, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 !!!!!!! Nodules by singularity: single, multiple
 
@@ -501,15 +503,16 @@ twoway	(scatter dct8_sin_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)") ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Single" 4 "Multiple" 5 "Multiple, L-E")) ///
-			legend(col(1) pos(10) ring (0) size (small) ) ///
-			name(Fig1D, replace) graphregion(fc(white) margin( 3 1 14 2 )) 
+			legend(col(1) pos(10) ring (0) size (medsmall) ) ///
+			name(Fig1D, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 graph combine Fig1A Fig1B Fig1C Fig1D, ///
 	cols(2) ///
 	/// title("Figure 1. Thyroid nodule risk by thyroid dose (Gy) by nodule type", size(medium)) ///
-	note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid}" "{stSerif: enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small) ring(0))  ///
-	iscale(*0.75) ///
+	///note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid}" "{stSerif: enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small) ring(0))  ///
+	iscale(*0.71) ///
 	name(Fig1all, replace) graphregion(ic(white)) ///
+	ysize(5) xsize(5.5)
 	
 
 /***
