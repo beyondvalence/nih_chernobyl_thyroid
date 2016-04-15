@@ -128,7 +128,7 @@ twoway	(rcap dct8_upp_rad dct8_low_rad dgy)  ///
 			xti("{bf} Thyroid dose (Gy)") ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs" 3 "Linear" )) ///
-			legend(col(1) pos(10) ring (0) size (medsmall) ) ///
+			legend(col(1) pos(10) ring (0) size (4) symxsize(4) keygap(0.7)) ///
 			name(Fig1A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
 
 !!!!!!! Nodules by behavior: non-neoplastic, neoplastic
@@ -250,7 +250,7 @@ twoway	(scatter dct8_ben_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)") ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Non-neoplastic" 4 "Neoplastic")) ///
-			legend(col(1) pos(10) ring (0) size (medsmall) ) ///
+			legend(col(1) pos(10) ring (0) size (5) symxsize(4) keygap(0.7)) ///
 			name(Fig1B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 !!!!!!! Nodules by size: small, large
@@ -372,7 +372,7 @@ twoway	(scatter dct8_sma_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)") ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Small" 4 "Large" )) ///
-			legend(col(1) pos(10) ring (0) size (medsmall) ) ///
+			legend(col(1) pos(10) ring (0) size (5) symxsize(4) keygap(0.7) ) ///
 			name(Fig1C, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 !!!!!!! Nodules by singularity: single, multiple
@@ -503,7 +503,7 @@ twoway	(scatter dct8_sin_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)") ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Single" 4 "Multiple" 5 "Multiple, L-E")) ///
-			legend(col(1) pos(10) ring (0) size (medsmall) ) ///
+			legend(col(1) pos(10) ring (0) size (5) symxsize(4) keygap(0.7) ) ///
 			name(Fig1D, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 graph combine Fig1A Fig1B Fig1C Fig1D, ///
