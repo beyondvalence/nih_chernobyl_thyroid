@@ -372,7 +372,7 @@ twoway	(scatter dct8_sma_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Small, <10 mm" 4 "Large, 10+ mm" )) ///
-			legend(col(1) pos(10) ring (0) size (5.1) symxsize(5) keygap(0.7) textw(17.8) ) ///
+			legend(col(1) pos(11) ring (0) size (4.9) symxsize(4.7) keygap(0.6) textw(17.7) ) ///
 			name(Fig1C, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 !!!!!!! Nodules by singularity: single, multiple
@@ -496,7 +496,7 @@ twoway	(scatter dct8_sin_rad dgy, mc(black)) ///
 		(line lerad_mul dgy, ///
 		 lpattern(shortdash) ///
 		 lcol(black ) ///
-		 lw(thick)) , ///
+		 lw(medthick)) , ///
 			ti("{bf}Singularity ", pos(11) ring(1) size(5.7) )  ///
 			yti("{bf}Odds ratio*" , size(4.7) )  ///
 			yla(0 (2) 10, ang(1)) ///
@@ -510,7 +510,7 @@ graph combine Fig1A Fig1B Fig1C Fig1D, ///
 	cols(2) ///
 	/// title("Figure 1. Thyroid nodule risk by thyroid dose (Gy) by nodule type", size(medium)) ///
 	///note("{stSerif:* Adjusted for sex, log age at screening, year of birth, urbanicity at screening, oblast at time of accident, thyroid}" "{stSerif: enlargement goiter detected at screening, and family history of thyroid disease for a person age 5 at time of accident.}", size(small) ring(0))  ///
-	iscale(*0.71) ///
+	iscale(*0.75) ///
 	name(Fig1all, replace) graphregion(ic(white)) ///
 	ysize(5) xsize(5.5)
 	
