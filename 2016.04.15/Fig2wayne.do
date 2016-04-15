@@ -66,11 +66,11 @@ twoway	(rcap exct4hirad exct4lorad age_exp) ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )), ///
-			ti("{bf}All nodules ", pos(11) ring(1))  ///
-			yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0 (2) 10) ///
-			legend(region(lwidth(none)) order(2 "Categorical ORs and 95%CIs") col(1) pos(1) ring (0) ) ///
+			ti("{bf}All nodules ", pos(11) ring(1) size(5.7) )  ///
+			yti("{bf}Odds ratio*", size(4.7) )  yla(,ang(0)) ylab(0 (2) 10) ///
+			legend(region(lwidth(none)) order(2 "ORs and 95%CIs") col(1) pos(1) ring (0) ) ///
 			legend( size (5.5) symxsize(5) keygap(0.7) ) ///
-			xti("{bf}Age at time of accident") xlab(0 (2) 12) ///
+			xti("{bf}Age at time of accident", size(4.7) ) xlab(0 (2) 12) ///
 			name(Fig2A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
 
 !!!!!!!!!! Nodules by behavior: benign / malignant
@@ -136,11 +136,11 @@ twoway	(scatter exct4_ben_rad age_exp, mc(black)) ///
 		 lpattern( solid ) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick )), ///
-			ti("{bf}Behavior ", pos(11) ring(1))  ///
-			yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0 (2) 10) ///
+			ti("{bf}Behavior ", pos(11) ring(1) size(5.7) )  ///
+			yti("{bf}Odds ratio*", size(4.7) )  yla(,ang(0)) ylab(0 (2) 10) ///
 			legend(region(lwidth(none)) order(2 "Non-neoplastic" 4 "Neoplastic") col(1) pos(1) ring (0) ) ///
 			legend( size (5.5) symxsize(5) keygap(0.7) ) ///
-			xti("{bf}Age at time of accident") xlab(0 (2) 12) ///
+			xti("{bf}Age at time of accident", size(4.7) ) xlab(0 (2) 12) ///
 			name(Fig2B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 
@@ -207,11 +207,11 @@ twoway	(scatter exct4_sma_rad age_exp, mc(black)) ///
 		 lpattern( solid ) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick )), ///
-			ti("{bf}Size ", pos(11) ring(1))  ///
-			yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0 (2) 10) ///
-			legend(region(lwidth(none)) order(2 "Small" 4 "Large" ) col(1) pos(1) ring (0) ) ///
+			ti("{bf}Size ", pos(11) ring(1) size(5.7) )  ///
+			yti("{bf}Odds ratio*", size(4.7) )  yla(,ang(0)) ylab(0 (2) 10) ///
+			legend(region(lwidth(none)) order(2 "Small, <10 mm" 4 "Large, 10+ mm" ) col(1) pos(1) ring (0) ) ///
 			legend( size (5.5) symxsize(5) keygap(0.7) ) ///
-			xti("{bf}Age at time of accident") xlab(0 (2) 12) ///
+			xti("{bf}Age at time of accident", size(4.7) ) xlab(0 (2) 12) ///
 			name(Fig2C, replace) graphregion(fc(white) margin( 2 3 2 2 ))
 
 
@@ -284,19 +284,19 @@ twoway	(scatter exct4_sin_rad age_exp, mc(black)) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick )) ///
 		(line linErad_mul age_exp, ///
-		 lpattern( dash ) ///
-		 lcol(gray*0.75 ) ///
+		 lpattern( shortdash ) ///
+		 lcol( black ) ///
 		 lw(medthick )), ///
-			ti("{bf}Singularity ", pos(11) ring(1))  ///
-			yti("{bf}Odds ratio* ")  yla(,ang(0)) ylab(0 (2) 10) ///
+			ti("{bf}Singularity ", pos(11) ring(1) size(5.7) )  ///
+			yti("{bf}Odds ratio*", size(4.7) )  yla(,ang(0)) ylab(0 (2) 10) ///
 			legend(region(lwidth(none)) order(2 "Single" 4 "Multiple" 5 "Multiple L-E") col(1) pos(1) ring (0) ) ///
 			legend( size (5.5) symxsize(5) keygap(0.7) ) ///
-			xti("{bf}Age at time of accident") xlab(0 (2) 12) ///
+			xti("{bf}Age at time of accident", size(4.7) ) xlab(0 (2) 12) ///
 			name(Fig2D, replace) graphregion(fc(white) margin( 2 3 2 2 ))
 
 graph combine Fig2A Fig2B Fig2C Fig2D, ///
 	cols(2) ///
-	iscale(*0.77) ///
+	iscale(*0.75) ///
 	name(Fig2all, replace) ///
 	ysize(5) xsize(5.5) ///
 	///title("Figure 2. Thyroid nodule risk by age at time of accident by nodule type", size(medium)) ///
