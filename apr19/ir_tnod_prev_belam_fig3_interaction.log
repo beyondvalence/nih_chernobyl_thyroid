@@ -1,0 +1,2700 @@
+! Fig 3 Interaction p-values
+
+new @
+
+
+names 
+IDN	
+byear AGE_EXM	AGE_EXP	YEAR_EXM 
+SEX_L	
+OBL_M	OBL_86	UR_RUR	ur_rur86
+thnod_prev	max_size nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+DOSE_GYAV_S		
+IODINE	tvolume TSH	TG	atg 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb study
+@
+
+
+skip 1 @
+
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1stacked.csv' @
+
+Input from E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1stacked.csv
+
+       22843 records read       22842 records used
+                                    1 records rejected
+
+41 variables defined  At least 500 additional variables can be created.
+
+
+
+tran dgy=dose_gyav_s;
+     dgysq=dgy*dgy;
+     ex8=(age_exp-8);
+     ex2=(age_exp-2);
+     ex8sq=ex8*ex8;
+     age21=(age_exm-21);
+     age21sq=age21*age21;
+     lage21 = log(age_exm/21) ;
+     tvol13=(tvolume-13);
+     tvol13sq=tvol13*tvol13;
+     yob1983=(byear-1983);
+
+     if any_fhf1==-1 then any_fhf1=2 !2 recoded to missing
+     endif; 
+
+     if smoke_f==-1 then smoke_f=2
+     endif;
+     
+     if ismiss(goiter_df_pal)==1 then goiter_df_pal=2
+     endif;
+
+
+     if obl_m==1 then obl_mn=2 !Gomel
+     elif obl_m==2 or obl_m==4 then obl_mn=1 !Minsk
+     else obl_mn=3 !Mogilev and others
+     endif;
+
+     if obl_86==1 then obl_86n=2 !Gomel
+     elif obl_86==2 or obl_86==4 then obl_86n=1 !Minsk
+     else obl_86n=3 !Mogilev and others
+     endif;
+
+     if ur_rur86==1 then ur_rur86n=1 !Rural
+     elif ur_rur86==2 or ur_rur86==3 or ur_rur86==4 then ur_rur86n=2 !Urban
+     endif;
+
+     if tvolume>=18 and sex_l==1 then tvlarge=1 !Thyroid enlargement for women
+     elif tvolume>=25 and sex_l==0 then tvlarge=1  !Thyroid enlargement for men
+     else tvlarge=0 !Normal thyroid
+     endif;
+
+     iod100=(iodine-100);
+     iod60=(iodine-60);
+     iodinen=iodine;
+     if ismiss(iodine)==1 then iodinen=9999
+     endif; 
+
+     if nod_sz==2   then largenod=2 !large
+     elif nod_sz==1 then largenod=1 !small
+     else largenod=0;
+     endif;
+
+     used_size=1;
+     if study==1 then casess=largenod==2;
+     		if largenod==1 then used_size=0;
+     		endif;
+     else 
+		casess=largenod==1;
+      	if largenod==2 then used_size=0;
+      	endif;
+     endif;	
+
+     if   thnod_prev==1 and nod_neo==1 then neo=2 !neoplastic
+     elif thnod_prev==1 and nod_neo==0 then neo=1 !non-neoplastic
+     else neo=0;
+     endif;
+
+
+     used_beh=1;
+     if study==1 then casesb=neo==2;
+     		if neo==1 then used_beh=0;
+     		endif;
+     else 
+		casesb=neo==1;
+      	if neo==2 then used_beh=0;
+      	endif;
+     endif;	
+
+
+
+     if thcount>1    then multi=2 !multi
+     elif thcount==1 then multi=1 !single
+     else multi=0;
+     endif;
+
+     used_sin=1;
+     if study==1 then casesm=multi==2;
+     		if multi==1 then used_sin=0;
+     		endif;
+     else 
+		casesm=multi==1;
+      	if multi==2 then used_sin=0;
+      	endif;
+     endif;	
+
+@
+
+ 
+levels   
+SEX_L	 
+OBL_M	obl_mn OBL_86 obl_86n	UR_RUR	ur_rur86 ur_rur86n
+thnod_prev nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+tvlarge largenod
+study used_size used_beh used_sin
+@
+
+SEX_L has 2 levels from 0 to 1
+OBL_M has 5 levels from 1 to 5
+obl_mn has 3 levels from 1 to 3
+OBL_86 has 8 levels from 1 to 8
+obl_86n has 3 levels from 1 to 3
+UR_RUR has 2 levels from 0 to 1
+ur_rur86 has 4 levels from 1 to 4
+ur_rur86n has 2 levels from 1 to 2
+thnod_prev has 2 levels from 0 to 1
+nod_sz has 3 levels from 0 to 2
+nod_sz3 has 4 levels from 0 to 3
+thcount has 5 levels from 0 to 4
+nod_neohc has 2 levels from 0 to 1
+nod_neo has 2 levels from 0 to 1
+tc has 4 levels from 0 to 3
+prevcases has 2 levels from 0 to 1
+FA_PREV has 2 levels from 0 to 1
+SMOKE_F has 3 levels from 0 to 2
+VITAM_F has 2 levels from 0 to 1
+AIT_TOTF has 3 levels from -1 to 1
+goiter_df_pal has 3 levels from 0 to 2
+NDG_RELF has 3 levels from -1 to 1
+ANY_FHF1 has 3 levels from 0 to 2
+Cytology has 2 levels from 1 to 2
+CytologyRecomend has 2 levels from 0 to 1
+Operat has 2 levels from 1 to 2
+OperatRecomend has 2 levels from 0 to 1
+RefOnko has 4 levels from 0 to 3
+fnb has 3 levels from 1 to 3
+tvlarge has 2 levels from 0 to 1
+largenod has 3 levels from 0 to 2
+study has 2 levels from 1 to 2
+used_size has 2 levels from 0 to 1
+used_beh has 2 levels from 0 to 1
+used_sin has 2 levels from 0 to 1
+
+categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+
+dobyrct has 5 levels from 1 to 5
+
+categ age_exm as agect </ 18/ 25/ > @
+
+agect has 3 levels from 1 to 3
+
+categ age_exp as exct </ 5/ 12/ > @
+
+exct has 3 levels from 1 to 3
+
+categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+
+yearexmct has 5 levels from 1 to 5
+
+categ tvolume as tvct </ 8/ 10/ 14/ > @
+
+tvct has 4 levels from 1 to 4
+
+categ iodinen as iodct </20/9998> @
+
+iodct has 3 levels from 1 to 3
+
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+
+dct7 has 7 levels from 1 to 7
+
+
+
+! effect modification by nodule size
+
+select used_size and dgy<4@
+
+21501 records to be used
+
+
+cases casess @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29806.715
+             1     0     9316.895
+             2     0     7117.807
+             3     0     6773.406
+             4     0     6712.524
+             5     0     6710.507
+             6     0     6710.480
+             7     0     6710.480
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6615      0.1338      4.944    < 0.001
+ 4 study_2 * SEX_L_0........         -2.240      0.1035     -21.64    < 0.001
+ 5 study_2 * SEX_L_1........         -1.917     0.09343     -20.52    < 0.001
+ 6 study_1 * UR_RUR_0.......        0.06413      0.1364     0.4701      > 0.5
+ 7 study_1 * UR_RUR_1.......          0.000     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.3464     0.09698     -3.572    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.417      0.1651     -26.75    < 0.001
+11 study_1 * obl_mn_2.......         -4.427      0.1528     -28.97    < 0.001
+12 study_1 * obl_mn_3.......         -4.235      0.2134     -19.84    < 0.001
+13 study_2 * obl_mn_1.......         -1.001       0.108     -9.271    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.365      0.1591     -8.585    < 0.001
+16 study_1 * lage21.........          2.246      0.3208      7.002    < 0.001
+17 study_2 * lage21.........          2.689      0.2513       10.7    < 0.001
+
+Linear term 1
+18 dgy......................          1.213      0.3501      3.465    < 0.001
+
+Log-linear term 1
+19 ex2......................        -0.2096      0.0582     -3.602    < 0.001
+
+            Records used        21501
+
+                Deviance      6710.48
+                     AIC      6738.48
+            Pearson Chi2     21198.22      Degrees of freedom   21487
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6789.519
+             1     0     6707.168
+             2     0     6703.589
+             3     0     6703.463
+             4     0     6703.462
+             5     0     6703.462
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6763      0.1342      5.041    < 0.001
+ 4 study_2 * SEX_L_0........         -2.144      0.1043     -20.57    < 0.001
+ 5 study_2 * SEX_L_1........         -1.827     0.09439     -19.36    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.1070      0.2064    -0.5186      > 0.5
+ 7 study_1 * UR_RUR_1.......        -0.1162      0.1929    -0.6022      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3213     0.09693     -3.315    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.458      0.1697     -26.28    < 0.001
+11 study_1 * obl_mn_2.......         -4.562     Aliased
+12 study_1 * obl_mn_3.......         -4.333       0.189     -22.92    < 0.001
+13 study_2 * obl_mn_1.......         -1.041      0.1086     -9.584    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.382      0.1589     -8.692    < 0.001
+16 study_1 * lage21.........          2.942       0.471      6.246    < 0.001
+17 study_2 * lage21.........          2.408       0.255      9.443    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          3.107       1.312      2.368     0.0179
+19 study_2 * dgy............         0.6719       0.291      2.309      0.021
+
+Log-linear term 1
+20 ex2......................        -0.2127     0.05414     -3.929    < 0.001
+
+            Records used        21501
+
+                Deviance     6703.462
+                     AIC     6733.462
+            Pearson Chi2     21352.59      Degrees of freedom   21486
+
+
+
+lrt@ 
+             LR statistic       7.018      Degrees of freedom      1
+                  P value     0.00807
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6879.723
+             1     0     6731.645
+             2     0     6705.889
+             3     0     6703.037
+             4     0     6702.897
+             5     0     6702.888
+             6     0     6702.887
+             7     0     6702.887
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6780      0.1342      5.052    < 0.001
+ 4 study_2 * SEX_L_0........         -2.128      0.1034     -20.57    < 0.001
+ 5 study_2 * SEX_L_1........         -1.814     0.09368     -19.36    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.1052       0.206    -0.5109      > 0.5
+ 7 study_1 * UR_RUR_1.......        -0.1115      0.1924    -0.5798      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3119     0.09704     -3.214    0.00131
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.459      0.1698     -26.26    < 0.001
+11 study_1 * obl_mn_2.......         -4.562     Aliased
+12 study_1 * obl_mn_3.......         -4.329      0.1891     -22.89    < 0.001
+13 study_2 * obl_mn_1.......         -1.046      0.1084     -9.653    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.387      0.1589      -8.73    < 0.001
+16 study_1 * lage21.........          2.852      0.4871      5.856    < 0.001
+17 study_2 * lage21.........          2.420      0.2573      9.407    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          2.880       1.269       2.27     0.0232
+19 study_2 * dgy............         0.6756      0.2968      2.276     0.0228
+
+Log-linear term 1
+20 study_1 * ex2............        -0.1917     0.06077     -3.155    0.00161
+21 study_2 * ex2............        -0.3137       0.164     -1.913     0.0557
+
+            Records used        21501
+
+                Deviance     6702.887
+                     AIC     6734.887
+            Pearson Chi2     21324.43      Degrees of freedom   21485
+
+
+
+lrt@
+
+! effect modification by behavior
+
+
+             LR statistic      0.5756      Degrees of freedom      1
+                  P value       0.448
+
+select used_beh  and dgy<4@
+
+21501 records to be used
+
+
+cases casesb @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29806.715
+             1     0     9210.841
+             2     0     6862.493
+             3     0     6402.136
+             4     0     6277.850
+             5     0     6265.658
+             6     0     6265.303
+             7     0     6265.302
+             8     0     6265.302
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_beh  and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3455      0.2139      1.615      0.106
+ 4 study_2 * SEX_L_0........         -2.252     0.09706     -23.21    < 0.001
+ 5 study_2 * SEX_L_1........         -1.817     0.08634     -21.05    < 0.001
+ 6 study_1 * UR_RUR_0.......         0.4778     Aliased
+ 7 study_1 * UR_RUR_1.......       -0.06668      0.2296    -0.2905      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3133     0.08604     -3.642    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -5.201      0.3098     -16.79    < 0.001
+11 study_1 * obl_mn_2.......         -5.379      0.2084     -25.81    < 0.001
+12 study_1 * obl_mn_3.......         -5.545      0.3714     -14.93    < 0.001
+13 study_2 * obl_mn_1.......        -0.8420     0.09781     -8.608    < 0.001
+14 study_2 * obl_mn_2.......        -0.8063     Aliased
+15 study_2 * obl_mn_3.......        -0.9910      0.1304     -7.597    < 0.001
+16 study_1 * lage21.........          1.133      0.4588      2.469     0.0136
+17 study_2 * lage21.........          2.731      0.2377      11.49    < 0.001
+
+Linear term 1
+18 dgy......................          1.170      0.3451      3.391    < 0.001
+
+Log-linear term 1
+19 ex2......................        -0.2037     0.05885     -3.462    < 0.001
+
+            Records used        21501
+
+                Deviance     6265.302
+                     AIC     6293.302
+            Pearson Chi2     20739.77      Degrees of freedom   21487
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6341.429
+             1     0     6263.899
+             2     0     6260.012
+             3     0     6259.596
+             4     0     6259.591
+             5     0     6259.591
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_beh  and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3681      0.2146      1.716     0.0862
+ 4 study_2 * SEX_L_0........         -2.196     0.09673      -22.7    < 0.001
+ 5 study_2 * SEX_L_1........         -1.765     0.08616     -20.48    < 0.001
+ 6 study_1 * UR_RUR_0.......         0.4778     Aliased
+ 7 study_1 * UR_RUR_1.......        0.04347      0.2333     0.1863      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.2988     0.08594     -3.477    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -5.581      0.3715     -15.02    < 0.001
+11 study_1 * obl_mn_2.......         -5.912      0.3452     -17.13    < 0.001
+12 study_1 * obl_mn_3.......         -6.004      0.4459     -13.46    < 0.001
+13 study_2 * obl_mn_1.......        -0.8647     0.09799     -8.824    < 0.001
+14 study_2 * obl_mn_2.......        -0.8063     Aliased
+15 study_2 * obl_mn_3.......         -1.000      0.1303     -7.676    < 0.001
+16 study_1 * lage21.........          2.306      0.7748      2.976    0.00292
+17 study_2 * lage21.........          2.574      0.2354      10.93    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          4.829       2.981       1.62      0.105
+19 study_2 * dgy............         0.8549      0.3016      2.834    0.00459
+
+Log-linear term 1
+20 ex2......................        -0.2079     0.05857     -3.549    < 0.001
+
+            Records used        21501
+
+                Deviance     6259.591
+                     AIC     6289.591
+            Pearson Chi2     20908.24      Degrees of freedom   21486
+
+
+
+lrt@ 
+             LR statistic       5.711      Degrees of freedom      1
+                  P value      0.0169
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6398.062
+             1     0     6281.220
+             2     0     6262.408
+             3     0     6260.108
+             4     0     6259.634
+             5     0     6259.515
+             6     0     6259.490
+             7     0     6259.486
+             8     0     6259.485
+             9     0     6259.485
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_beh  and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3648      0.2146        1.7     0.0892
+ 4 study_2 * SEX_L_0........         -2.199     0.09723     -22.62    < 0.001
+ 5 study_2 * SEX_L_1........         -1.767     0.08644     -20.44    < 0.001
+ 6 study_1 * UR_RUR_0.......         0.4840      0.3456        1.4      0.161
+ 7 study_1 * UR_RUR_1.......        0.04362      0.3337     0.1307      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3006     0.08622     -3.486    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -5.579       0.278     -20.07    < 0.001
+11 study_1 * obl_mn_2.......         -5.912     Aliased
+12 study_1 * obl_mn_3.......         -6.011      0.3615     -16.63    < 0.001
+13 study_2 * obl_mn_1.......        -0.8638     0.09806     -8.808    < 0.001
+14 study_2 * obl_mn_2.......        -0.8063     Aliased
+15 study_2 * obl_mn_3.......        -0.9991      0.1304     -7.659    < 0.001
+16 study_1 * lage21.........          2.452      0.8804      2.785    0.00535
+17 study_2 * lage21.........          2.563      0.2402      10.67    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          5.241       3.515      1.491      0.136
+19 study_2 * dgy............         0.8429      0.3049      2.764     0.0057
+
+Log-linear term 1
+20 study_1 * ex2............        -0.2357     0.08792     -2.681    0.00734
+21 study_2 * ex2............        -0.1946     0.07611     -2.556     0.0106
+
+            Records used        21501
+
+                Deviance     6259.485
+                     AIC     6291.485
+            Pearson Chi2     20946.97      Degrees of freedom   21485
+
+
+
+lrt@
+
+! effect modification by single multiple
+
+
+             LR statistic      0.1062      Degrees of freedom      1
+                  P value      > 0.50
+
+
+! effect modification by single multiple
+
+select used_sin and dgy<4@
+
+21501 records to be used
+
+
+cases casesm @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29806.715
+             1     0     9308.868
+             2     0     7095.837
+             3     0     6727.829
+             4     0     6660.252
+             5     0     6656.993
+             6     0     6656.967
+             7     0     6656.967
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_sin and dgy<4
+
+   casesm is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.2854      0.1381      2.066     0.0388
+ 4 study_2 * SEX_L_0........         -2.364      0.1041     -22.71    < 0.001
+ 5 study_2 * SEX_L_1........         -1.890     0.09177     -20.59    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.4147      0.1547      -2.68    0.00736
+ 7 study_1 * UR_RUR_1.......          0.000     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.1480     0.09208     -1.607      0.108
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.156      0.1608     -25.84    < 0.001
+11 study_1 * obl_mn_2.......         -4.221      0.1518      -27.8    < 0.001
+12 study_1 * obl_mn_3.......         -4.482      0.2584     -17.34    < 0.001
+13 study_2 * obl_mn_1.......        -0.9830      0.1078     -9.122    < 0.001
+14 study_2 * obl_mn_2.......        -0.9342     Aliased
+15 study_2 * obl_mn_3.......         -1.089      0.1404     -7.757    < 0.001
+16 study_1 * lage21.........          3.161      0.3464      9.127    < 0.001
+17 study_2 * lage21.........          2.337      0.2503      9.337    < 0.001
+
+Linear term 1
+18 dgy......................          1.207      0.3509      3.439    < 0.001
+
+Log-linear term 1
+19 ex2......................        -0.2103     0.05881     -3.576    < 0.001
+
+            Records used        21501
+
+                Deviance     6656.967
+                     AIC     6684.967
+            Pearson Chi2     20862.68      Degrees of freedom   21487
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6735.067
+             1     0     6658.150
+             2     0     6656.462
+             3     0     6656.433
+             4     0     6656.432
+             5     0     6656.432
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_sin and dgy<4
+
+   casesm is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.2886      0.1383      2.087     0.0369
+ 4 study_2 * SEX_L_0........         -2.407      0.1069     -22.53    < 0.001
+ 5 study_2 * SEX_L_1........         -1.935     0.09457     -20.46    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.4278      0.1564     -2.735    0.00624
+ 7 study_1 * UR_RUR_1.......          0.000     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.1397     0.09229     -1.514       0.13
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.197      0.1752     -23.96    < 0.001
+11 study_1 * obl_mn_2.......         -4.285      0.1856     -23.09    < 0.001
+12 study_1 * obl_mn_3.......         -4.538      0.2746     -16.53    < 0.001
+13 study_2 * obl_mn_1.......        -0.9227      0.1084     -8.516    < 0.001
+14 study_2 * obl_mn_2.......        -0.8621     Aliased
+15 study_2 * obl_mn_3.......         -1.023      0.1404     -7.282    < 0.001
+16 study_1 * lage21.........          3.354      0.4577      7.328    < 0.001
+17 study_2 * lage21.........          2.264       0.259      8.741    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          1.668      0.8832      1.889     0.0589
+19 study_2 * dgy............          1.054      0.3586      2.938     0.0033
+
+Log-linear term 1
+20 ex2......................        -0.2193     0.06091       -3.6    < 0.001
+
+            Records used        21501
+
+                Deviance     6656.432
+                     AIC     6686.432
+            Pearson Chi2     20912.59      Degrees of freedom   21486
+
+
+
+lrt@ 
+             LR statistic      0.5354      Degrees of freedom      1
+                  P value       0.464
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6798.515
+             1     0     6680.374
+             2     0     6658.088
+             3     0     6655.028
+             4     0     6654.486
+             5     0     6654.366
+             6     0     6654.338
+             7     0     6654.331
+             8     0     6654.330
+             9     0     6654.329
+            10     0     6654.329
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_sin and dgy<4
+
+   casesm is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.2805      0.1382       2.03     0.0424
+ 4 study_2 * SEX_L_0........         -2.418      0.1078     -22.44    < 0.001
+ 5 study_2 * SEX_L_1........         -1.943     0.09509     -20.43    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.3868      0.1555     -2.487     0.0129
+ 7 study_1 * UR_RUR_1.......        0.01509     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.1471     0.09258     -1.589      0.112
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.181      0.1721      -24.3    < 0.001
+11 study_1 * obl_mn_2.......         -4.255      0.1768     -24.07    < 0.001
+12 study_1 * obl_mn_3.......         -4.523      0.2714     -16.66    < 0.001
+13 study_2 * obl_mn_1.......        -0.9191      0.1085      -8.47    < 0.001
+14 study_2 * obl_mn_2.......        -0.8621     Aliased
+15 study_2 * obl_mn_3.......         -1.017      0.1406     -7.231    < 0.001
+16 study_1 * lage21.........          3.407      0.4622      7.372    < 0.001
+17 study_2 * lage21.........          2.214      0.2666      8.305    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          1.787      0.9555       1.87     0.0615
+19 study_2 * dgy............          1.001      0.3539      2.828    0.00469
+
+Log-linear term 1
+20 study_1 * ex2............        -0.4394      0.2032     -2.162     0.0306
+21 study_2 * ex2............        -0.1724     0.06543     -2.635    0.00842
+
+            Records used        21501
+
+                Deviance     6654.329
+                     AIC     6686.329
+            Pearson Chi2     20898.81      Degrees of freedom   21485
+
+
+
+lrt@
+
+! effect modification by size among benign
+
+
+             LR statistic       2.103      Degrees of freedom      1
+                  P value       0.147
+
+select neo ne 2 and used_size and dgy<4@
+
+21410 records to be used
+
+
+cases casess @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29680.562
+             1     0     8879.048
+             2     0     6552.487
+             3     0     6157.329
+             4     0     6059.665
+             5     0     6053.539
+             6     0     6053.455
+             7     0     6053.453
+             8     0     6053.453
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using neo ne 2 and used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.8047      0.1593      5.051    < 0.001
+ 4 study_2 * SEX_L_0........         -2.218      0.1048     -21.17    < 0.001
+ 5 study_2 * SEX_L_1........         -1.906     0.09452     -20.17    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.3773      0.1812     -2.083     0.0373
+ 7 study_1 * UR_RUR_1.......        -0.2966       0.178     -1.667     0.0956
+ 8 study_2 * UR_RUR_0.......        -0.3789     0.09951     -3.808    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.475      0.1914     -23.38    < 0.001
+11 study_1 * obl_mn_2.......         -4.441     Aliased
+12 study_1 * obl_mn_3.......         -4.197      0.2137     -19.64    < 0.001
+13 study_2 * obl_mn_1.......         -1.035      0.1104     -9.376    < 0.001
+14 study_2 * obl_mn_2.......        -0.9708     Aliased
+15 study_2 * obl_mn_3.......         -1.352       0.161     -8.402    < 0.001
+16 study_1 * lage21.........          2.373      0.3628      6.541    < 0.001
+17 study_2 * lage21.........          2.619      0.2555      10.25    < 0.001
+
+Linear term 1
+18 dgy......................         0.8402      0.3003      2.798    0.00515
+
+Log-linear term 1
+19 ex2......................        -0.1928     0.07446     -2.589    0.00961
+
+            Records used        21410
+
+                Deviance     6053.453
+                     AIC     6081.453
+            Pearson Chi2     21224.91      Degrees of freedom   21396
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6093.046
+             1     0     6051.072
+             2     0     6049.529
+             3     0     6049.463
+             4     0     6049.463
+             5     0     6049.463
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using neo ne 2 and used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.8177      0.1596      5.122    < 0.001
+ 4 study_2 * SEX_L_0........         -2.157      0.1055     -20.43    < 0.001
+ 5 study_2 * SEX_L_1........         -1.849     0.09552     -19.36    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.5352      0.2381     -2.248     0.0246
+ 7 study_1 * UR_RUR_1.......        -0.4064      0.2201     -1.846     0.0649
+ 8 study_2 * UR_RUR_0.......        -0.3621     0.09941     -3.642    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.499       0.196     -22.96    < 0.001
+11 study_1 * obl_mn_2.......         -4.549     Aliased
+12 study_1 * obl_mn_3.......         -4.272      0.2148     -19.89    < 0.001
+13 study_2 * obl_mn_1.......         -1.061      0.1109      -9.57    < 0.001
+14 study_2 * obl_mn_2.......        -0.9708     Aliased
+15 study_2 * obl_mn_3.......         -1.363      0.1609     -8.476    < 0.001
+16 study_1 * lage21.........          2.977      0.5201      5.723    < 0.001
+17 study_2 * lage21.........          2.447      0.2571      9.519    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          2.247       1.167      1.925     0.0542
+19 study_2 * dgy............         0.5379      0.2695      1.996     0.0459
+
+Log-linear term 1
+20 ex2......................        -0.1993     0.06847     -2.911    0.00361
+
+            Records used        21410
+
+                Deviance     6049.463
+                     AIC     6079.463
+            Pearson Chi2     21372.74      Degrees of freedom   21395
+
+
+
+lrt@ 
+             LR statistic       3.990      Degrees of freedom      1
+                  P value      0.0458
+
+! Fig 3 Interaction p-values
+
+new @
+
+
+names 
+IDN	
+byear AGE_EXM	AGE_EXP	YEAR_EXM 
+SEX_L	
+OBL_M	OBL_86	UR_RUR	ur_rur86
+thnod_prev	max_size nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+DOSE_GYAV_S		
+IODINE	tvolume TSH	TG	atg 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb study
+@
+
+
+skip 1 @
+
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1stacked.csv' @
+
+Input from E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1stacked.csv
+
+       22843 records read       22842 records used
+                                    1 records rejected
+
+41 variables defined  At least 500 additional variables can be created.
+
+
+
+tran dgy=dose_gyav_s;
+     dgysq=dgy*dgy;
+     ex8=(age_exp-8);
+     ex2=(age_exp-2);
+     ex8sq=ex8*ex8;
+     age21=(age_exm-21);
+     age21sq=age21*age21;
+     lage21 = log(age_exm/21) ;
+     tvol13=(tvolume-13);
+     tvol13sq=tvol13*tvol13;
+     yob1983=(byear-1983);
+
+     if any_fhf1==-1 then any_fhf1=2 !2 recoded to missing
+     endif; 
+
+     if smoke_f==-1 then smoke_f=2
+     endif;
+     
+     if ismiss(goiter_df_pal)==1 then goiter_df_pal=2
+     endif;
+
+
+     if obl_m==1 then obl_mn=2 !Gomel
+     elif obl_m==2 or obl_m==4 then obl_mn=1 !Minsk
+     else obl_mn=3 !Mogilev and others
+     endif;
+
+     if obl_86==1 then obl_86n=2 !Gomel
+     elif obl_86==2 or obl_86==4 then obl_86n=1 !Minsk
+     else obl_86n=3 !Mogilev and others
+     endif;
+
+     if ur_rur86==1 then ur_rur86n=1 !Rural
+     elif ur_rur86==2 or ur_rur86==3 or ur_rur86==4 then ur_rur86n=2 !Urban
+     endif;
+
+     if tvolume>=18 and sex_l==1 then tvlarge=1 !Thyroid enlargement for women
+     elif tvolume>=25 and sex_l==0 then tvlarge=1  !Thyroid enlargement for men
+     else tvlarge=0 !Normal thyroid
+     endif;
+
+     iod100=(iodine-100);
+     iod60=(iodine-60);
+     iodinen=iodine;
+     if ismiss(iodine)==1 then iodinen=9999
+     endif; 
+
+     if nod_sz==2   then largenod=2 !large
+     elif nod_sz==1 then largenod=1 !small
+     else largenod=0;
+     endif;
+
+     used_size=1;
+     if study==1 then casess=largenod==2;
+     		if largenod==1 then used_size=0;
+     		endif;
+     else 
+		casess=largenod==1;
+      	if largenod==2 then used_size=0;
+      	endif;
+     endif;	
+
+     if   thnod_prev==1 and nod_neo==1 then neo=2 !neoplastic
+     elif thnod_prev==1 and nod_neo==0 then neo=1 !non-neoplastic
+     else neo=0;
+     endif;
+
+
+     used_beh=1;
+     if study==1 then casesb=neo==2;
+     		if neo==1 then used_beh=0;
+     		endif;
+     else 
+		casesb=neo==1;
+      	if neo==2 then used_beh=0;
+      	endif;
+     endif;	
+
+
+
+     if thcount>1    then multi=2 !multi
+     elif thcount==1 then multi=1 !single
+     else multi=0;
+     endif;
+
+     used_sin=1;
+     if study==1 then casesm=multi==2;
+     		if multi==1 then used_sin=0;
+     		endif;
+     else 
+		casesm=multi==1;
+      	if multi==2 then used_sin=0;
+      	endif;
+     endif;	
+
+@
+
+ 
+levels   
+SEX_L	 
+OBL_M	obl_mn OBL_86 obl_86n	UR_RUR	ur_rur86 ur_rur86n
+thnod_prev nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+tvlarge largenod
+study used_size used_beh used_sin
+@
+
+SEX_L has 2 levels from 0 to 1
+OBL_M has 5 levels from 1 to 5
+obl_mn has 3 levels from 1 to 3
+OBL_86 has 8 levels from 1 to 8
+obl_86n has 3 levels from 1 to 3
+UR_RUR has 2 levels from 0 to 1
+ur_rur86 has 4 levels from 1 to 4
+ur_rur86n has 2 levels from 1 to 2
+thnod_prev has 2 levels from 0 to 1
+nod_sz has 3 levels from 0 to 2
+nod_sz3 has 4 levels from 0 to 3
+thcount has 5 levels from 0 to 4
+nod_neohc has 2 levels from 0 to 1
+nod_neo has 2 levels from 0 to 1
+tc has 4 levels from 0 to 3
+prevcases has 2 levels from 0 to 1
+FA_PREV has 2 levels from 0 to 1
+SMOKE_F has 3 levels from 0 to 2
+VITAM_F has 2 levels from 0 to 1
+AIT_TOTF has 3 levels from -1 to 1
+goiter_df_pal has 3 levels from 0 to 2
+NDG_RELF has 3 levels from -1 to 1
+ANY_FHF1 has 3 levels from 0 to 2
+Cytology has 2 levels from 1 to 2
+CytologyRecomend has 2 levels from 0 to 1
+Operat has 2 levels from 1 to 2
+OperatRecomend has 2 levels from 0 to 1
+RefOnko has 4 levels from 0 to 3
+fnb has 3 levels from 1 to 3
+tvlarge has 2 levels from 0 to 1
+largenod has 3 levels from 0 to 2
+study has 2 levels from 1 to 2
+used_size has 2 levels from 0 to 1
+used_beh has 2 levels from 0 to 1
+used_sin has 2 levels from 0 to 1
+
+categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+
+dobyrct has 5 levels from 1 to 5
+
+categ age_exm as agect </ 18/ 25/ > @
+
+agect has 3 levels from 1 to 3
+
+categ age_exp as exct </ 5/ 12/ > @
+
+exct has 3 levels from 1 to 3
+
+categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+
+yearexmct has 5 levels from 1 to 5
+
+categ tvolume as tvct </ 8/ 10/ 14/ > @
+
+tvct has 4 levels from 1 to 4
+
+categ iodinen as iodct </20/9998> @
+
+iodct has 3 levels from 1 to 3
+
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+
+dct7 has 7 levels from 1 to 7
+
+
+
+! effect modification by nodule size
+
+select used_size and dgy<4@
+
+21501 records to be used
+
+
+cases casess @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+! effect modification by behavior
+
+select used_beh  and dgy<4@
+
+21501 records to be used
+
+
+cases casesb @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29806.715
+             1     0     9210.841
+             2     0     6862.493
+             3     0     6402.136
+             4     0     6277.850
+             5     0     6265.658
+             6     0     6265.303
+             7     0     6265.302
+             8     0     6265.302
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_beh  and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3455      0.2139      1.615      0.106
+ 4 study_2 * SEX_L_0........         -2.252     0.09706     -23.21    < 0.001
+ 5 study_2 * SEX_L_1........         -1.817     0.08634     -21.05    < 0.001
+ 6 study_1 * UR_RUR_0.......         0.4778     Aliased
+ 7 study_1 * UR_RUR_1.......       -0.06668      0.2296    -0.2905      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3133     0.08604     -3.642    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -5.201      0.3098     -16.79    < 0.001
+11 study_1 * obl_mn_2.......         -5.379      0.2084     -25.81    < 0.001
+12 study_1 * obl_mn_3.......         -5.545      0.3714     -14.93    < 0.001
+13 study_2 * obl_mn_1.......        -0.8420     0.09781     -8.608    < 0.001
+14 study_2 * obl_mn_2.......        -0.8063     Aliased
+15 study_2 * obl_mn_3.......        -0.9910      0.1304     -7.597    < 0.001
+16 study_1 * lage21.........          1.133      0.4588      2.469     0.0136
+17 study_2 * lage21.........          2.731      0.2377      11.49    < 0.001
+
+Linear term 1
+18 dgy......................          1.170      0.3451      3.391    < 0.001
+
+Log-linear term 1
+19 ex2......................        -0.2037     0.05885     -3.462    < 0.001
+
+            Records used        21501
+
+                Deviance     6265.302
+                     AIC     6293.302
+            Pearson Chi2     20739.77      Degrees of freedom   21487
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6341.429
+             1     0     6263.899
+             2     0     6260.012
+             3     0     6259.596
+             4     0     6259.591
+             5     0     6259.591
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_beh  and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3681      0.2146      1.716     0.0862
+ 4 study_2 * SEX_L_0........         -2.196     0.09673      -22.7    < 0.001
+ 5 study_2 * SEX_L_1........         -1.765     0.08616     -20.48    < 0.001
+ 6 study_1 * UR_RUR_0.......         0.4778     Aliased
+ 7 study_1 * UR_RUR_1.......        0.04347      0.2333     0.1863      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.2988     0.08594     -3.477    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -5.581      0.3715     -15.02    < 0.001
+11 study_1 * obl_mn_2.......         -5.912      0.3452     -17.13    < 0.001
+12 study_1 * obl_mn_3.......         -6.004      0.4459     -13.46    < 0.001
+13 study_2 * obl_mn_1.......        -0.8647     0.09799     -8.824    < 0.001
+14 study_2 * obl_mn_2.......        -0.8063     Aliased
+15 study_2 * obl_mn_3.......         -1.000      0.1303     -7.676    < 0.001
+16 study_1 * lage21.........          2.306      0.7748      2.976    0.00292
+17 study_2 * lage21.........          2.574      0.2354      10.93    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          4.829       2.981       1.62      0.105
+19 study_2 * dgy............         0.8549      0.3016      2.834    0.00459
+
+Log-linear term 1
+20 ex2......................        -0.2079     0.05857     -3.549    < 0.001
+
+            Records used        21501
+
+                Deviance     6259.591
+                     AIC     6289.591
+            Pearson Chi2     20908.24      Degrees of freedom   21486
+
+
+
+lrt@ 
+             LR statistic       5.711      Degrees of freedom      1
+                  P value      0.0169
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6398.062
+             1     0     6281.220
+             2     0     6262.408
+             3     0     6260.108
+             4     0     6259.634
+             5     0     6259.515
+             6     0     6259.490
+             7     0     6259.486
+             8     0     6259.485
+             9     0     6259.485
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_beh  and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3648      0.2146        1.7     0.0892
+ 4 study_2 * SEX_L_0........         -2.199     0.09723     -22.62    < 0.001
+ 5 study_2 * SEX_L_1........         -1.767     0.08644     -20.44    < 0.001
+ 6 study_1 * UR_RUR_0.......         0.4840      0.3456        1.4      0.161
+ 7 study_1 * UR_RUR_1.......        0.04362      0.3337     0.1307      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3006     0.08622     -3.486    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -5.579       0.278     -20.07    < 0.001
+11 study_1 * obl_mn_2.......         -5.912     Aliased
+12 study_1 * obl_mn_3.......         -6.011      0.3615     -16.63    < 0.001
+13 study_2 * obl_mn_1.......        -0.8638     0.09806     -8.808    < 0.001
+14 study_2 * obl_mn_2.......        -0.8063     Aliased
+15 study_2 * obl_mn_3.......        -0.9991      0.1304     -7.659    < 0.001
+16 study_1 * lage21.........          2.452      0.8804      2.785    0.00535
+17 study_2 * lage21.........          2.563      0.2402      10.67    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          5.241       3.515      1.491      0.136
+19 study_2 * dgy............         0.8429      0.3049      2.764     0.0057
+
+Log-linear term 1
+20 study_1 * ex2............        -0.2357     0.08792     -2.681    0.00734
+21 study_2 * ex2............        -0.1946     0.07611     -2.556     0.0106
+
+            Records used        21501
+
+                Deviance     6259.485
+                     AIC     6291.485
+            Pearson Chi2     20946.97      Degrees of freedom   21485
+
+
+
+lrt@
+
+
+! effect modification by nodule size
+
+
+             LR statistic      0.1062      Degrees of freedom      1
+                  P value      > 0.50
+
+select used_size and dgy<4@
+
+21501 records to be used
+
+
+cases casess @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29806.715
+             1     0     9316.895
+             2     0     7117.807
+             3     0     6773.406
+             4     0     6712.524
+             5     0     6710.507
+             6     0     6710.480
+             7     0     6710.480
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6615      0.1338      4.944    < 0.001
+ 4 study_2 * SEX_L_0........         -2.240      0.1035     -21.64    < 0.001
+ 5 study_2 * SEX_L_1........         -1.917     0.09343     -20.52    < 0.001
+ 6 study_1 * UR_RUR_0.......        0.06413      0.1364     0.4701      > 0.5
+ 7 study_1 * UR_RUR_1.......          0.000     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.3464     0.09698     -3.572    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.417      0.1651     -26.75    < 0.001
+11 study_1 * obl_mn_2.......         -4.427      0.1528     -28.97    < 0.001
+12 study_1 * obl_mn_3.......         -4.235      0.2134     -19.84    < 0.001
+13 study_2 * obl_mn_1.......         -1.001       0.108     -9.271    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.365      0.1591     -8.585    < 0.001
+16 study_1 * lage21.........          2.246      0.3208      7.002    < 0.001
+17 study_2 * lage21.........          2.689      0.2513       10.7    < 0.001
+
+Linear term 1
+18 dgy......................          1.213      0.3501      3.465    < 0.001
+
+Log-linear term 1
+19 ex2......................        -0.2096      0.0582     -3.602    < 0.001
+
+            Records used        21501
+
+                Deviance      6710.48
+                     AIC      6738.48
+            Pearson Chi2     21198.22      Degrees of freedom   21487
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6789.519
+             1     0     6707.168
+             2     0     6703.589
+             3     0     6703.463
+             4     0     6703.462
+             5     0     6703.462
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6763      0.1342      5.041    < 0.001
+ 4 study_2 * SEX_L_0........         -2.144      0.1043     -20.57    < 0.001
+ 5 study_2 * SEX_L_1........         -1.827     0.09439     -19.36    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.1070      0.2064    -0.5186      > 0.5
+ 7 study_1 * UR_RUR_1.......        -0.1162      0.1929    -0.6022      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3213     0.09693     -3.315    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.458      0.1697     -26.28    < 0.001
+11 study_1 * obl_mn_2.......         -4.562     Aliased
+12 study_1 * obl_mn_3.......         -4.333       0.189     -22.92    < 0.001
+13 study_2 * obl_mn_1.......         -1.041      0.1086     -9.584    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.382      0.1589     -8.692    < 0.001
+16 study_1 * lage21.........          2.942       0.471      6.246    < 0.001
+17 study_2 * lage21.........          2.408       0.255      9.443    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          3.107       1.312      2.368     0.0179
+19 study_2 * dgy............         0.6719       0.291      2.309      0.021
+
+Log-linear term 1
+20 ex2......................        -0.2127     0.05414     -3.929    < 0.001
+
+            Records used        21501
+
+                Deviance     6703.462
+                     AIC     6733.462
+            Pearson Chi2     21352.59      Degrees of freedom   21486
+
+
+
+lrt@ 
+             LR statistic       7.018      Degrees of freedom      1
+                  P value     0.00807
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6879.723
+             1     0     6731.645
+             2     0     6705.889
+             3     0     6703.037
+             4     0     6702.897
+             5     0     6702.888
+             6     0     6702.887
+             7     0     6702.887
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6780      0.1342      5.052    < 0.001
+ 4 study_2 * SEX_L_0........         -2.128      0.1034     -20.57    < 0.001
+ 5 study_2 * SEX_L_1........         -1.814     0.09368     -19.36    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.1052       0.206    -0.5109      > 0.5
+ 7 study_1 * UR_RUR_1.......        -0.1115      0.1924    -0.5798      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3119     0.09704     -3.214    0.00131
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.459      0.1698     -26.26    < 0.001
+11 study_1 * obl_mn_2.......         -4.562     Aliased
+12 study_1 * obl_mn_3.......         -4.329      0.1891     -22.89    < 0.001
+13 study_2 * obl_mn_1.......         -1.046      0.1084     -9.653    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.387      0.1589      -8.73    < 0.001
+16 study_1 * lage21.........          2.852      0.4871      5.856    < 0.001
+17 study_2 * lage21.........          2.420      0.2573      9.407    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          2.880       1.269       2.27     0.0232
+19 study_2 * dgy............         0.6756      0.2968      2.276     0.0228
+
+Log-linear term 1
+20 study_1 * ex2............        -0.1917     0.06077     -3.155    0.00161
+21 study_2 * ex2............        -0.3137       0.164     -1.913     0.0557
+
+            Records used        21501
+
+                Deviance     6702.887
+                     AIC     6734.887
+            Pearson Chi2     21324.43      Degrees of freedom   21485
+
+
+
+lrt@
+
+
+
+! effect modification by size among benign
+
+
+             LR statistic      0.5756      Degrees of freedom      1
+                  P value       0.448
+
+select neo ne 2 and used_size and dgy<4@
+
+21410 records to be used
+
+
+cases casess @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29680.562
+             1     0     8879.048
+             2     0     6552.487
+             3     0     6157.329
+             4     0     6059.665
+             5     0     6053.539
+             6     0     6053.455
+             7     0     6053.453
+             8     0     6053.453
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using neo ne 2 and used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.8047      0.1593      5.051    < 0.001
+ 4 study_2 * SEX_L_0........         -2.218      0.1048     -21.17    < 0.001
+ 5 study_2 * SEX_L_1........         -1.906     0.09452     -20.17    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.3773      0.1812     -2.083     0.0373
+ 7 study_1 * UR_RUR_1.......        -0.2966       0.178     -1.667     0.0956
+ 8 study_2 * UR_RUR_0.......        -0.3789     0.09951     -3.808    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.475      0.1914     -23.38    < 0.001
+11 study_1 * obl_mn_2.......         -4.441     Aliased
+12 study_1 * obl_mn_3.......         -4.197      0.2137     -19.64    < 0.001
+13 study_2 * obl_mn_1.......         -1.035      0.1104     -9.376    < 0.001
+14 study_2 * obl_mn_2.......        -0.9708     Aliased
+15 study_2 * obl_mn_3.......         -1.352       0.161     -8.402    < 0.001
+16 study_1 * lage21.........          2.373      0.3628      6.541    < 0.001
+17 study_2 * lage21.........          2.619      0.2555      10.25    < 0.001
+
+Linear term 1
+18 dgy......................         0.8402      0.3003      2.798    0.00515
+
+Log-linear term 1
+19 ex2......................        -0.1928     0.07446     -2.589    0.00961
+
+            Records used        21410
+
+                Deviance     6053.453
+                     AIC     6081.453
+            Pearson Chi2     21224.91      Degrees of freedom   21396
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6093.046
+             1     0     6051.072
+             2     0     6049.529
+             3     0     6049.463
+             4     0     6049.463
+             5     0     6049.463
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using neo ne 2 and used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.8177      0.1596      5.122    < 0.001
+ 4 study_2 * SEX_L_0........         -2.157      0.1055     -20.43    < 0.001
+ 5 study_2 * SEX_L_1........         -1.849     0.09552     -19.36    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.5352      0.2381     -2.248     0.0246
+ 7 study_1 * UR_RUR_1.......        -0.4064      0.2201     -1.846     0.0649
+ 8 study_2 * UR_RUR_0.......        -0.3621     0.09941     -3.642    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.499       0.196     -22.96    < 0.001
+11 study_1 * obl_mn_2.......         -4.549     Aliased
+12 study_1 * obl_mn_3.......         -4.272      0.2148     -19.89    < 0.001
+13 study_2 * obl_mn_1.......         -1.061      0.1109      -9.57    < 0.001
+14 study_2 * obl_mn_2.......        -0.9708     Aliased
+15 study_2 * obl_mn_3.......         -1.363      0.1609     -8.476    < 0.001
+16 study_1 * lage21.........          2.977      0.5201      5.723    < 0.001
+17 study_2 * lage21.........          2.447      0.2571      9.519    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          2.247       1.167      1.925     0.0542
+19 study_2 * dgy............         0.5379      0.2695      1.996     0.0459
+
+Log-linear term 1
+20 ex2......................        -0.1993     0.06847     -2.911    0.00361
+
+            Records used        21410
+
+                Deviance     6049.463
+                     AIC     6079.463
+            Pearson Chi2     21372.74      Degrees of freedom   21395
+
+
+
+lrt@ 
+             LR statistic       3.990      Degrees of freedom      1
+                  P value      0.0458
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6145.094
+             1     0     6064.648
+             2     0     6050.488
+             3     0     6049.170
+             4     0     6049.118
+             5     0     6049.112
+             6     0     6049.111
+             7     0     6049.111
+             8     0     6049.111
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using neo ne 2 and used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.8191      0.1597      5.129    < 0.001
+ 4 study_2 * SEX_L_0........         -2.142       0.105     -20.41    < 0.001
+ 5 study_2 * SEX_L_1........         -1.837     0.09504     -19.33    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.5319      0.2374      -2.24     0.0251
+ 7 study_1 * UR_RUR_1.......        -0.4008      0.2193     -1.827     0.0677
+ 8 study_2 * UR_RUR_0.......        -0.3540     0.09954     -3.556    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.500      0.1961     -22.95    < 0.001
+11 study_1 * obl_mn_2.......         -4.549     Aliased
+12 study_1 * obl_mn_3.......         -4.269      0.2149     -19.86    < 0.001
+13 study_2 * obl_mn_1.......         -1.066      0.1107     -9.632    < 0.001
+14 study_2 * obl_mn_2.......        -0.9708     Aliased
+15 study_2 * obl_mn_3.......         -1.369      0.1608     -8.509    < 0.001
+16 study_1 * lage21.........          2.895      0.5387      5.374    < 0.001
+17 study_2 * lage21.........          2.458      0.2593      9.478    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          2.066       1.133      1.823     0.0683
+19 study_2 * dgy............         0.5423      0.2751      1.971     0.0487
+
+Log-linear term 1
+20 study_1 * ex2............        -0.1775     0.07938     -2.237     0.0253
+21 study_2 * ex2............        -0.2922      0.1868     -1.564      0.118
+
+            Records used        21410
+
+                Deviance     6049.111
+                     AIC     6081.111
+            Pearson Chi2     21353.46      Degrees of freedom   21394
+
+
+
+lrt@
+
+! effect modification by size among neoplastic
+
+
+             LR statistic      0.3520      Degrees of freedom      1
+                  P value      > 0.50
+
+select neo ne 1 and used_size and dgy<4@
+
+20755 records to be used
+
+
+cases casess @
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    28772.539
+             1     0     5715.376
+             2     0     2412.689
+             3     0     1454.829
+             4     0     1184.297
+             5     0     1124.320
+             6     0     1114.432
+             7     0     1112.867
+             8     0     1112.685
+             9     0     1112.681
+            10     0     1112.681
+            11     0     1112.680
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using neo ne 1 and used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3016      0.2484      1.214      0.225
+ 4 study_2 * SEX_L_0........        -0.5477      0.4229     -1.295      0.195
+ 5 study_2 * SEX_L_1........          0.000     Aliased
+ 6 study_1 * UR_RUR_0.......         0.3765      0.3614      1.042      0.298
+ 7 study_1 * UR_RUR_1.......       -0.03604      0.3591    -0.1004      > 0.5
+ 8 study_2 * UR_RUR_0.......         0.4223     Aliased
+ 9 study_2 * UR_RUR_1.......       -0.09547      0.4503     -0.212      > 0.5
+10 study_1 * obl_mn_1.......         -5.834      0.3279     -17.79    < 0.001
+11 study_1 * obl_mn_2.......         -6.089     Aliased
+12 study_1 * obl_mn_3.......         -6.002      0.3881     -15.46    < 0.001
+13 study_2 * obl_mn_1.......         -6.195      0.5787      -10.7    < 0.001
+14 study_2 * obl_mn_2.......         -6.714      0.4365     -15.38    < 0.001
+15 study_2 * obl_mn_3.......         -7.655       1.054      -7.26    < 0.001
+16 study_1 * lage21.........          2.675      0.9027      2.963    0.00305
+17 study_2 * lage21.........          1.761       1.108       1.59      0.112
+
+Linear term 1
+18 dgy......................          5.148       3.442      1.496      0.135
+
+Log-linear term 1
+19 ex2......................        -0.2333     0.08777     -2.659    0.00784
+
+            Records used        20755
+
+                Deviance      1112.68
+                     AIC      1140.68
+            Pearson Chi2     19561.13      Degrees of freedom   20741
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     1182.137
+             1     0     1124.467
+             2     0     1113.636
+             3     0     1112.601
+             4     0     1112.584
+             5     0     1112.584
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using neo ne 1 and used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3048      0.2486      1.226       0.22
+ 4 study_2 * SEX_L_0........        -0.5426      0.4231     -1.282        0.2
+ 5 study_2 * SEX_L_1........          0.000     Aliased
+ 6 study_1 * UR_RUR_0.......         0.3742      0.4129     0.9063      0.365
+ 7 study_1 * UR_RUR_1.......       -0.02722      0.3974    -0.0685      > 0.5
+ 8 study_2 * UR_RUR_0.......         0.6036     Aliased
+ 9 study_2 * UR_RUR_1.......        0.05808        0.46     0.1263      > 0.5
+10 study_1 * obl_mn_1.......         -5.880      0.3306     -17.78    < 0.001
+11 study_1 * obl_mn_2.......         -6.149     Aliased
+12 study_1 * obl_mn_3.......         -6.054      0.3887     -15.57    < 0.001
+13 study_2 * obl_mn_1.......         -6.278      0.6429     -9.765    < 0.001
+14 study_2 * obl_mn_2.......         -6.763      0.5811     -11.64    < 0.001
+15 study_2 * obl_mn_3.......         -7.720       1.104     -6.996    < 0.001
+16 study_1 * lage21.........          2.779       1.014      2.741    0.00612
+17 study_2 * lage21.........          1.453        1.37       1.06      0.289
+
+Linear term 1
+18 study_1 * dgy............          5.758        4.48      1.285      0.199
+19 study_2 * dgy............          3.795       4.283     0.8861      0.376
+
+Log-linear term 1
+20 ex2......................        -0.2295     0.08743     -2.626    0.00865
+
+            Records used        20755
+
+                Deviance     1112.584
+                     AIC     1142.584
+            Pearson Chi2     19588.96      Degrees of freedom   20740
+
+
+
+lrt@ 
+             LR statistic     0.09624      Degrees of freedom      1
+                  P value      > 0.50
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     1197.720
+             1     0     1126.357
+             2     0     1115.557
+             3     0     1113.711
+             4     0     1112.600
+             5     0     1111.732
+             6     0     1111.612
+             7     0     1111.606
+             8     0     1111.604
+             9     0     1111.604
+            10     0     1111.603
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using neo ne 1 and used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3113      0.2488      1.251      0.211
+ 4 study_2 * SEX_L_0........        -0.5362      0.4232     -1.267      0.205
+ 5 study_2 * SEX_L_1........          0.000     Aliased
+ 6 study_1 * UR_RUR_0.......         0.3642      0.4135     0.8806      0.379
+ 7 study_1 * UR_RUR_1.......       -0.02613      0.3969   -0.06583      > 0.5
+ 8 study_2 * UR_RUR_0.......         0.5125     Aliased
+ 9 study_2 * UR_RUR_1.......       -0.03827      0.4565   -0.08384      > 0.5
+10 study_1 * obl_mn_1.......         -5.881      0.3314     -17.75    < 0.001
+11 study_1 * obl_mn_2.......         -6.149     Aliased
+12 study_1 * obl_mn_3.......         -6.040      0.3892     -15.52    < 0.001
+13 study_2 * obl_mn_1.......         -6.230      0.6501     -9.583    < 0.001
+14 study_2 * obl_mn_2.......         -6.763      0.5868     -11.53    < 0.001
+15 study_2 * obl_mn_3.......         -7.727       1.113     -6.944    < 0.001
+16 study_1 * lage21.........          2.496       1.071      2.332     0.0197
+17 study_2 * lage21.........          2.307       1.638      1.408      0.159
+
+Linear term 1
+18 study_1 * dgy............          4.906       4.014      1.222      0.222
+19 study_2 * dgy............          6.569       7.868     0.8348      0.404
+
+Log-linear term 1
+20 study_1 * ex2............        -0.1818     0.09632     -1.887     0.0591
+21 study_2 * ex2............        -0.4021      0.2166     -1.857     0.0633
+
+            Records used        20755
+
+                Deviance     1111.603
+                     AIC     1143.603
+            Pearson Chi2     19689.87      Degrees of freedom   20739
+
+
+
+lrt@
+
+
+             LR statistic      0.9807      Degrees of freedom      1
+                  P value       0.322
+
+bound 21@
+
+      Profile likelihood bounds for parameter 21 (study_2 * ex2)
+
+                  MLE    -0.4021    exp(MLE)     0.6689
+
+               97.5% lower bound      -1.439
+                       exp(bound)     0.2373
+               97.5% upper bound not found last estimate      1.395 Deviance 61785.241
+
+
+ *** WARNING: Parameter study_2 * UR_RUR_1 changed by 37118831.0% MLE may be infinite or may not exist
+
+! effect modification by behavior among small
+
+select largenod ne 2 and used_beh and dgy<4@
+
+21244 records to be used
+
+
+cases casesb @
+sum casesb@
+
+Using largenod ne 2 and used_beh and dgy<4
+
+           Summary for casesb
+
+                Sum         Count      Minimum      Maximum
+                580         21244            0            1
+
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29450.437
+             1     0     8044.440
+             2     0     5418.900
+             3     0     4774.030
+             4     0     4604.444
+             5     0     4564.015
+             6     0     4557.330
+             7     0     4556.794
+             8     0     4556.783
+             9     0     4556.783
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using largenod ne 2 and used_beh and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.5236      0.4225      1.239      0.215
+ 4 study_2 * SEX_L_0........         -2.185      0.1047     -20.88    < 0.001
+ 5 study_2 * SEX_L_1........         -1.879     0.09477     -19.83    < 0.001
+ 6 study_1 * UR_RUR_0.......         0.5513     Aliased
+ 7 study_1 * UR_RUR_1.......        -0.1377      0.4517     -0.305      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3575     0.09945     -3.595    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -6.388      0.5838     -10.94    < 0.001
+11 study_1 * obl_mn_2.......         -6.701      0.3979     -16.84    < 0.001
+12 study_1 * obl_mn_3.......         -7.754       1.047     -7.406    < 0.001
+13 study_2 * obl_mn_1.......         -1.033      0.1105     -9.342    < 0.001
+14 study_2 * obl_mn_2.......        -0.9445     Aliased
+15 study_2 * obl_mn_3.......         -1.340      0.1608     -8.332    < 0.001
+16 study_1 * lage21.........         0.1266      0.8139     0.1556      > 0.5
+17 study_2 * lage21.........          2.518      0.2577      9.768    < 0.001
+
+Linear term 1
+18 dgy......................         0.6388      0.2862      2.232     0.0256
+
+Log-linear term 1
+19 ex2......................        -0.2985      0.1617     -1.846     0.0649
+
+            Records used        21244
+
+                Deviance     4556.783
+                     AIC     4584.783
+            Pearson Chi2      20598.5      Degrees of freedom   21230
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     4576.803
+             1     0     4556.289
+             2     0     4555.161
+             3     0     4554.572
+             4     0     4554.392
+             5     0     4554.362
+             6     0     4554.357
+             7     0     4554.357
+             8     0     4554.357
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using largenod ne 2 and used_beh and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.5368      0.4232      1.269      0.205
+ 4 study_2 * SEX_L_0........         -2.170     0.08901     -24.38    < 0.001
+ 5 study_2 * SEX_L_1........         -1.866     Aliased
+ 6 study_1 * UR_RUR_0.......         0.5513     Aliased
+ 7 study_1 * UR_RUR_1.......       0.001545      0.4565   0.003384      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3486     0.09877      -3.53    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -6.801      0.6851     -9.927    < 0.001
+11 study_1 * obl_mn_2.......         -7.329      0.6317      -11.6    < 0.001
+12 study_1 * obl_mn_3.......         -8.292       1.138     -7.285    < 0.001
+13 study_2 * obl_mn_1.......         -1.030     0.09833     -10.48    < 0.001
+14 study_2 * obl_mn_2.......        -0.9305     0.09156     -10.16    < 0.001
+15 study_2 * obl_mn_3.......         -1.331       0.167     -7.972    < 0.001
+16 study_1 * lage21.........          2.219       1.608       1.38      0.168
+17 study_2 * lage21.........          2.436      0.2562      9.507    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          6.228       7.439     0.8372      0.402
+19 study_2 * dgy............         0.5021       0.263      1.909     0.0562
+
+Log-linear term 1
+20 ex2......................        -0.3798      0.1638     -2.318     0.0204
+
+            Records used        21244
+
+                Deviance     4554.357
+                     AIC     4584.357
+            Pearson Chi2     20283.59      Degrees of freedom   21229
+
+
+
+lrt@ 
+             LR statistic       2.427      Degrees of freedom      1
+                  P value       0.119
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     4619.413
+             1     0     4564.275
+             2     0     4557.588
+             3     0     4556.699
+             4     0     4555.967
+             5     0     4554.880
+             6     0     4554.311
+             7     0     4554.278
+             8     0     4554.276
+             9     0     4554.276
+            10     0     4554.276
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using largenod ne 2 and used_beh and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.5363      0.4232      1.267      0.205
+ 4 study_2 * SEX_L_0........         -2.183      0.1049      -20.8    < 0.001
+ 5 study_2 * SEX_L_1........         -1.877     0.09502     -19.76    < 0.001
+ 6 study_1 * UR_RUR_0.......         0.6276     Aliased
+ 7 study_1 * UR_RUR_1.......        0.07715      0.4565      0.169      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3539     0.09954     -3.556    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -6.882      0.6863     -10.03    < 0.001
+11 study_1 * obl_mn_2.......         -7.415      0.6314     -11.74    < 0.001
+12 study_1 * obl_mn_3.......         -8.379       1.139      -7.36    < 0.001
+13 study_2 * obl_mn_1.......         -1.026      0.1107     -9.269    < 0.001
+14 study_2 * obl_mn_2.......        -0.9305     Aliased
+15 study_2 * obl_mn_3.......         -1.328      0.1608     -8.259    < 0.001
+16 study_1 * lage21.........          2.307       1.639      1.408      0.159
+17 study_2 * lage21.........          2.458      0.2593      9.478    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          6.576        7.88     0.8346      0.404
+19 study_2 * dgy............         0.5419       0.275       1.97     0.0488
+
+Log-linear term 1
+20 study_1 * ex2............        -0.4010       0.216     -1.857     0.0634
+21 study_2 * ex2............        -0.2929      0.1874     -1.563      0.118
+
+            Records used        21244
+
+                Deviance     4554.276
+                     AIC     4586.276
+            Pearson Chi2     20334.35      Degrees of freedom   21228
+
+
+
+lrt@
+
+! effect modification by behavior among large
+
+
+             LR statistic     0.08100      Degrees of freedom      1
+                  P value      > 0.50
+
+select largenod ne 1 and used_beh and dgy<4@
+
+20921 records to be used
+
+
+cases casesb @
+sum casesb@
+
+Using largenod ne 1 and used_beh and dgy<4
+
+           Summary for casesb
+
+                Sum         Count      Minimum      Maximum
+                257         20921            0            1
+
+
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn  @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29002.664
+             1     0     6550.027
+             2     0     3546.599
+             3     0     2844.669
+             4     0     2635.039
+             5     0     2610.367
+             6     0     2607.647
+             7     0     2607.518
+             8     0     2607.517
+             9     0     2607.517
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using largenod ne 1 and used_beh and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.2968      0.2481      1.197      0.231
+ 4 study_2 * SEX_L_0........         -3.137      0.1597     -19.65    < 0.001
+ 5 study_2 * SEX_L_1........         -2.314     Aliased
+ 6 study_1 * UR_RUR_0.......         0.3491     Aliased
+ 7 study_1 * UR_RUR_1.......       -0.09439      0.2658     -0.355      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.4416      0.2004     -2.203     0.0276
+ 9 study_2 * UR_RUR_1.......        -0.2944      0.1793     -1.642      0.101
+10 study_1 * obl_mn_1.......         -5.654      0.3759     -15.04    < 0.001
+11 study_1 * obl_mn_2.......         -5.849      0.2744     -21.31    < 0.001
+12 study_1 * obl_mn_3.......         -5.779      0.4178     -13.83    < 0.001
+13 study_2 * obl_mn_1.......         -1.524      0.1942     -7.846    < 0.001
+14 study_2 * obl_mn_2.......         -1.602     Aliased
+15 study_2 * obl_mn_3.......         -1.311      0.2146     -6.108    < 0.001
+16 study_1 * lage21.........          2.006      0.6491       3.09      0.002
+17 study_2 * lage21.........          3.122      0.5018       6.22    < 0.001
+
+Linear term 1
+18 dgy......................          2.757       1.216      2.267     0.0234
+
+Log-linear term 1
+19 ex2......................        -0.1859      0.0606     -3.067    0.00216
+
+            Records used        20921
+
+                Deviance     2607.517
+                     AIC     2635.517
+            Pearson Chi2     20587.81      Degrees of freedom   20907
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     2688.324
+             1     0     2609.689
+             2     0     2606.459
+             3     0     2606.440
+             4     0     2606.440
+             5     0     2606.440
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using largenod ne 1 and used_beh and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3117      0.2487      1.253       0.21
+ 4 study_2 * SEX_L_0........         -3.133      0.1597     -19.62    < 0.001
+ 5 study_2 * SEX_L_1........         -2.314     Aliased
+ 6 study_1 * UR_RUR_0.......        0.07149     Aliased
+ 7 study_1 * UR_RUR_1.......        -0.3183      0.2697      -1.18      0.238
+ 8 study_2 * UR_RUR_0.......        -0.4906      0.2122     -2.312     0.0208
+ 9 study_2 * UR_RUR_1.......        -0.3596      0.1868     -1.925     0.0543
+10 study_1 * obl_mn_1.......         -5.588      0.4414     -12.66    < 0.001
+11 study_1 * obl_mn_2.......         -5.856      0.4096      -14.3    < 0.001
+12 study_1 * obl_mn_3.......         -5.746      0.4977     -11.55    < 0.001
+13 study_2 * obl_mn_1.......         -1.409      0.1961     -7.187    < 0.001
+14 study_2 * obl_mn_2.......         -1.458     Aliased
+15 study_2 * obl_mn_3.......         -1.178      0.2148     -5.485    < 0.001
+16 study_1 * lage21.........          2.477      0.8838      2.802    0.00507
+17 study_2 * lage21.........          2.901      0.5073      5.719    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          4.849       3.445      1.408      0.159
+19 study_2 * dgy............          2.079       1.074      1.936     0.0529
+
+Log-linear term 1
+20 ex2......................        -0.1790     0.06129      -2.92     0.0035
+
+            Records used        20921
+
+                Deviance      2606.44
+                     AIC      2636.44
+            Pearson Chi2     20703.93      Degrees of freedom   20906
+
+
+
+lrt@ 
+             LR statistic       1.077      Degrees of freedom      1
+                  P value       0.299
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     2708.766
+             1     0     2622.710
+             2     0     2608.031
+             3     0     2606.539
+             4     0     2606.447
+             5     0     2606.439
+             6     0     2606.438
+             7     0     2606.438
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using largenod ne 1 and used_beh and dgy<4
+
+   casesb is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.3113      0.2488      1.251      0.211
+ 4 study_2 * SEX_L_0........         -3.133      0.1597     -19.61    < 0.001
+ 5 study_2 * SEX_L_1........         -2.314     Aliased
+ 6 study_1 * UR_RUR_0.......        0.07088      0.4136     0.1714      > 0.5
+ 7 study_1 * UR_RUR_1.......        -0.3193       0.397    -0.8043      0.421
+ 8 study_2 * UR_RUR_0.......        -0.4901      0.2122      -2.31     0.0209
+ 9 study_2 * UR_RUR_1.......        -0.3590      0.1871     -1.919      0.055
+10 study_1 * obl_mn_1.......         -5.588      0.3314     -16.86    < 0.001
+11 study_1 * obl_mn_2.......         -5.856     Aliased
+12 study_1 * obl_mn_3.......         -5.747      0.3892     -14.76    < 0.001
+13 study_2 * obl_mn_1.......         -1.409      0.1961     -7.187    < 0.001
+14 study_2 * obl_mn_2.......         -1.458     Aliased
+15 study_2 * obl_mn_3.......         -1.178      0.2149     -5.481    < 0.001
+16 study_1 * lage21.........          2.496       1.071      2.331     0.0198
+17 study_2 * lage21.........          2.895      0.5387      5.374    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          4.907       4.015      1.222      0.222
+19 study_2 * dgy............          2.066       1.133      1.823     0.0683
+
+Log-linear term 1
+20 study_1 * ex2............        -0.1816      0.0963     -1.886     0.0593
+21 study_2 * ex2............        -0.1775     0.07938     -2.237     0.0253
+
+            Records used        20921
+
+                Deviance     2606.438
+                     AIC     2638.438
+            Pearson Chi2     20707.54      Degrees of freedom   20905
+
+
+
+lrt@
+
+
+! effect modification by single multiple
+
+
+             LR statistic    0.001103      Degrees of freedom      1
+                  P value      > 0.50
+
+select used_sin and dgy<4@
+
+21501 records to be used
+
+
+cases casesm @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29806.715
+             1     0     9308.868
+             2     0     7095.837
+             3     0     6727.829
+             4     0     6660.252
+             5     0     6656.993
+             6     0     6656.967
+             7     0     6656.967
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_sin and dgy<4
+
+   casesm is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.2854      0.1381      2.066     0.0388
+ 4 study_2 * SEX_L_0........         -2.364      0.1041     -22.71    < 0.001
+ 5 study_2 * SEX_L_1........         -1.890     0.09177     -20.59    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.4147      0.1547      -2.68    0.00736
+ 7 study_1 * UR_RUR_1.......          0.000     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.1480     0.09208     -1.607      0.108
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.156      0.1608     -25.84    < 0.001
+11 study_1 * obl_mn_2.......         -4.221      0.1518      -27.8    < 0.001
+12 study_1 * obl_mn_3.......         -4.482      0.2584     -17.34    < 0.001
+13 study_2 * obl_mn_1.......        -0.9830      0.1078     -9.122    < 0.001
+14 study_2 * obl_mn_2.......        -0.9342     Aliased
+15 study_2 * obl_mn_3.......         -1.089      0.1404     -7.757    < 0.001
+16 study_1 * lage21.........          3.161      0.3464      9.127    < 0.001
+17 study_2 * lage21.........          2.337      0.2503      9.337    < 0.001
+
+Linear term 1
+18 dgy......................          1.207      0.3509      3.439    < 0.001
+
+Log-linear term 1
+19 ex2......................        -0.2103     0.05881     -3.576    < 0.001
+
+            Records used        21501
+
+                Deviance     6656.967
+                     AIC     6684.967
+            Pearson Chi2     20862.68      Degrees of freedom   21487
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6735.067
+             1     0     6658.150
+             2     0     6656.462
+             3     0     6656.433
+             4     0     6656.432
+             5     0     6656.432
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_sin and dgy<4
+
+   casesm is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.2886      0.1383      2.087     0.0369
+ 4 study_2 * SEX_L_0........         -2.407      0.1069     -22.53    < 0.001
+ 5 study_2 * SEX_L_1........         -1.935     0.09457     -20.46    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.4278      0.1564     -2.735    0.00624
+ 7 study_1 * UR_RUR_1.......          0.000     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.1397     0.09229     -1.514       0.13
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.197      0.1752     -23.96    < 0.001
+11 study_1 * obl_mn_2.......         -4.285      0.1856     -23.09    < 0.001
+12 study_1 * obl_mn_3.......         -4.538      0.2746     -16.53    < 0.001
+13 study_2 * obl_mn_1.......        -0.9227      0.1084     -8.516    < 0.001
+14 study_2 * obl_mn_2.......        -0.8621     Aliased
+15 study_2 * obl_mn_3.......         -1.023      0.1404     -7.282    < 0.001
+16 study_1 * lage21.........          3.354      0.4577      7.328    < 0.001
+17 study_2 * lage21.........          2.264       0.259      8.741    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          1.668      0.8832      1.889     0.0589
+19 study_2 * dgy............          1.054      0.3586      2.938     0.0033
+
+Log-linear term 1
+20 ex2......................        -0.2193     0.06091       -3.6    < 0.001
+
+            Records used        21501
+
+                Deviance     6656.432
+                     AIC     6686.432
+            Pearson Chi2     20912.59      Degrees of freedom   21486
+
+
+
+lrt@ 
+             LR statistic      0.5354      Degrees of freedom      1
+                  P value       0.464
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6798.515
+             1     0     6680.374
+             2     0     6658.088
+             3     0     6655.028
+             4     0     6654.486
+             5     0     6654.366
+             6     0     6654.338
+             7     0     6654.331
+             8     0     6654.330
+             9     0     6654.329
+            10     0     6654.329
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_sin and dgy<4
+
+   casesm is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.2805      0.1382       2.03     0.0424
+ 4 study_2 * SEX_L_0........         -2.418      0.1078     -22.44    < 0.001
+ 5 study_2 * SEX_L_1........         -1.943     0.09509     -20.43    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.3868      0.1555     -2.487     0.0129
+ 7 study_1 * UR_RUR_1.......        0.01509     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.1471     0.09258     -1.589      0.112
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.181      0.1721      -24.3    < 0.001
+11 study_1 * obl_mn_2.......         -4.255      0.1768     -24.07    < 0.001
+12 study_1 * obl_mn_3.......         -4.523      0.2714     -16.66    < 0.001
+13 study_2 * obl_mn_1.......        -0.9191      0.1085      -8.47    < 0.001
+14 study_2 * obl_mn_2.......        -0.8621     Aliased
+15 study_2 * obl_mn_3.......         -1.017      0.1406     -7.231    < 0.001
+16 study_1 * lage21.........          3.407      0.4622      7.372    < 0.001
+17 study_2 * lage21.........          2.214      0.2666      8.305    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          1.787      0.9555       1.87     0.0615
+19 study_2 * dgy............          1.001      0.3539      2.828    0.00469
+
+Log-linear term 1
+20 study_1 * ex2............        -0.4394      0.2032     -2.162     0.0306
+21 study_2 * ex2............        -0.1724     0.06543     -2.635    0.00842
+
+            Records used        21501
+
+                Deviance     6654.329
+                     AIC     6686.329
+            Pearson Chi2     20898.81      Degrees of freedom   21485
+
+
+
+lrt@
+
+             LR statistic       2.103      Degrees of freedom      1
+                  P value       0.147
+

@@ -1,0 +1,261 @@
+! Fig 3 Interaction p-values
+
+new @
+
+names 
+IDN	
+byear AGE_EXM	AGE_EXP	YEAR_EXM 
+SEX_L	
+OBL_M	OBL_86	UR_RUR	ur_rur86
+thnod_prev	max_size nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+DOSE_GYAV_S		
+IODINE	tvolume TSH	TG	atg 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb study
+@
+
+skip 1 @
+
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1stacked.csv' @
+
+tran dgy=dose_gyav_s;
+     dgysq=dgy*dgy;
+     ex8=(age_exp-8);
+     ex2=(age_exp-2);
+     ex8sq=ex8*ex8;
+     age21=(age_exm-21);
+     age21sq=age21*age21;
+     lage21 = log(age_exm/21) ;
+     tvol13=(tvolume-13);
+     tvol13sq=tvol13*tvol13;
+     yob1983=(byear-1983);
+
+     if any_fhf1==-1 then any_fhf1=2 !2 recoded to missing
+     endif; 
+
+     if smoke_f==-1 then smoke_f=2
+     endif;
+     
+     if ismiss(goiter_df_pal)==1 then goiter_df_pal=2
+     endif;
+
+
+     if obl_m==1 then obl_mn=2 !Gomel
+     elif obl_m==2 or obl_m==4 then obl_mn=1 !Minsk
+     else obl_mn=3 !Mogilev and others
+     endif;
+
+     if obl_86==1 then obl_86n=2 !Gomel
+     elif obl_86==2 or obl_86==4 then obl_86n=1 !Minsk
+     else obl_86n=3 !Mogilev and others
+     endif;
+
+     if ur_rur86==1 then ur_rur86n=1 !Rural
+     elif ur_rur86==2 or ur_rur86==3 or ur_rur86==4 then ur_rur86n=2 !Urban
+     endif;
+
+     if tvolume>=18 and sex_l==1 then tvlarge=1 !Thyroid enlargement for women
+     elif tvolume>=25 and sex_l==0 then tvlarge=1  !Thyroid enlargement for men
+     else tvlarge=0 !Normal thyroid
+     endif;
+
+     iod100=(iodine-100);
+     iod60=(iodine-60);
+     iodinen=iodine;
+     if ismiss(iodine)==1 then iodinen=9999
+     endif; 
+
+     if nod_sz==2   then largenod=2 !large
+     elif nod_sz==1 then largenod=1 !small
+     else largenod=0;
+     endif;
+
+     used_size=1;
+     if study==1 then casess=largenod==2;
+     		if largenod==1 then used_size=0;
+     		endif;
+     else 
+		casess=largenod==1;
+      	if largenod==2 then used_size=0;
+      	endif;
+     endif;	
+
+     if   thnod_prev==1 and nod_neo==1 then neo=2 !neoplastic
+     elif thnod_prev==1 and nod_neo==0 then neo=1 !non-neoplastic
+     else neo=0;
+     endif;
+
+
+     used_beh=1;
+     if study==1 then casesb=neo==2;
+     		if neo==1 then used_beh=0;
+     		endif;
+     else 
+		casesb=neo==1;
+      	if neo==2 then used_beh=0;
+      	endif;
+     endif;	
+
+
+
+     if thcount>1    then multi=2 !multi
+     elif thcount==1 then multi=1 !single
+     else multi=0;
+     endif;
+
+     used_sin=1;
+     if study==1 then casesm=multi==2;
+     		if multi==1 then used_sin=0;
+     		endif;
+     else 
+		casesm=multi==1;
+      	if multi==2 then used_sin=0;
+      	endif;
+     endif;	
+
+@
+ 
+levels   
+SEX_L	 
+OBL_M	obl_mn OBL_86 obl_86n	UR_RUR	ur_rur86 ur_rur86n
+thnod_prev nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+tvlarge largenod
+study used_size used_beh used_sin
+@
+
+categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+categ age_exm as agect </ 18/ 25/ > @
+categ age_exp as exct </ 5/ 12/ > @
+categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+categ tvolume as tvct </ 8/ 10/ 14/ > @
+categ iodinen as iodct </20/9998> @
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+
+! effect modification by behavior
+
+select used_beh  and dgy<4@
+cases casesb @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+logl 1 ex2 @ 
+line 1 dgy @ 
+fit @ null@
+
+line 1 study*dgy@ 
+fit@ lrt@ null@
+
+logl 1 study*ex2@  
+fit@ lrt@
+
+
+! effect modification by nodule size
+
+select used_size and dgy<4@
+cases casess @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+logl 1 ex2 @ 
+line 1 dgy @ 
+fit @ null@
+
+line 1 study*dgy@ 
+fit@ lrt@ null@
+
+logl 1 study*ex2@  
+fit@ lrt@
+
+
+
+! effect modification by size among benign
+
+select neo ne 2 and used_size and dgy<4@
+cases casess @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+logl 1 ex2 @ 
+line 1 dgy @ 
+fit @ null@
+
+line 1 study*dgy@ 
+fit@ lrt@ null@
+
+logl 1 study*ex2@  
+fit@ lrt@
+
+! effect modification by size among neoplastic
+
+select neo ne 1 and used_size and dgy<4@
+cases casess @
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+logl 1 ex2 @ 
+line 1 dgy @ 
+fit @ null@
+
+line 1 study*dgy@ 
+fit@ lrt@ null@
+
+logl 1 study*ex2@  
+fit@ lrt@
+
+! effect modification by behavior among small
+
+select largenod ne 2 and used_beh and dgy<4@
+cases casesb @
+sum casesb@
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+logl 1 ex2 @ 
+line 1 dgy @ 
+fit @ null@
+
+line 1 study*dgy@ 
+fit@ lrt@ null@
+
+logl 1 study*ex2@  
+fit@ lrt@
+
+! effect modification by behavior among large
+
+select largenod ne 1 and used_beh and dgy<4@
+cases casesb @
+sum casesb@
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn  @ 
+logl 1 ex2 @ 
+line 1 dgy @ 
+fit @ null@
+
+line 1 study*dgy@ 
+fit@ lrt@ null@
+
+logl 1 study*ex2@  
+fit@ lrt@
+
+
+! effect modification by single multiple
+
+select used_sin and dgy<4@
+cases casesm @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+logl 1 ex2 @ 
+line 1 dgy @ 
+fit @ null@
+
+line 1 study*dgy@ 
+fit@ lrt@ null@
+
+logl 1 study*ex2@  
+fit@ lrt@

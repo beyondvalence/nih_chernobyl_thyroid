@@ -1,0 +1,417 @@
+! Fig 3 Interaction p-values
+
+new @
+
+
+names 
+IDN	
+byear AGE_EXM	AGE_EXP	YEAR_EXM 
+SEX_L	
+OBL_M	OBL_86	UR_RUR	ur_rur86
+thnod_prev	max_size nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+DOSE_GYAV_S		
+IODINE	tvolume TSH	TG	atg 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb study
+@
+
+
+skip 1 @
+
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1stacked.csv' @
+
+Input from E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1stacked.csv
+
+       22843 records read       22842 records used
+                                    1 records rejected
+
+41 variables defined  At least 500 additional variables can be created.
+
+
+
+tran dgy=dose_gyav_s;
+     dgysq=dgy*dgy;
+     ex8=(age_exp-8);
+     ex2=(age_exp-2);
+     ex8sq=ex8*ex8;
+     age21=(age_exm-21);
+     age21sq=age21*age21;
+     lage21 = log(age_exm/21) ;
+     tvol13=(tvolume-13);
+     tvol13sq=tvol13*tvol13;
+     yob1983=(byear-1983);
+
+     if any_fhf1==-1 then any_fhf1=2 !2 recoded to missing
+     endif; 
+
+     if smoke_f==-1 then smoke_f=2
+     endif;
+     
+     if ismiss(goiter_df_pal)==1 then goiter_df_pal=2
+     endif;
+
+
+     if obl_m==1 then obl_mn=2 !Gomel
+     elif obl_m==2 or obl_m==4 then obl_mn=1 !Minsk
+     else obl_mn=3 !Mogilev and others
+     endif;
+
+     if obl_86==1 then obl_86n=2 !Gomel
+     elif obl_86==2 or obl_86==4 then obl_86n=1 !Minsk
+     else obl_86n=3 !Mogilev and others
+     endif;
+
+     if ur_rur86==1 then ur_rur86n=1 !Rural
+     elif ur_rur86==2 or ur_rur86==3 or ur_rur86==4 then ur_rur86n=2 !Urban
+     endif;
+
+     if tvolume>=18 and sex_l==1 then tvlarge=1 !Thyroid enlargement for women
+     elif tvolume>=25 and sex_l==0 then tvlarge=1  !Thyroid enlargement for men
+     else tvlarge=0 !Normal thyroid
+     endif;
+
+     iod100=(iodine-100);
+     iod60=(iodine-60);
+     iodinen=iodine;
+     if ismiss(iodine)==1 then iodinen=9999
+     endif; 
+
+     if nod_sz==2   then largenod=2 !large
+     elif nod_sz==1 then largenod=1 !small
+     else largenod=0;
+     endif;
+
+     used_size=1;
+     if study==1 then casess=largenod==2;
+     		if largenod==1 then used_size=0;
+     		endif;
+     else 
+		casess=largenod==1;
+      	if largenod==2 then used_size=0;
+      	endif;
+     endif;	
+
+     if   thnod_prev==1 and nod_neo==1 then neo=2 !neoplastic
+     elif thnod_prev==1 and nod_neo==0 then neo=1 !non-neoplastic
+     else neo=0;
+     endif;
+
+
+     used_beh=1;
+     if study==1 then casesb=neo==2;
+     		if neo==1 then used_beh=0;
+     		endif;
+     else 
+		casesb=neo==1;
+      	if neo==2 then used_beh=0;
+      	endif;
+     endif;	
+
+
+
+     if thcount>1    then multi=2 !multi
+     elif thcount==1 then multi=1 !single
+     else multi=0;
+     endif;
+
+     used_sin=1;
+     if study==1 then casesm=multi==2;
+     		if multi==1 then used_sin=0;
+     		endif;
+     else 
+		casesm=multi==1;
+      	if multi==2 then used_sin=0;
+      	endif;
+     endif;	
+
+@
+
+ 
+levels   
+SEX_L	 
+OBL_M	obl_mn OBL_86 obl_86n	UR_RUR	ur_rur86 ur_rur86n
+thnod_prev nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+tvlarge largenod
+study used_size used_beh used_sin
+@
+
+SEX_L has 2 levels from 0 to 1
+OBL_M has 5 levels from 1 to 5
+obl_mn has 3 levels from 1 to 3
+OBL_86 has 8 levels from 1 to 8
+obl_86n has 3 levels from 1 to 3
+UR_RUR has 2 levels from 0 to 1
+ur_rur86 has 4 levels from 1 to 4
+ur_rur86n has 2 levels from 1 to 2
+thnod_prev has 2 levels from 0 to 1
+nod_sz has 3 levels from 0 to 2
+nod_sz3 has 4 levels from 0 to 3
+thcount has 5 levels from 0 to 4
+nod_neohc has 2 levels from 0 to 1
+nod_neo has 2 levels from 0 to 1
+tc has 4 levels from 0 to 3
+prevcases has 2 levels from 0 to 1
+FA_PREV has 2 levels from 0 to 1
+SMOKE_F has 3 levels from 0 to 2
+VITAM_F has 2 levels from 0 to 1
+AIT_TOTF has 3 levels from -1 to 1
+goiter_df_pal has 3 levels from 0 to 2
+NDG_RELF has 3 levels from -1 to 1
+ANY_FHF1 has 3 levels from 0 to 2
+Cytology has 2 levels from 1 to 2
+CytologyRecomend has 2 levels from 0 to 1
+Operat has 2 levels from 1 to 2
+OperatRecomend has 2 levels from 0 to 1
+RefOnko has 4 levels from 0 to 3
+fnb has 3 levels from 1 to 3
+tvlarge has 2 levels from 0 to 1
+largenod has 3 levels from 0 to 2
+study has 2 levels from 1 to 2
+used_size has 2 levels from 0 to 1
+used_beh has 2 levels from 0 to 1
+used_sin has 2 levels from 0 to 1
+
+categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+
+dobyrct has 5 levels from 1 to 5
+
+categ age_exm as agect </ 18/ 25/ > @
+
+agect has 3 levels from 1 to 3
+
+categ age_exp as exct </ 5/ 12/ > @
+
+exct has 3 levels from 1 to 3
+
+categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+
+yearexmct has 5 levels from 1 to 5
+
+categ tvolume as tvct </ 8/ 10/ 14/ > @
+
+tvct has 4 levels from 1 to 4
+
+categ iodinen as iodct </20/9998> @
+
+iodct has 3 levels from 1 to 3
+
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+
+dct7 has 7 levels from 1 to 7
+
+
+
+! effect modification by nodule size
+
+select used_size and dgy<4@
+
+21501 records to be used
+
+
+cases casess @
+
+nomodel @
+logl 0 study*sex_l study*lage21 study*ur_rur study*obl_mn @ 
+
+logl 1 ex2 @ 
+
+line 1 dgy @ 
+
+fit @ 
+          Iter  Step      Deviance
+
+             0     0    29806.715
+             1     0     9316.895
+             2     0     7117.807
+             3     0     6773.406
+             4     0     6712.524
+             5     0     6710.507
+             6     0     6710.480
+             7     0     6710.480
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6615      0.1338      4.944    < 0.001
+ 4 study_2 * SEX_L_0........         -2.240      0.1035     -21.64    < 0.001
+ 5 study_2 * SEX_L_1........         -1.917     0.09343     -20.52    < 0.001
+ 6 study_1 * UR_RUR_0.......        0.06413      0.1364     0.4701      > 0.5
+ 7 study_1 * UR_RUR_1.......          0.000     Aliased
+ 8 study_2 * UR_RUR_0.......        -0.3464     0.09698     -3.572    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.417      0.1651     -26.75    < 0.001
+11 study_1 * obl_mn_2.......         -4.427      0.1528     -28.97    < 0.001
+12 study_1 * obl_mn_3.......         -4.235      0.2134     -19.84    < 0.001
+13 study_2 * obl_mn_1.......         -1.001       0.108     -9.271    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.365      0.1591     -8.585    < 0.001
+16 study_1 * lage21.........          2.246      0.3208      7.002    < 0.001
+17 study_2 * lage21.........          2.689      0.2513       10.7    < 0.001
+
+Linear term 1
+18 dgy......................          1.213      0.3501      3.465    < 0.001
+
+Log-linear term 1
+19 ex2......................        -0.2096      0.0582     -3.602    < 0.001
+
+            Records used        21501
+
+                Deviance      6710.48
+                     AIC      6738.48
+            Pearson Chi2     21198.22      Degrees of freedom   21487
+
+
+
+null@
+
+line 1 study*dgy@ 
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6789.519
+             1     0     6707.168
+             2     0     6703.589
+             3     0     6703.463
+             4     0     6703.462
+             5     0     6703.462
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6763      0.1342      5.041    < 0.001
+ 4 study_2 * SEX_L_0........         -2.144      0.1043     -20.57    < 0.001
+ 5 study_2 * SEX_L_1........         -1.827     0.09439     -19.36    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.1070      0.2064    -0.5186      > 0.5
+ 7 study_1 * UR_RUR_1.......        -0.1162      0.1929    -0.6022      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3213     0.09693     -3.315    < 0.001
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.458      0.1697     -26.28    < 0.001
+11 study_1 * obl_mn_2.......         -4.562     Aliased
+12 study_1 * obl_mn_3.......         -4.333       0.189     -22.92    < 0.001
+13 study_2 * obl_mn_1.......         -1.041      0.1086     -9.584    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.382      0.1589     -8.692    < 0.001
+16 study_1 * lage21.........          2.942       0.471      6.246    < 0.001
+17 study_2 * lage21.........          2.408       0.255      9.443    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          3.107       1.312      2.368     0.0179
+19 study_2 * dgy............         0.6719       0.291      2.309      0.021
+
+Log-linear term 1
+20 ex2......................        -0.2127     0.05414     -3.929    < 0.001
+
+            Records used        21501
+
+                Deviance     6703.462
+                     AIC     6733.462
+            Pearson Chi2     21352.59      Degrees of freedom   21486
+
+
+
+lrt@ 
+             LR statistic       7.018      Degrees of freedom      1
+                  P value     0.00807
+
+null@
+
+logl 1 study*ex2@  
+
+fit@ 
+          Iter  Step      Deviance
+
+             0     0     6879.723
+             1     0     6731.645
+             2     0     6705.889
+             3     0     6703.037
+             4     0     6702.897
+             5     0     6702.888
+             6     0     6702.887
+             7     0     6702.887
+
+Binomial odds regression
+Additive excess relative risk T0 * (1 + T1 + T2 + ...)
+
+Using used_size and dgy<4
+
+   casess is used for cases
+Bernoulli trials
+
+
+                            Parameter Summary Table
+
+ # Name                            Estimate     Std.Err.  Test Stat.  P value
+-- ----------------------------   ----------   ---------  ----------  --------
+Log-linear term 0
+ 1 %CON.....................          0.000     Aliased
+ 3 study_1 * SEX_L_1........         0.6780      0.1342      5.052    < 0.001
+ 4 study_2 * SEX_L_0........         -2.128      0.1034     -20.57    < 0.001
+ 5 study_2 * SEX_L_1........         -1.814     0.09368     -19.36    < 0.001
+ 6 study_1 * UR_RUR_0.......        -0.1052       0.206    -0.5109      > 0.5
+ 7 study_1 * UR_RUR_1.......        -0.1115      0.1924    -0.5798      > 0.5
+ 8 study_2 * UR_RUR_0.......        -0.3119     0.09704     -3.214    0.00131
+ 9 study_2 * UR_RUR_1.......          0.000     Aliased
+10 study_1 * obl_mn_1.......         -4.459      0.1698     -26.26    < 0.001
+11 study_1 * obl_mn_2.......         -4.562     Aliased
+12 study_1 * obl_mn_3.......         -4.329      0.1891     -22.89    < 0.001
+13 study_2 * obl_mn_1.......         -1.046      0.1084     -9.653    < 0.001
+14 study_2 * obl_mn_2.......        -0.9723     Aliased
+15 study_2 * obl_mn_3.......         -1.387      0.1589      -8.73    < 0.001
+16 study_1 * lage21.........          2.852      0.4871      5.856    < 0.001
+17 study_2 * lage21.........          2.420      0.2573      9.407    < 0.001
+
+Linear term 1
+18 study_1 * dgy............          2.880       1.269       2.27     0.0232
+19 study_2 * dgy............         0.6756      0.2968      2.276     0.0228
+
+Log-linear term 1
+20 study_1 * ex2............        -0.1917     0.06077     -3.155    0.00161
+21 study_2 * ex2............        -0.3137       0.164     -1.913     0.0557
+
+            Records used        21501
+
+                Deviance     6702.887
+                     AIC     6734.887
+            Pearson Chi2     21324.43      Degrees of freedom   21485
+
+
+
+lrt@
+
+! effect modification by behavior
+
+
+             LR statistic      0.5756      Degrees of freedom      1
+                  P value       0.448
+
