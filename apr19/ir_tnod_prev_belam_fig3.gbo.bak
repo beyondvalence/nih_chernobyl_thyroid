@@ -105,7 +105,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -121,11 +121,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ !Fig 3 All
+bounds 10 @ !Fig 3 All
 
 
 
@@ -137,7 +137,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -153,11 +153,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ !Fig 3 Non-neoplastic
+bounds 10 @ !Fig 3 Non-neoplastic
  
 
 
@@ -168,7 +168,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -184,11 +184,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Neoplastic
+bounds 10 @ ! Fig 3 Neoplastic
 
 
 
@@ -199,7 +199,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -215,11 +215,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Small
+bounds 10 @ ! Fig 3 Small
 
 
 !!! Large
@@ -230,7 +230,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -246,11 +246,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Large
+bounds 10 @ ! Fig 3 Large
 
 
 
@@ -261,7 +261,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -277,11 +277,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Small, non-neoplastic
+bounds 10 @ ! Fig 3 Small, non-neoplastic
  
 
 
@@ -293,7 +293,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -309,11 +309,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Large, non-neoplastic
+bounds 10 @ ! Fig 3 Large, non-neoplastic
 
 
 
@@ -325,11 +325,11 @@ freq thnod_prev @
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Small, neoplastic model did not converge
+bounds 10 @ ! Fig 3 Small, neoplastic model did not converge
  
 
 
@@ -341,7 +341,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -357,11 +357,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Large, neoplastic
+bounds 10 @ ! Fig 3 Large, neoplastic
 
  
 
@@ -372,7 +372,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -388,11 +388,11 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Single
+bounds 10 @ ! Fig 3 Single
 
 
 
@@ -403,7 +403,7 @@ freq thnod_prev @
 
 !Basic linear dose model 
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n   @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ null@
@@ -419,9 +419,9 @@ fit@  lrt@
 
 !Final model Figure 3 <4 Gy
 nomodel@
-logl 0 sex_l lage21  ex2 ur_rur obl_86n @
+logl 0 sex_l lage21  ur_rur obl_mn   @
 line 1 dgy@
 logl 1 ex2 @
 fit@ 
-bounds 11 @ ! Fig 3 Multiple
+bounds 10 @ ! Fig 3 Multiple
 

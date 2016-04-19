@@ -19,8 +19,8 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 
 skip 1 @
 
-input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
-! input 'C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+!input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
+ input 'C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -810,17 +810,3 @@ fit@
 bounds 18@ !Figure 1 Dose reasponse plot at age 5
 bounds 19@ !Figure 1 Dose reasponse plot at age 5 LE
 bounds 20@ !Figure 2 Age at exposure plot
-
-
-
-
-
-
-
-
-
-
-
-
-
-

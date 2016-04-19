@@ -115,133 +115,133 @@ freq any_fhf1  thnod_prev @
 
 ! all participants
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
-fit@ bounds 11@
+fit@ bounds 10@
 
 ! effect modification by sex 
 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 sex_l@  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-bounds 12@ 
-bounds 13@
+bounds 11@ 
+bounds 12@
 
 
 ! effect modification by age at accident  
 nomodel @
-logl 0 sex_l lage21 exct ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 exct@  
 fit @ lrt@
-para 13=1@
+para 10=1@
 fit @ 
-bounds 14@ 
-bounds 15@ 
-bounds 16 force@
+bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 ! effect modification by age at screen 
 nomodel @
-logl 0 sex_l agect ex8 ur_rur obl_86n @ 
+logl 0 sex_l agect ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 agect @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
-bounds 16@
+bounds 15@
 
 
 ! effect modification by oblast 1986 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n  @ 
+logl 0 sex_l lage21 ur_rur obl_mn  @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 obl_86n @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-!bounds 12@ 
-bounds 13@ 
-bounds 14@
+!bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 
 ! effect modification by urbanicity at screen 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 ur_rur @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
+bounds 11@ 
 bounds 12@ 
-bounds 13@ 
 
 
 ! effect modification by iodine concentration
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n iodct @ 
+logl 0 sex_l lage21 ur_rur obl_mn iodct @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 iodct @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16 force@ 
-bounds 17@ 
+bounds 14@ 
+bounds 15 force@ 
+bounds 16@ 
 
 
 ! effect modification by thyroid enlargement
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n tvlarge @ 
+logl 0 sex_l lage21 ur_rur obl_mn tvlarge @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 tvlarge @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
 
 
 ! effect modification by goiter
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n goiter_df_pal @ 
+logl 0 sex_l lage21 ur_rur obl_mn goiter_df_pal @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 goiter_df_pal @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15 force@ 
+bounds 14 force@ 
+bounds 15@ 
 bounds 16@ 
-bounds 17@ 
 
 
 ! effect modification by family hx of thyroid disease
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n any_fhf1 @ 
+logl 0 sex_l lage21 ur_rur obl_mn any_fhf1 @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 any_fhf1 @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16@  
-bounds 17@ 
+bounds 14@ 
+bounds 15@  
+bounds 16@ 
 
 
 
@@ -263,134 +263,133 @@ freq any_fhf1  thnod_prev @
 
 ! all participants
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
-fit@ bounds 11@
+fit@ bounds 10@
 
 ! effect modification by sex 
 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 sex_l@  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-bounds 12@ 
-bounds 13@
+bounds 11@ 
+bounds 12@
 
 
 ! effect modification by age at accident  
 nomodel @
-logl 0 sex_l lage21 exct ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 exct@  
 fit @ lrt@
-para 13=1@
+para 10=1@
 fit @ 
-bounds 14@ 
-bounds 15@ 
-bounds 16 force@
+bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 ! effect modification by age at screen 
 nomodel @
-logl 0 sex_l agect ex8 ur_rur obl_86n @ 
+logl 0 sex_l agect ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 agect @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
-bounds 16@
+bounds 15@
 
 
 ! effect modification by oblast 1986 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n  @ 
+logl 0 sex_l lage21 ur_rur obl_mn  @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 obl_86n @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-!bounds 12@ 
-bounds 13@ 
-bounds 14@
+!bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 
 ! effect modification by urbanicity at screen 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 ur_rur @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
+bounds 11@ 
 bounds 12@ 
-bounds 13@ 
 
 
 ! effect modification by iodine concentration
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n iodct @ 
+logl 0 sex_l lage21 ur_rur obl_mn iodct @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 iodct @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16 force@ 
-bounds 17@ 
+bounds 14@ 
+bounds 15 force@ 
+bounds 16@ 
 
 
 ! effect modification by thyroid enlargement
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n tvlarge @ 
+logl 0 sex_l lage21 ur_rur obl_mn tvlarge @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 tvlarge @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
 
 
 ! effect modification by goiter
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n goiter_df_pal @ 
+logl 0 sex_l lage21 ur_rur obl_mn goiter_df_pal @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 goiter_df_pal @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15 force@ 
+bounds 14 force@ 
+bounds 15@ 
 bounds 16@ 
-bounds 17@ 
 
 
 ! effect modification by family hx of thyroid disease
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n any_fhf1 @ 
+logl 0 sex_l lage21 ur_rur obl_mn any_fhf1 @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 any_fhf1 @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16@  
-!bounds 17@ 
-
+bounds 14@ 
+bounds 15@  
+!bounds 16@ 
 
 
 !!! Neoplastic
@@ -408,137 +407,136 @@ freq tvlarge thnod_prev @
 freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
 
+
 ! all participants
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
-fit@ bounds 11@
+fit@ bounds 10@
 
 ! effect modification by sex 
 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 sex_l@  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-bounds 12@ 
-bounds 13@
+bounds 11@ 
+bounds 12@
 
 
 ! effect modification by age at accident  
 nomodel @
-logl 0 sex_l lage21 exct ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 exct@  
 fit @ lrt@
-para 13=1@
+para 10=1@
 fit @ 
-bounds 14@ 
-bounds 15@ 
-bounds 16 force@
+bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 ! effect modification by age at screen 
 nomodel @
-logl 0 sex_l agect ex8 ur_rur obl_86n @ 
+logl 0 sex_l agect ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 agect @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
-bounds 16@
+bounds 15@
 
 
 ! effect modification by oblast 1986 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n  @ 
+logl 0 sex_l lage21 ur_rur obl_mn  @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 obl_86n @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-!bounds 12@ 
-bounds 13@ 
-!bounds 14@
+bounds 11@ 
+bounds 12@ 
+!bounds 13@
 
 
 
 ! effect modification by urbanicity at screen 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 ur_rur @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
+bounds 11@ 
 bounds 12@ 
-bounds 13@ 
 
 
 ! effect modification by iodine concentration
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n iodct @ 
+logl 0 sex_l lage21 ur_rur obl_mn iodct @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 iodct @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16 force@ 
-bounds 17@ 
+bounds 14@ 
+bounds 15 force@ 
+bounds 16@ 
 
 
 ! effect modification by thyroid enlargement
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n tvlarge @ 
+logl 0 sex_l lage21 ur_rur obl_mn tvlarge @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 tvlarge @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-!bounds 15@ 
 
 
 ! effect modification by goiter
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n goiter_df_pal @ 
+logl 0 sex_l lage21 ur_rur obl_mn goiter_df_pal @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 goiter_df_pal @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15 force@ 
+bounds 14 force@ 
+bounds 15@ 
 bounds 16@ 
-bounds 17@ 
 
 
 ! effect modification by family hx of thyroid disease
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n any_fhf1 @ 
+logl 0 sex_l lage21 ur_rur obl_mn any_fhf1 @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 any_fhf1 @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16@  
-bounds 17@ 
-
-
+bounds 14@ 
+bounds 15@  
+bounds 16@ 
 
 
 !!! Small
@@ -555,140 +553,137 @@ freq iodct thnod_prev @
 freq tvlarge thnod_prev @
 freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
-! effect modification by sex 
+
 
 ! all participants
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
-fit@ bounds 11@
+fit@ bounds 10@
 
-! effect modification sex
+! effect modification by sex 
 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 sex_l@  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-bounds 12@ 
-bounds 13@
+bounds 11@ 
+bounds 12@
 
 
 ! effect modification by age at accident  
 nomodel @
-logl 0 sex_l lage21 exct ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 exct@  
 fit @ lrt@
-para 13=1@
+para 10=1@
 fit @ 
-bounds 14@ 
-bounds 15@ 
-!bounds 16 force@
+bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 ! effect modification by age at screen 
 nomodel @
-logl 0 sex_l agect ex8 ur_rur obl_86n @ 
+logl 0 sex_l agect ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 agect @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
-bounds 14@ 
-!bounds 15@ 
-bounds 16@
+bounds 13@ 
+!bounds 14@ 
+bounds 15@
 
 
 ! effect modification by oblast 1986 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n  @ 
+logl 0 sex_l lage21 ur_rur obl_mn  @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 obl_86n @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-!bounds 12@ 
-bounds 13@ 
-bounds 14@
+!bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 
 ! effect modification by urbanicity at screen 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 ur_rur @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
+bounds 11@ 
 bounds 12@ 
-bounds 13@ 
 
 
 ! effect modification by iodine concentration
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n iodct @ 
+logl 0 sex_l lage21 ur_rur obl_mn iodct @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 iodct @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16 force@ 
-!bounds 17@ 
+bounds 14@ 
+bounds 15 force@ 
+!bounds 16@ 
 
 
 ! effect modification by thyroid enlargement
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n tvlarge @ 
+logl 0 sex_l lage21 ur_rur obl_mn tvlarge @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 tvlarge @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
 
 
 ! effect modification by goiter
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n goiter_df_pal @ 
+logl 0 sex_l lage21 ur_rur obl_mn goiter_df_pal @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 goiter_df_pal @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15 force@ 
+bounds 14 force@ 
+bounds 15@ 
 bounds 16@ 
-bounds 17@ 
 
 
 ! effect modification by family hx of thyroid disease
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n any_fhf1 @ 
+logl 0 sex_l lage21 ur_rur obl_mn any_fhf1 @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 any_fhf1 @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16@  
-!bounds 17@ 
-
-
-
+bounds 14@ 
+bounds 15@  
+!bounds 16@ 
 
 
 !!! Large
@@ -708,135 +703,133 @@ freq any_fhf1  thnod_prev @
 
 ! all participants
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
-fit@ bounds 11@
-
+fit@ bounds 10@
 
 ! effect modification by sex 
 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 sex_l@  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-bounds 12@ 
-bounds 13@
+bounds 11@ 
+bounds 12@
 
 
 ! effect modification by age at accident  
 nomodel @
-logl 0 sex_l lage21 exct ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 exct@  
 fit @ lrt@
-para 13=1@
+para 10=1@
 fit @ 
-bounds 14@ 
-bounds 15@ 
-bounds 16 force@
+bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 ! effect modification by age at screen 
 nomodel @
-logl 0 sex_l agect ex8 ur_rur obl_86n @ 
+logl 0 sex_l agect ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 agect @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
-bounds 16@
+bounds 15@
 
 
 ! effect modification by oblast 1986 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n  @ 
+logl 0 sex_l lage21 ur_rur obl_mn  @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 obl_86n @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-!bounds 12@ 
-bounds 13@ 
-bounds 14@
+!bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 
 ! effect modification by urbanicity at screen 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 ur_rur @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
+bounds 11@ 
 bounds 12@ 
-bounds 13@ 
 
 
 ! effect modification by iodine concentration
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n iodct @ 
+logl 0 sex_l lage21 ur_rur obl_mn iodct @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 iodct @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16 force@ 
-bounds 17@ 
+bounds 14@ 
+bounds 15 force@ 
+bounds 16@ 
 
 
 ! effect modification by thyroid enlargement
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n tvlarge @ 
+logl 0 sex_l lage21 ur_rur obl_mn tvlarge @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 tvlarge @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
 
 
 ! effect modification by goiter
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n goiter_df_pal @ 
+logl 0 sex_l lage21 ur_rur obl_mn goiter_df_pal @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 goiter_df_pal @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15 force@ 
+bounds 14 force@ 
+bounds 15@ 
 bounds 16@ 
-bounds 17@ 
 
 
 ! effect modification by family hx of thyroid disease
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n any_fhf1 @ 
+logl 0 sex_l lage21 ur_rur obl_mn any_fhf1 @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 any_fhf1 @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16@  
-bounds 17@ 
-
+bounds 14@ 
+bounds 15@  
+bounds 16@ 
 
  
 
@@ -857,133 +850,134 @@ freq any_fhf1  thnod_prev @
 
 ! all participants
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
-fit@ bounds 11@
+fit@ bounds 10@
 
 ! effect modification by sex 
 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 sex_l@  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-bounds 12@ 
-bounds 13@
+bounds 11@ 
+bounds 12 force@
 
 
 ! effect modification by age at accident  
 nomodel @
-logl 0 sex_l lage21 exct ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 exct@  
 fit @ lrt@
-para 13=1@
+para 10=1@
 fit @ 
-bounds 14@ 
-bounds 15@ 
-bounds 16 force@
+bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 ! effect modification by age at screen 
 nomodel @
-logl 0 sex_l agect ex8 ur_rur obl_86n @ 
+logl 0 sex_l agect ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 agect @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
-bounds 16@
+bounds 15@
 
 
 ! effect modification by oblast 1986 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n  @ 
+logl 0 sex_l lage21 ur_rur obl_mn  @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 obl_86n @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-!bounds 12@ 
-bounds 13@ 
-bounds 14@
+!bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 
 ! effect modification by urbanicity at screen 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 ur_rur @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
+bounds 11@ 
 bounds 12@ 
-bounds 13@ 
 
 
 ! effect modification by iodine concentration
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n iodct @ 
+logl 0 sex_l lage21 ur_rur obl_mn iodct @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 iodct @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16 force@ 
-bounds 17@ 
+bounds 14@ 
+bounds 15 force@ 
+bounds 16@ 
 
 
 ! effect modification by thyroid enlargement
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n tvlarge @ 
+logl 0 sex_l lage21 ur_rur obl_mn tvlarge @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 tvlarge @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
-bounds 14@ 
-!bounds 15@ 
+bounds 13@ 
+!bounds 14@ 
 
 
 ! effect modification by goiter
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n goiter_df_pal @ 
+logl 0 sex_l lage21 ur_rur obl_mn goiter_df_pal @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 goiter_df_pal @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15 force@ 
+bounds 14 force@ 
+bounds 15@ 
 bounds 16@ 
-bounds 17@ 
 
 
 ! effect modification by family hx of thyroid disease
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n any_fhf1 @ 
+logl 0 sex_l lage21 ur_rur obl_mn any_fhf1 @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 any_fhf1 @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16@  
-bounds 17@ 
+bounds 14@ 
+bounds 15@  
+bounds 16@ 
+
 
 
 !!! Multiple
@@ -1004,132 +998,132 @@ freq any_fhf1  thnod_prev @
 
 ! all participants
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
-fit@ bounds 11@
+fit@ bounds 10@
 
 ! effect modification by sex 
 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 sex_l@  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-bounds 12@ 
-bounds 13@
+!bounds 11@ 
+bounds 12@
 
 
 ! effect modification by age at accident  
 nomodel @
-logl 0 sex_l lage21 exct ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 exct@  
 fit @ lrt@
-para 13=1@
+para 10=1@
 fit @ 
-bounds 14@ 
-bounds 15@ 
-bounds 16 force@
+bounds 11@ 
+bounds 12@ 
+bounds 13@
 
 
 ! effect modification by age at screen 
 nomodel @
-logl 0 sex_l agect ex8 ur_rur obl_86n @ 
+logl 0 sex_l agect ur_rur obl_mn @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 agect @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
-bounds 16@
+bounds 15@
 
 
 ! effect modification by oblast 1986 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n  @ 
+logl 0 sex_l lage21 ur_rur obl_mn  @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 obl_86n @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
-!bounds 12@ 
-bounds 13@ 
-!bounds 14@
+bounds 11 force@ 
+bounds 12@ 
+!bounds 13@
 
 
 
 ! effect modification by urbanicity at screen 
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
+logl 0 sex_l lage21 ur_rur obl_mn @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 ur_rur @  
 fit @ lrt@
-para 11=1@
+para 10=1@
 fit @ 
+bounds 11@ 
 bounds 12@ 
-bounds 13@ 
 
 
 ! effect modification by iodine concentration
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n iodct @ 
+logl 0 sex_l lage21 ur_rur obl_mn iodct @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 iodct @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16 force@ 
-bounds 17@ 
+bounds 14@ 
+bounds 15 force@ 
+!bounds 16@ 
 
 
 ! effect modification by thyroid enlargement
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n tvlarge @ 
+logl 0 sex_l lage21 ur_rur obl_mn tvlarge @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 tvlarge @  
 fit @ lrt@
-para 13=1@
+para 12=1@
 fit @ 
+bounds 13@ 
 bounds 14@ 
-bounds 15@ 
 
 
 ! effect modification by goiter
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n goiter_df_pal @ 
+logl 0 sex_l lage21 ur_rur obl_mn goiter_df_pal @ 
 line 1 dgy @
 fit@ null@ 
 logl 1 goiter_df_pal @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15 force@ 
+bounds 14 force@ 
+bounds 15@ 
 bounds 16@ 
-bounds 17@ 
 
 
 ! effect modification by family hx of thyroid disease
 nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n any_fhf1 @ 
+logl 0 sex_l lage21 ur_rur obl_mn any_fhf1 @ 
 line 1 dgy @ 
 fit@ null@
 logl 1 any_fhf1 @  
 fit @ lrt@
-para 14=1@
+para 13=1@
 fit @ 
-bounds 15@ 
-bounds 16@  
-!bounds 17@ 
+bounds 14@ 
+bounds 15@  
+!bounds 16@ 
 
 

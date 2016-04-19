@@ -1,4 +1,4 @@
-! Table S2 8-level categorical dose response ORs
+! Table S3 4-level categorical age at exposure
 ! remember to add 1 to estimate and lower and upper cis
 
 
@@ -89,325 +89,127 @@ tvlarge
 
 categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
 categ age_exm as agect </ 18/ 25/ > @
-categ age_exp as exct </2/5/ > @ 
+categ age_exp as exct </1/2/5/ > @ 
 categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
 categ tvolume as tvct </ 8/ 10/ 14/ > @
 categ iodinen as iodct </20/9998> @
 categ dgy as dct8  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/6.000/> @
 
-tran 
-if        dct8==1 then dct8num=1
-     elif dct8==2 then dct8num=2
-     elif dct8==3 then dct8num=3
-     elif dct8==4 then dct8num=4
-     elif dct8==5 then dct8num=5
-     elif dct8==6 then dct8num=6
-     elif dct8==7 then dct8num=7
-     else              dct8num=8
-     endif;
-
-@
-
 cases thnod_prev @
 
 !All
-freq dct8 thnod_prev @
+freq thnod_prev @
 
 nomodel@
 logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
+line 1 dgy @ 
+logl 1 exct@
+para 10=1@
 fit@
 bounds 11@
 bounds 12@  
 bounds 13@
 bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
 
 !Benign
 
 select (nod_neo==0 or thnod_prev==0)@
-freq dct8 thnod_prev @
+
+freq thnod_prev @
 
 nomodel@
 logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
+line 1 dgy @ 
+logl 1 exct@
+para 10=1@
 fit@
 bounds 11@
 bounds 12@  
 bounds 13@
 bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
 
 !Malignant
 
 select (nod_neo==1 or thnod_prev==0)@
-freq dct8 thnod_prev @
+
+freq thnod_prev @
 
 nomodel@
 logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
+line 1 dgy @ 
+logl 1 exct@
+para 10=1@
 fit@
 bounds 11@
 bounds 12@  
 bounds 13@
 bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
-
 
 !Small
 
 select (nod_sz==1 or thnod_prev==0)@
-freq dct8 thnod_prev @
+
+freq thnod_prev @
 
 nomodel@
 logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
+line 1 dgy @ 
+logl 1 exct@
+para 10=1@
 fit@
 bounds 11@
 bounds 12@  
 bounds 13@
 bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
 
 
 !Large
 
 select (nod_sz==2 or thnod_prev==0)@
-freq dct8 thnod_prev @
+
+freq thnod_prev @
 
 nomodel@
 logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
+line 1 dgy @ 
+logl 1 exct@
+para 10=1@
 fit@
 bounds 11@
 bounds 12@  
 bounds 13@
 bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
-
-
-!Benign, small
-
-select ((nod_neo==0 and nod_sz==1) or thnod_prev==0)@
-freq dct8 thnod_prev @
-
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
-fit@
-bounds 11@
-bounds 12@  
-bounds 13@
-bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
-
-!Benign, large
-
-select ((nod_neo==0 and nod_sz==2) or thnod_prev==0)@
-freq dct8 thnod_prev @
-
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
-fit@
-bounds 11@
-bounds 12@  
-bounds 13@
-bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
-
-
-!Malignant, small
-
-select ((nod_neo==1 and nod_sz==1) or thnod_prev==0)@
-freq dct8 thnod_prev @
-
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
-fit@
-bounds 11@
-bounds 12@  
-bounds 13@
-bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
-
-!Malignant, large
-
-select ((nod_neo==1 and nod_sz==2) or thnod_prev==0)@
-freq dct8 thnod_prev @
-
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
-fit@
-bounds 11@
-bounds 12@  
-bounds 13@
-bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
 
 !Single
 
 select (thcount==1 or thnod_prev==0)@
-freq dct8 thnod_prev @
+
+freq thnod_prev @
 
 nomodel@
 logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
+line 1 dgy @ 
+logl 1 exct@
+para 10=1@
 fit@
 bounds 11@
 bounds 12@  
 bounds 13@
 bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@
-
-
 
 !Multiple
 
 select (thcount>1 or thnod_prev==0)@
-freq dct8 thnod_prev @
+
+freq thnod_prev @
 
 nomodel@
 logl 0 sex_l lage21 obl_mn ur_rur @ 
-line 1 dct8 @ 
-logl 1 ex5@
-para 10=0@
+line 1 dgy @ 
+logl 1 exct@
+para 10=1@
 fit@
 bounds 11@
 bounds 12@  
 bounds 13@
 bounds 14@
-bounds 15@
-bounds 16@
-bounds 17@
-
-!categorical dose response p-value
-nomodel@
-logl 0 sex_l lage21 obl_mn ur_rur @
-logl 1 ex5 @
-fit@ null@
-line 1 +dct8num@ 
-fit@ lrt@

@@ -19,8 +19,7 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 
 skip 1 @
 
-!input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
- input 'C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+input 'C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
 Input from C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv
 
        11422 records read       11421 records used
@@ -1558,10 +1557,10 @@ bounds 23@
 
                97.5% lower bound     -0.7239
                        exp(bound)     0.4848
-               97.5% upper bound not found last estimate      40.43 Deviance  18310.63
+               97.5% upper bound not found last estimate       29.3 Deviance 18189.145
 
 
- *** WARNING: Parameter exct4_2 changed by 94886728.8% MLE may be infinite or may not exist
+ *** WARNING: Parameter exct4_3 changed by -18682602.-7% MLE may be infinite or may not exist
 
 
 bounds 24@ 
