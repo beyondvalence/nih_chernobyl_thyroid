@@ -310,63 +310,6 @@ ANY_FHF1   |         0         1 |  Total
 
 
 
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ 
-          Iter  Step      Deviance
-
-             0     0    15483.522
-             1     0     6512.077
-             2     0     5814.949
-             3     0     5745.447
-             4     0     5743.170
-             5     0     5743.166
-             6     0     5743.166
-
-Binomial odds regression
-Additive excess relative risk T0 * (1 + T1 + T2 + ...)
-
-Using dgy<4
-
-thnod_prev is used for cases
-Bernoulli trials
-
-
-                            Parameter Summary Table
-
- # Name                            Estimate     Std.Err.  Test Stat.  P value
--- ----------------------------   ----------   ---------  ----------  --------
-Log-linear term 0
- 1 %CON.....................         -3.209      0.1376     -23.33    < 0.001
- 3 SEX_L_1..................         0.4339     0.07441      5.831    < 0.001
- 5 UR_RUR_1.................         0.2150     0.07999      2.688    0.00719
- 7 obl_86n_2................         0.1439      0.1192      1.207      0.227
- 8 obl_86n_3................        -0.1669      0.1699     -0.982      0.326
- 9 lage21...................          3.050      0.6379      4.782    < 0.001
-10 ex8......................       -0.05762     0.03032     -1.901     0.0573
-
-Linear term 1
-11 dgy......................         0.3278      0.1039      3.156     0.0016
-
-            Records used        11169
-
-                Deviance     5743.166
-                     AIC     5759.166
-            Pearson Chi2     11048.14      Degrees of freedom   11161
-
-
-
-bounds 11@
-      Profile likelihood bounds for parameter 11 (dgy)
-
-                  MLE     0.3278
-
-               97.5% lower bound      0.1476
-               97.5% upper bound        0.56
-
-
 
 ! effect modification by sex 
 
@@ -2196,63 +2139,6 @@ ANY_FHF1   |         0         1 |  Total
 
 
 
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ 
-          Iter  Step      Deviance
-
-             0     0    15357.369
-             1     0     6120.182
-             2     0     5347.245
-             3     0     5256.765
-             4     0     5252.400
-             5     0     5252.380
-             6     0     5252.380
-
-Binomial odds regression
-Additive excess relative risk T0 * (1 + T1 + T2 + ...)
-
-Using (nod_neo==0 or thnod_prev==0) and dgy<4
-
-thnod_prev is used for cases
-Bernoulli trials
-
-
-                            Parameter Summary Table
-
- # Name                            Estimate     Std.Err.  Test Stat.  P value
--- ----------------------------   ----------   ---------  ----------  --------
-Log-linear term 0
- 1 %CON.....................         -3.352      0.1438     -23.31    < 0.001
- 3 SEX_L_1..................         0.4378     0.07863      5.568    < 0.001
- 5 UR_RUR_1.................         0.2916     0.08533      3.417    < 0.001
- 7 obl_86n_2................         0.1239      0.1228      1.009      0.313
- 8 obl_86n_3................        -0.1495      0.1752    -0.8533      0.393
- 9 lage21...................          3.613      0.6914      5.226    < 0.001
-10 ex8......................       -0.07481     0.03252       -2.3     0.0214
-
-Linear term 1
-11 dgy......................         0.2505      0.1007      2.487     0.0129
-
-            Records used        11078
-
-                Deviance      5252.38
-                     AIC      5268.38
-            Pearson Chi2     10995.71      Degrees of freedom   11070
-
-
-
-bounds 11@
-      Profile likelihood bounds for parameter 11 (dgy)
-
-                  MLE     0.2505
-
-               97.5% lower bound     0.07798
-               97.5% upper bound      0.4759
-
-
 
 ! effect modification by sex 
 
@@ -3913,7 +3799,10 @@ bounds 16@
                        exp(bound)      2.427
 
 
-!bounds 17@ 
+bounds 17@ 
+ ***   ERROR: Parameter 17 (ANY_FHF1_2) is fixed or aliased
+
+
 
 
 
@@ -4074,67 +3963,6 @@ ANY_FHF1   |         0         1 |  Total
       2    |       157         3 |       160
 -----------+---------------------+----------
      Total |     10332        91 |     10423
-
-
-
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ 
-          Iter  Step      Deviance
-
-             0     0    14449.346
-             1     0     3089.766
-             2     0     1533.874
-             3     0     1120.041
-             4     0     1028.112
-             5     0     1015.128
-             6     0     1014.227
-             7     0     1014.204
-             8     0     1014.203
-             9     0     1014.203
-
-Binomial odds regression
-Additive excess relative risk T0 * (1 + T1 + T2 + ...)
-
-Using (nod_neo==1 or thnod_prev==0) and dgy<4
-
-thnod_prev is used for cases
-Bernoulli trials
-
-
-                            Parameter Summary Table
-
- # Name                            Estimate     Std.Err.  Test Stat.  P value
--- ----------------------------   ----------   ---------  ----------  --------
-Log-linear term 0
- 1 %CON.....................         -5.533      0.4872     -11.36    < 0.001
- 3 SEX_L_1..................         0.3925      0.2149      1.826     0.0678
- 5 UR_RUR_1.................        -0.3364       0.225     -1.495      0.135
- 7 obl_86n_2................         0.3980       0.461     0.8633      0.388
- 8 obl_86n_3................        -0.3252      0.6613    -0.4918      > 0.5
- 9 lage21...................         0.1217       1.609    0.07562      > 0.5
-10 ex8......................        0.02101     0.08158     0.2576      > 0.5
-
-Linear term 1
-11 dgy......................          1.078      0.5538      1.947     0.0515
-
-            Records used        10423
-
-                Deviance     1014.203
-                     AIC     1030.203
-            Pearson Chi2     10166.81      Degrees of freedom   10415
-
-
-
-bounds 11@
-      Profile likelihood bounds for parameter 11 (dgy)
-
-                  MLE      1.078
-
-               97.5% lower bound      0.2837
-               97.5% upper bound       2.958
 
 
 
@@ -4871,7 +4699,10 @@ bounds 13@
                        exp(bound)      3.192
 
 
-!bounds 14@
+bounds 14@
+ ***   ERROR: Parameter 14 (obl_86n_3) is fixed or aliased
+
+
 
 
 
@@ -5433,7 +5264,10 @@ bounds 14@
                        exp(bound)      3.207
 
 
-!bounds 15@ 
+bounds 15@ 
+ ***   ERROR: Parameter 15 (tvlarge_1) is fixed or aliased
+
+
 
 
 ! effect modification by goiter
@@ -6007,65 +5841,7 @@ ANY_FHF1   |         0         1 |  Total
      Total |     10332       580 |     10912
 
 
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ 
-          Iter  Step      Deviance
-
-             0     0    15127.244
-             1     0     5406.796
-             2     0     4505.283
-             3     0     4384.671
-             4     0     4376.611
-             5     0     4376.530
-             6     0     4376.530
-
-Binomial odds regression
-Additive excess relative risk T0 * (1 + T1 + T2 + ...)
-
-Using (nod_sz==1 or thnod_prev==0) and dgy<4
-
-thnod_prev is used for cases
-Bernoulli trials
-
-
-                            Parameter Summary Table
-
- # Name                            Estimate     Std.Err.  Test Stat.  P value
--- ----------------------------   ----------   ---------  ----------  --------
-Log-linear term 0
- 1 %CON.....................         -3.535      0.1604     -22.05    < 0.001
- 3 SEX_L_1..................         0.3202     0.08747      3.661    < 0.001
- 5 UR_RUR_1.................         0.3170     0.09626      3.293    < 0.001
- 7 obl_86n_2................         0.1782      0.1366      1.305      0.192
- 8 obl_86n_3................        -0.3138      0.2075     -1.512       0.13
- 9 lage21...................          3.810      0.7777      4.899    < 0.001
-10 ex8......................       -0.08947     0.03661     -2.444     0.0145
-
-Linear term 1
-11 dgy......................         0.1653      0.1003      1.648     0.0993
-
-            Records used        10912
-
-                Deviance      4376.53
-                     AIC      4392.53
-            Pearson Chi2     10924.41      Degrees of freedom   10904
-
-
-
-bounds 11@
-      Profile likelihood bounds for parameter 11 (dgy)
-
-                  MLE     0.1653
-
-               97.5% lower bound   -0.006938
-               97.5% upper bound      0.3978
-
-
-
-! effect modification sex
+! effect modification by sex 
 
 nomodel @
 logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
@@ -6429,7 +6205,17 @@ bounds 15@
  *** WARNING: Parameter exct_3 changed by 1.9% MLE may be infinite or may not exist
 
 
-!bounds 16 force@
+bounds 16 force@
+      Profile likelihood bounds for parameter 16 (exct_3)
+
+                  MLE     -6.434    exp(MLE)   0.001606
+
+               97.5% lower bound       -2300
+                       exp(bound)          0
+ ***   ERROR: Execution interrupted by user
+               97.5% upper bound not found last estimate      5.096 Deviance         0
+
+
 
 
 ! effect modification by age at screen 
@@ -6601,7 +6387,10 @@ bounds 14@
                        exp(bound)      1.508
 
 
-!bounds 15@ 
+bounds 15@ 
+ ***   ERROR: Parameter 15 (agect_2) is fixed or aliased
+
+
 bounds 16@
       Profile likelihood bounds for parameter 16 (agect_3)
 
@@ -7150,7 +6939,10 @@ bounds 16 force@
                        exp(bound)     0.3573
 
 
-!bounds 17@ 
+bounds 17@ 
+ ***   ERROR: Parameter 17 (iodct_3) is fixed or aliased
+
+
 
 
 ! effect modification by thyroid enlargement
@@ -7509,6 +7301,17 @@ bounds 16@
 
                97.5% lower bound      -111.7
                        exp(bound)  3.011e-49
+ ***   ERROR: Execution interrupted by user
+               97.5% upper bound not found last estimate       -2.2 Deviance         0
+
+
+bounds 16@ 
+      Profile likelihood bounds for parameter 16 (goiter_df_pal_1)
+
+                  MLE     -2.663    exp(MLE)    0.06972
+
+               97.5% lower bound      -111.7
+                       exp(bound)  3.011e-49
                97.5% upper bound     -0.6841
                        exp(bound)     0.5045
 
@@ -7709,7 +7512,10 @@ bounds 16@
                        exp(bound)      2.926
 
 
-!bounds 17@ 
+bounds 17@ 
+ ***   ERROR: Parameter 17 (ANY_FHF1_2) is fixed or aliased
+
+
 
 
 
@@ -7872,65 +7678,6 @@ ANY_FHF1   |         0         1 |  Total
       2    |       157         5 |       162
 -----------+---------------------+----------
      Total |     10332       257 |     10589
-
-
-
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ 
-          Iter  Step      Deviance
-
-             0     0    14679.471
-             1     0     3909.226
-             2     0     2629.755
-             3     0     2374.377
-             4     0     2341.156
-             5     0     2339.699
-             6     0     2339.694
-             7     0     2339.694
-
-Binomial odds regression
-Additive excess relative risk T0 * (1 + T1 + T2 + ...)
-
-Using (nod_sz==2 or thnod_prev==0) and dgy<4
-
-thnod_prev is used for cases
-Bernoulli trials
-
-
-                            Parameter Summary Table
-
- # Name                            Estimate     Std.Err.  Test Stat.  P value
--- ----------------------------   ----------   ---------  ----------  --------
-Log-linear term 0
- 1 %CON.....................         -4.533      0.2553     -17.76    < 0.001
- 3 SEX_L_1..................         0.6956      0.1344      5.176    < 0.001
- 5 UR_RUR_1.................      -0.005369      0.1365   -0.03934      > 0.5
- 7 obl_86n_2................        0.07165      0.2279     0.3143      > 0.5
- 8 obl_86n_3................         0.1310      0.2907     0.4506      > 0.5
- 9 lage21...................          1.434       1.068      1.342      0.179
-10 ex8......................        0.01093     0.05176     0.2112      > 0.5
-
-Linear term 1
-11 dgy......................         0.7306      0.2634      2.774    0.00553
-
-            Records used        10589
-
-                Deviance     2339.694
-                     AIC     2355.694
-            Pearson Chi2     10493.76      Degrees of freedom   10581
-
-
-
-bounds 11@
-      Profile likelihood bounds for parameter 11 (dgy)
-
-                  MLE     0.7306
-
-               97.5% lower bound      0.3139
-               97.5% upper bound       1.386
 
 
 
@@ -9824,64 +9571,6 @@ ANY_FHF1   |         0         1 |  Total
 
 
 
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ 
-          Iter  Step      Deviance
-
-             0     0    15175.764
-             1     0     5568.221
-             2     0     4709.175
-             3     0     4606.230
-             4     0     4601.257
-             5     0     4601.233
-             6     0     4601.233
-
-Binomial odds regression
-Additive excess relative risk T0 * (1 + T1 + T2 + ...)
-
-Using (thcount==1 or thnod_prev==0) and dgy<4
-
-thnod_prev is used for cases
-Bernoulli trials
-
-
-                            Parameter Summary Table
-
- # Name                            Estimate     Std.Err.  Test Stat.  P value
--- ----------------------------   ----------   ---------  ----------  --------
-Log-linear term 0
- 1 %CON.....................         -3.586      0.1633     -21.97    < 0.001
- 3 SEX_L_1..................         0.4809     0.08617       5.58    < 0.001
- 5 UR_RUR_1.................         0.1523     0.09103      1.673     0.0944
- 7 obl_86n_2................         0.2804      0.1429      1.963     0.0496
- 8 obl_86n_3................       -0.05177      0.2006     -0.258      > 0.5
- 9 lage21...................          2.425      0.7202      3.368    < 0.001
-10 ex8......................       -0.03914     0.03457     -1.132      0.258
-
-Linear term 1
-11 dgy......................         0.2772      0.1108      2.502     0.0124
-
-            Records used        10947
-
-                Deviance     4601.233
-                     AIC     4617.233
-            Pearson Chi2     10850.52      Degrees of freedom   10939
-
-
-
-bounds 11@
-      Profile likelihood bounds for parameter 11 (dgy)
-
-                  MLE     0.2772
-
-               97.5% lower bound     0.08599
-               97.5% upper bound      0.5318
-
-
-
 ! effect modification by sex 
 
 nomodel @
@@ -11147,7 +10836,10 @@ bounds 14@
                        exp(bound)     0.6081
 
 
-!bounds 15@ 
+bounds 15@ 
+ ***   ERROR: Parameter 15 (tvlarge_1) is fixed or aliased
+
+
 
 
 ! effect modification by goiter
@@ -11698,65 +11390,6 @@ ANY_FHF1   |         0         1 |  Total
       2    |       157         7 |       164
 -----------+---------------------+----------
      Total |     10332       222 |     10554
-
-
-
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ 
-          Iter  Step      Deviance
-
-             0     0    14630.951
-             1     0     3738.523
-             2     0     2403.000
-             3     0     2114.944
-             4     0     2067.228
-             5     0     2063.082
-             6     0     2063.023
-             7     0     2063.022
-
-Binomial odds regression
-Additive excess relative risk T0 * (1 + T1 + T2 + ...)
-
-Using (thcount>1 or thnod_prev==0) and dgy<4
-
-thnod_prev is used for cases
-Bernoulli trials
-
-
-                            Parameter Summary Table
-
- # Name                            Estimate     Std.Err.  Test Stat.  P value
--- ----------------------------   ----------   ---------  ----------  --------
-Log-linear term 0
- 1 %CON.....................         -4.434      0.2462     -18.01    < 0.001
- 3 SEX_L_1..................         0.2986      0.1385      2.155     0.0311
- 5 UR_RUR_1.................         0.4068      0.1563      2.604    0.00923
- 7 obl_86n_2................        -0.1853      0.2069    -0.8957       0.37
- 8 obl_86n_3................        -0.4248      0.3059     -1.389      0.165
- 9 lage21...................          5.070       1.303      3.892    < 0.001
-10 ex8......................        -0.1195     0.05993     -1.994     0.0462
-
-Linear term 1
-11 dgy......................         0.4541      0.2284      1.989     0.0467
-
-            Records used        10554
-
-                Deviance     2063.022
-                     AIC     2079.022
-            Pearson Chi2      10120.1      Degrees of freedom   10546
-
-
-
-bounds 11@
-      Profile likelihood bounds for parameter 11 (dgy)
-
-                  MLE     0.4541
-
-               97.5% lower bound      0.1036
-               97.5% upper bound       1.016
 
 
 
@@ -12491,7 +12124,10 @@ bounds 13@
                        exp(bound)      1.166
 
 
-!bounds 14@
+bounds 14@
+ ***   ERROR: Parameter 14 (obl_86n_3) is fixed or aliased
+
+
 
 
 
@@ -13468,6 +13104,9 @@ bounds 16@
                        exp(bound)      2.757
 
 
-!bounds 17@ 
+bounds 17@ 
+ ***   ERROR: Parameter 17 (ANY_FHF1_2) is fixed or aliased
+
+
 
 

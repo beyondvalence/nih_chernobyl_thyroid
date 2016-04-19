@@ -79,29 +79,29 @@ replace dct8_6=1 if dose1000==2745
 replace dct8_7=1 if dose1000==4953
 replace dct8_8=1 if dose1000==10302
 
-scalar dct82_all_b=1.02642
-scalar dct83_all_b=1.2803
-scalar dct84_all_b=1.4089
-scalar dct85_all_b=2.400
-scalar dct86_all_b=2.103
-scalar dct87_all_b=4.112
-scalar dct88_all_b=6.570
+scalar dct82_all_b=0.97021
+scalar dct83_all_b=1.2997
+scalar dct84_all_b=1.3791
+scalar dct85_all_b=2.42
+scalar dct86_all_b=2.068
+scalar dct87_all_b=4.69
+scalar dct88_all_b=6.806
 
-scalar dct82_low_b=0.8133
-scalar dct83_low_b=1.005455
-scalar dct84_low_b=1.06883
-scalar dct85_low_b=1.5915
-scalar dct86_low_b=1.4312
-scalar dct87_low_b=2.053
-scalar dct88_low_b=3.384
+scalar dct82_low_b=0.7377
+scalar dct83_low_b=0.97428
+scalar dct84_low_b=1.0137
+scalar dct85_low_b=1.6861
+scalar dct86_low_b=1.4006
+scalar dct87_low_b=2.405
+scalar dct88_low_b=3.816
 
-scalar dct82_upp_b=1.4011
-scalar dct83_upp_b=1.7477
-scalar dct84_upp_b=1.9736
-scalar dct85_upp_b=3.532
-scalar dct86_upp_b=3.219
-scalar dct87_upp_b=7.989
-scalar dct88_upp_b=12.03
+scalar dct82_upp_b=1.3642
+scalar dct83_upp_b=1.793
+scalar dct84_upp_b=1.9377
+scalar dct85_upp_b=3.466
+scalar dct86_upp_b=3.133
+scalar dct87_upp_b=8.626
+scalar dct88_upp_b=11.82
 
 gen ctpoint8=.
 replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
@@ -128,7 +128,7 @@ twoway	(rcap dct8_upp_rad dct8_low_rad dgy)  ///
 			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "ORs and 95%CIs" 3 "Linear" )) ///
-			legend(col(1) pos(10) ring (0) size (5.5) symxsize(5) keygap(0.7)) ///
+			legend(col(1) pos(10) ring (0) size (5.5) symxsize(5) keygap(0.7) textw(23.6) ) ///
 			name(Fig1A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
 
 !!!!!!! Nodules by behavior: non-neoplastic, neoplastic
@@ -204,21 +204,21 @@ replace dct8_6=1 if dose1000==2745
 replace dct8_7=1 if dose1000==4953
 replace dct8_8=1 if dose1000==10302
 
-scalar dct82_ben_b=1.03257
-scalar dct83_ben_b=1.2817
-scalar dct84_ben_b=1.2907
-scalar dct85_ben_b=2.263
-scalar dct86_ben_b=1.830
-scalar dct87_ben_b=3.177
-scalar dct88_ben_b=7.187
+scalar dct82_ben_b=0.97401
+scalar dct83_ben_b=1.2809
+scalar dct84_ben_b=1.246
+scalar dct85_ben_b=2.237
+scalar dct86_ben_b=1.7527
+scalar dct87_ben_b=3.529
+scalar dct88_ben_b=7.166
 
-scalar dct82_mal_b=0.8777
-scalar dct83_mal_b=1.2134
-scalar dct84_mal_b=1.9585
-scalar dct85_mal_b=2.975
-scalar dct86_mal_b=3.042
-scalar dct87_mal_b=6.506
-scalar dct88_mal_b=4.510
+scalar dct82_mal_b=1.04596
+scalar dct83_mal_b=1.5065
+scalar dct84_mal_b=2.324
+scalar dct85_mal_b=3.822
+scalar dct86_mal_b=4.143
+scalar dct87_mal_b=11.49
+scalar dct88_mal_b=6.196
 
 gen ctpoint8=.
 replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
@@ -234,15 +234,15 @@ gen linrad_ben= lin_dgy_ben_b*dgy+1
 gen linrad_mal= lin_dgy_mal_b*dgy+1
 replace linrad_mal=. if linrad_mal > 12
 
-twoway	(scatter dct8_ben_rad dgy, mc(black)) ///
+twoway	(scatter dct8_ben_rad dgy, mc(gray)) ///
 		(line linrad_ben dgy, ///
 		 lpattern( solid ) /// 
-		 lcol(black*0.75 ) ///
+		 lcol(gray*0.75 ) ///
 		 lw(medthick)) ///
-		(scatter dct8_mal_rad dgy, mc(gray)) ///
+		(scatter dct8_mal_rad dgy, mc(black)) ///
 		(line linrad_mal dgy, ///
 		 lpattern( solid ) ///
-		 lcol(gray*0.75 ) ///
+		 lcol(black*0.75 ) ///
 		 lw(medthick)) , ///
 			ti("{bf}Behavior ", pos(11) ring(1) size(5.7) )  ///
 			yti("{bf}Odds ratio*", size(4.7) ) ///
@@ -250,7 +250,7 @@ twoway	(scatter dct8_ben_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Non-neoplastic" 4 "Neoplastic")) ///
-			legend(col(1) pos(10) ring (0) size (5.5) symxsize(5) keygap(0.7) textw(19.2) ) ///
+			legend(col(1) pos(5) ring (0) size (5.112) symxsize(4.8) keygap(0.7) textw(18.2) ) ///
 			name(Fig1B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 !!!!!!! Nodules by size: small, large
@@ -325,21 +325,21 @@ replace dct8_6=1 if dose1000==2745
 replace dct8_7=1 if dose1000==4953
 replace dct8_8=1 if dose1000==10302
 
-scalar dct82_sma_b=1.02798
-scalar dct83_sma_b=1.1505
-scalar dct84_sma_b=1.4476
-scalar dct85_sma_b=1.9499
-scalar dct86_sma_b=1.4418
-scalar dct87_sma_b=3.074
-scalar dct88_sma_b=4.613
+scalar dct82_sma_b=1.002923
+scalar dct83_sma_b=1.1281
+scalar dct84_sma_b=1.4421
+scalar dct85_sma_b=1.9828
+scalar dct86_sma_b=1.3774
+scalar dct87_sma_b=3.373
+scalar dct88_sma_b=4.927
 
-scalar dct82_lar_b=1.07482
-scalar dct83_lar_b=1.9497
-scalar dct84_lar_b=1.4620
-scalar dct85_lar_b=4.445
-scalar dct86_lar_b=4.918
-scalar dct87_lar_b=9.512
-scalar dct88_lar_b=15.04
+scalar dct82_lar_b=0.98259
+scalar dct83_lar_b=2.089
+scalar dct84_lar_b=1.3585
+scalar dct85_lar_b=3.988
+scalar dct86_lar_b=4.581
+scalar dct87_lar_b=10.782
+scalar dct88_lar_b=13.61
 
 gen ctpoint8=.
 replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
@@ -356,15 +356,15 @@ gen linrad_sma= lin_dgy_sma_b*dgy+1
 gen linrad_lar= lin_dgy_lar_b*dgy+1
 replace linrad_lar=. if linrad_lar > 16
 
-twoway	(scatter dct8_sma_rad dgy, mc(black)) ///
+twoway	(scatter dct8_sma_rad dgy, mc(gray)) ///
 		(line linrad_sma dgy, ///
 		 lpattern( solid ) ///
-		 lcol(black*0.75 ) ///
+		 lcol(gray*0.75 ) ///
 		 lw(medthick)) ///
-		(scatter dct8_lar_rad dgy, mc(gray)) ///
+		(scatter dct8_lar_rad dgy, mc(black)) ///
 		(line linrad_lar dgy, ///
 		 lpattern( solid ) ///
-		 lcol(gray*0.75 ) ///
+		 lcol(black*0.75 ) ///
 		 lw(medthick)), ///
 			ti("{bf}Size ", pos(11) ring(1) size(5.7) ) ///
 			yti("{bf}Odds ratio* ", size(4.7) )  ///
@@ -372,7 +372,7 @@ twoway	(scatter dct8_sma_rad dgy, mc(black)) ///
 			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(2 "Small, <10 mm" 4 "Large, 10+ mm" )) ///
-			legend(col(1) pos(11) ring (0) size (4.9) symxsize(4.7) keygap(0.6) textw(17.7) ) ///
+			legend(col(1) pos(11) ring (0) size (4.74) symxsize(4.7) keygap(0.6) textw(17.2) ) ///
 			name(Fig1C, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 !!!!!!! Nodules by singularity: single, multiple
@@ -461,21 +461,21 @@ replace dct8_6=1 if dose1000==2745
 replace dct8_7=1 if dose1000==4953
 replace dct8_8=1 if dose1000==10302
 
-scalar dct82_sin_b=1.09909
-scalar dct83_sin_b=1.2160
-scalar dct84_sin_b=1.4232
-scalar dct85_sin_b=2.343
-scalar dct86_sin_b=1.9166
-scalar dct87_sin_b=4.697
-scalar dct88_sin_b=5.779
+scalar dct82_sin_b=1.03896
+scalar dct83_sin_b=1.1846
+scalar dct84_sin_b=1.3549
+scalar dct85_sin_b=2.224
+scalar dct86_sin_b=1.8133
+scalar dct87_sin_b=4.823
+scalar dct88_sin_b=5.479
 
-scalar dct82_mul_b=0.98285
-scalar dct83_mul_b=1.03052
-scalar dct84_mul_b=1.2552
-scalar dct85_mul_b=1.8227
-scalar dct86_mul_b=1.9211
-scalar dct87_mul_b=1.4256
-scalar dct88_mul_b=5.002
+scalar dct82_mul_b=0.95457
+scalar dct83_mul_b=1.4875
+scalar dct84_mul_b=1.3126
+scalar dct85_mul_b=2.153
+scalar dct86_mul_b=2.18
+scalar dct87_mul_b=2.016
+scalar dct88_mul_b=6.408
 
 gen ctpoint8=.
 replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
@@ -483,15 +483,15 @@ replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
 gen dct8_sin_rad= (dct82_sin_b*dct8_2+dct83_sin_b*dct8_3+dct84_sin_b*dct8_4+dct85_sin_b*dct8_5+dct86_sin_b*dct8_6+dct87_sin_b*dct8_7+dct88_sin_b*dct8_8)*ctpoint8
 gen dct8_mul_rad= (dct82_mul_b*dct8_2+dct83_mul_b*dct8_3+dct84_mul_b*dct8_4+dct85_mul_b*dct8_5+dct86_mul_b*dct8_6+dct87_mul_b*dct8_7+dct88_mul_b*dct8_8)*ctpoint8
 
-twoway	(scatter dct8_sin_rad dgy, mc(black)) ///
+twoway	(scatter dct8_sin_rad dgy, mc(gray)) ///
 		(line linrad_sin dgy, ///
 		 lpattern( solid ) ///
-		 lcol(black*0.75 ) ///
+		 lcol(gray*0.75 ) ///
 		 lw(medthick)) ///
-		(scatter dct8_mul_rad dgy, mc(gray)) ///
+		(scatter dct8_mul_rad dgy, mc(black)) ///
 		(line linrad_mul dgy, ///
 		 lpattern( solid ) ///
-		 lcol(gray*0.75 ) ///
+		 lcol(black*0.75 ) ///
 		 lw(medthick)) ///
 		(line lerad_mul dgy, ///
 		 lpattern(shortdash) ///

@@ -126,15 +126,15 @@ scalar dgy_mal_b=1.142
 scalar ex5_mal_b=-0.3676
 gen linrad_mal= dgy_mal_b*dose1*exp(ex5_mal_b*(age_exp-5))+1
 
-twoway	(scatter exct4_ben_rad age_exp, mc(black)) ///
+twoway	(scatter exct4_ben_rad age_exp, mc(gray)) ///
 		(line linrad_ben  age_exp, ///
 		 lpattern( solid ) ///
-		 lcol(black*0.75 ) ///
+		 lcol(gray*0.75 ) ///
 		 lw(medthick )) ///
-		(scatter exct4_mal_rad age_exp, mc(gray)) ///
+		(scatter exct4_mal_rad age_exp, mc(black)) ///
 		(line linrad_mal  age_exp, ///
 		 lpattern( solid ) ///
-		 lcol(gray*0.75 ) ///
+		 lcol(black*0.75 ) ///
 		 lw(medthick )), ///
 			ti("{bf}Behavior ", pos(11) ring(1) size(5.7) )  ///
 			yti("{bf}Odds ratio*", size(4.7) )  yla(,ang(0)) ylab(0 (2) 10) ///
@@ -197,15 +197,15 @@ scalar dgy_lar_b=1.142
 scalar ex5_lar_b=-0.3676
 gen linrad_lar= dgy_lar_b*dose1*exp(ex5_lar_b*(age_exp-5))+1
 
-twoway	(scatter exct4_sma_rad age_exp, mc(black)) ///
+twoway	(scatter exct4_sma_rad age_exp, mc(gray)) ///
 		(line linrad_sma  age_exp, ///
 		 lpattern( solid ) ///
-		 lcol(black*0.75 ) ///
+		 lcol(gray*0.75 ) ///
 		 lw(medthick )) ///
-		(scatter exct4_lar_rad age_exp, mc(gray)) ///
+		(scatter exct4_lar_rad age_exp, mc(black)) ///
 		(line linrad_lar age_exp, ///
 		 lpattern( solid ) ///
-		 lcol(gray*0.75 ) ///
+		 lcol(black*0.75 ) ///
 		 lw(medthick )), ///
 			ti("{bf}Size ", pos(11) ring(1) size(5.7) )  ///
 			yti("{bf}Odds ratio*", size(4.7) )  yla(,ang(0)) ylab(0 (2) 10) ///
@@ -273,15 +273,15 @@ scalar dgyLE_mul_LEb=0.08468
 scalar ex5LE_mul_b=-0.6398
 gen linErad_mul= dgyLE_mul_b*dose1*exp(ex5LE_mul_b*(age_exp-5)+dgyLE_mul_LEb*dose1)+1
 
-twoway	(scatter exct4_sin_rad age_exp, mc(black)) ///
+twoway	(scatter exct4_sin_rad age_exp, mc(gray)) ///
 		(line linrad_sin age_exp, ///
 		 lpattern( solid ) ///
-		 lcol(black*0.75 ) ///
+		 lcol(gray*0.75 ) ///
 		 lw(medthick )) ///
-		(scatter exct4_mul_rad age_exp, mc(gray)) ///
+		(scatter exct4_mul_rad age_exp, mc(black)) ///
 		(line linrad_mul age_exp, ///
 		 lpattern( solid ) ///
-		 lcol(gray*0.75 ) ///
+		 lcol(black*0.75 ) ///
 		 lw(medthick )) ///
 		(line linErad_mul age_exp, ///
 		 lpattern( shortdash ) ///

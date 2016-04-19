@@ -112,11 +112,6 @@ freq tvlarge thnod_prev @
 freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
 
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ bounds 11@
 
 ! effect modification by sex 
 
@@ -260,11 +255,6 @@ freq tvlarge thnod_prev @
 freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
 
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ bounds 11@
 
 ! effect modification by sex 
 
@@ -406,12 +396,6 @@ freq iodct thnod_prev @
 freq tvlarge thnod_prev @
 freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
-
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ bounds 11@
 
 ! effect modification by sex 
 
@@ -556,14 +540,6 @@ freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
 ! effect modification by sex 
 
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ bounds 11@
-
-! effect modification sex
-
 nomodel @
 logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
 line 1 dgy @ 
@@ -704,12 +680,6 @@ freq iodct thnod_prev @
 freq tvlarge thnod_prev @
 freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
-
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ bounds 11@
 
 
 ! effect modification by sex 
@@ -854,12 +824,6 @@ freq tvlarge thnod_prev @
 freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
 
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ bounds 11@
-
 ! effect modification by sex 
 
 nomodel @
@@ -1000,12 +964,6 @@ freq iodct thnod_prev @
 freq tvlarge thnod_prev @
 freq goiter_df_pal thnod_prev @
 freq any_fhf1  thnod_prev @
-
-! all participants
-nomodel @
-logl 0 sex_l lage21 ex8 ur_rur obl_86n @ 
-line 1 dgy @ 
-fit@ bounds 11@
 
 ! effect modification by sex 
 
