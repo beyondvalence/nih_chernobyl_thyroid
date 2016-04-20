@@ -1,0 +1,401 @@
+! Table 2 categorical dose response ORs
+! remember to add 1 to estimate and lower and upper cis
+
+
+new @
+
+names 
+IDN	
+byear AGE_EXM	AGE_EXP	YEAR_EXM 
+SEX_L	
+OBL_M	OBL_86	UR_RUR	ur_rur86
+thnod_prev	max_size nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+DOSE_GYAV_S		
+IODINE	tvolume TSH	TG	atg 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+@
+
+skip 1 @
+
+!input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
+input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+
+tran dgy=dose_gyav_s;
+     dgysq=dgy*dgy;
+     ex2=(age_exp-2);
+     ex4=(age_exp-4);
+     ex5=(age_exp-5);
+     ex8=(age_exp-8);
+     ex8sq=ex8*ex8;
+     age21=(age_exm-21);
+     age21sq=age21*age21;
+     lage21 = log(age_exm/21) ;
+     lage21sq = lage21^2 ;
+     tvol13=(tvolume-13);
+     tvol13sq=tvol13*tvol13;
+     yob1983=(byear-1983);
+
+     if any_fhf1==-1 then any_fhf1=2 !2 recoded to missing
+     endif; 
+
+     if smoke_f==-1 then smoke_f=2
+     endif;
+     
+     if ismiss(goiter_df_pal)==1 then goiter_df_pal=2
+     endif;
+
+
+     if obl_m==1 then obl_mn=2 !Gomel
+     elif obl_m==2 or obl_m==4 then obl_mn=1 !Minsk
+     else obl_mn=3 !Mogilev and others
+     endif;
+
+     if obl_86==1 then obl_86n=2 !Gomel
+     elif obl_86==2 or obl_86==4 then obl_86n=1 !Minsk
+     else obl_86n=3 !Mogilev and others
+     endif;
+
+     if ur_rur86==1 then ur_rur86n=1 !Rural
+     elif ur_rur86==2 or ur_rur86==3 or ur_rur86==4 then ur_rur86n=2 !Urban
+     endif;
+
+     if tvolume>=18 and sex_l==1 then tvlarge=1 !Thyroid enlargement for women
+     elif tvolume>=25 and sex_l==0 then tvlarge=1  !Thyroid enlargement for men
+     else tvlarge=0 !Normal thyroid
+     endif;
+
+     iod100=(iodine-100);
+     iod60=(iodine-60);
+     iodinen=iodine;
+     if ismiss(iodine)==1 then iodinen=9999
+     endif; 
+
+
+@
+ 
+levels   
+SEX_L	 
+OBL_M	obl_mn OBL_86 obl_86n	UR_RUR	ur_rur86 ur_rur86n
+thnod_prev nod_sz nod_sz3 thcount nod_neohc nod_neo
+tc	prevcases FA_PREV 
+SMOKE_F	VITAM_F		
+AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
+Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
+tvlarge 
+@
+
+categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+categ age_exm as agect </ 18/ 25/ > @
+categ age_exp as exct </2/5/ > @ 
+categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+categ tvolume as tvct </ 8/ 10/ 14/ > @
+categ iodinen as iodct </20/9998> @
+categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+
+tran 
+if        dct7==1 then dct7num=1
+     elif dct7==2 then dct7num=2
+     elif dct7==3 then dct7num=3
+     elif dct7==4 then dct7num=4
+     elif dct7==5 then dct7num=5
+     elif dct7==6 then dct7num=6
+     else              dct7num=7
+     endif;
+
+@
+
+cases thnod_prev @
+
+!All
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+!Benign
+
+select (nod_neo==0 or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+!Malignant
+
+select (nod_neo==1 or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+
+!Small
+
+select (nod_sz==1 or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+
+!Large
+
+select (nod_sz==2 or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+
+!Benign, small
+
+select ((nod_neo==0 and nod_sz==1) or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+!Benign, large
+
+select ((nod_neo==0 and nod_sz==2) or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+
+!Malignant, small
+
+select ((nod_neo==1 and nod_sz==1) or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+!Malignant, large
+
+select ((nod_neo==1 and nod_sz==2) or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+!Single
+
+select (thcount==1 or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
+
+
+
+!Multiple
+
+select (thcount>1 or thnod_prev==0)@
+freq dct7 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @ 
+line 1 dct7 @ 
+logl 1 ex5@
+para 10=0@
+fit@
+bounds 11@
+bounds 12@  
+bounds 13@
+bounds 14@
+bounds 15@
+bounds 16@
+
+!categorical dose response p-value
+nomodel@
+logl 0 sex_l lage21 obl_mn ur_rur @
+logl 1 ex5 @
+fit@ null@
+line 1 +dct7num@ 
+fit@ lrt@
