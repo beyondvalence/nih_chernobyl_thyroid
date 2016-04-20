@@ -2,6 +2,7 @@
 
 new @
 
+
 names 
 IDN	
 byear AGE_EXM	AGE_EXP	YEAR_EXM 
@@ -16,11 +17,12 @@ AIT_TOTF goiter_df_pal NDG_RELF ANY_FHF1
 Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 @
 
+
 skip 1 @
 
-!input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
-input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
-Input from C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv
+input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
+
+Input from E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv
 
        11422 records read       11421 records used
                                     1 records rejected
@@ -28,6 +30,7 @@ Input from C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv
 40 variables defined  At least 500 additional variables can be created.
 
 
+!input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -77,6 +80,7 @@ tran dgy=dose_gyav_s;
 
 
 @
+
  
 levels   
 SEX_L	 
@@ -121,32 +125,41 @@ fnb has 3 levels from 1 to 3
 tvlarge has 2 levels from 0 to 1
 
 categ byear as dobyrct </1973/ 1978/ 1983/ 1987/ > @
+
 dobyrct has 5 levels from 1 to 5
 
 categ age_exm as agect </ 18/ 25/ > @
+
 agect has 3 levels from 1 to 3
 
 categ age_exp as exct </ 2/ 5/ > @
+
 exct has 3 levels from 1 to 3
 
 categ year_exm as yearexmct </ 1998/ 1999/ 2000/ 2001/> @
+
 yearexmct has 5 levels from 1 to 5
 
 categ tvolume as tvct </ 8/ 10/ 14/ > @
+
 tvct has 4 levels from 1 to 4
 
 categ iodinen as iodct </20/9998> @
+
 iodct has 3 levels from 1 to 3
 
 categ iodinen as iod3ct </20/300/9998> @
+
 iod3ct has 4 levels from 1 to 4
 
 categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
+
 dct7 has 7 levels from 1 to 7
 
 
 !Fig 1: mean doses per category
 mean dgy; by dct7@
+
            Summary for dgy
 
  dct7          Mean      Std. Dev.        Count      Minimum      Maximum
@@ -163,6 +176,8 @@ mean dgy; by dct7@
 !Table 1: counts
 
 freq SEX_L; by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: SEX_L
@@ -170,6 +185,7 @@ For thnod_prev = 0
       0        5232   49.64    49.64
       1        5308   50.36   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -181,6 +197,8 @@ For thnod_prev = 1
 
 
 freq exct; by thnod_prev  @
+
+
 For thnod_prev = 0
 
   FOR: exct
@@ -189,6 +207,7 @@ For thnod_prev = 0
       2        2185   20.73    33.47
       3        7012   66.53   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -201,6 +220,8 @@ For thnod_prev = 1
 
 
 freq agect; by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: agect
@@ -209,6 +230,7 @@ For thnod_prev = 0
       2        4178   39.64    71.36
       3        3019   28.64   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -221,6 +243,8 @@ For thnod_prev = 1
 
 
 freq obl_86n; by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: obl_86n
@@ -229,6 +253,7 @@ For thnod_prev = 0
       2        7984   75.75    90.55
       3         996    9.45   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -241,6 +266,8 @@ For thnod_prev = 1
 
 
 freq ur_rur; by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: UR_RUR
@@ -248,6 +275,7 @@ For thnod_prev = 0
       0        4172   39.58    39.58
       1        6368   60.42   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -259,6 +287,8 @@ For thnod_prev = 1
 
 
 freq iod3ct; by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: iod3ct
@@ -268,6 +298,7 @@ For thnod_prev = 0
       3         411    3.90    98.69
       4         138    1.31   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -281,6 +312,8 @@ For thnod_prev = 1
 
 
 freq tvct; by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: tvct
@@ -290,6 +323,7 @@ For thnod_prev = 0
       3        4086   38.77    66.72
       4        3508   33.28   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -303,6 +337,8 @@ For thnod_prev = 1
 
 
 freq tvlarge; by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: tvlarge
@@ -310,6 +346,7 @@ For thnod_prev = 0
       0       10034   95.20    95.20
       1         506    4.80   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -321,6 +358,8 @@ For thnod_prev = 1
 
 
 freq goiter_df_pal;by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: goiter_df_pal
@@ -329,6 +368,7 @@ For thnod_prev = 0
       1        1575   14.94    99.76
       2          25    0.24   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -341,6 +381,8 @@ For thnod_prev = 1
 
 
 freq any_fhf1;by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: ANY_FHF1
@@ -349,6 +391,7 @@ For thnod_prev = 0
       1         863    8.19    98.44
       2         164    1.56   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -361,6 +404,8 @@ For thnod_prev = 1
 
 
 freq dct7;by thnod_prev @
+
+
 For thnod_prev = 0
 
   FOR: dct7
@@ -373,6 +418,7 @@ For thnod_prev = 0
       6         503    4.77    98.03
       7         208    1.97   100.00
   Total       10540
+
 
 For thnod_prev = 1
 
@@ -428,6 +474,7 @@ Log-linear term 0
 
 
 bounds 3@
+
       Profile likelihood bounds for parameter 3 (SEX_L_1)
 
                   MLE     0.4071    exp(MLE)      1.502
@@ -486,6 +533,7 @@ bounds 2@
                        exp(bound)      2.136
 
 bounds 3@
+
       Profile likelihood bounds for parameter 3 (exct_2)
 
                   MLE  -0.001276    exp(MLE)     0.9987
@@ -542,6 +590,7 @@ bounds 3@
                        exp(bound)      1.901
 
 bounds 4@
+
       Profile likelihood bounds for parameter 4 (agect_3)
 
                   MLE     0.9286    exp(MLE)      2.531
@@ -599,6 +648,7 @@ bounds 3@
                        exp(bound)      1.576
 
 bounds 4@
+
       Profile likelihood bounds for parameter 4 (obl_86n_3)
 
                   MLE    -0.1525    exp(MLE)     0.8586
@@ -645,6 +695,7 @@ Log-linear term 0
 
 
 bounds 3@
+
       Profile likelihood bounds for parameter 3 (UR_RUR_1)
 
                   MLE    0.07805    exp(MLE)      1.081
@@ -703,6 +754,7 @@ bounds 3@
                        exp(bound)     0.9818
 
 bounds 4@ 
+
       Profile likelihood bounds for parameter 4 (iod3ct_3)
 
                   MLE    -0.1625    exp(MLE)       0.85
@@ -771,6 +823,7 @@ bounds 4@
                        exp(bound)       1.85
 
 bounds 5@ 
+
       Profile likelihood bounds for parameter 5 (tvct_4)
 
                   MLE     0.6625    exp(MLE)       1.94
@@ -817,6 +870,7 @@ Log-linear term 0
 
 
 bounds 3@ 
+
       Profile likelihood bounds for parameter 3 (tvlarge_1)
 
                   MLE       1.04    exp(MLE)       2.83
@@ -874,6 +928,7 @@ bounds 3@
                        exp(bound)      3.807
 
 bounds 4@
+
       Profile likelihood bounds for parameter 4 (goiter_df_pal_2)
 
                   MLE    -0.4888    exp(MLE)     0.6133
@@ -931,6 +986,7 @@ bounds 3@
                        exp(bound)      2.269
 
 bounds 4@
+
       Profile likelihood bounds for parameter 4 (ANY_FHF1_2)
 
                   MLE       0.52    exp(MLE)      1.682
@@ -1032,6 +1088,7 @@ bounds 7@
                        exp(bound)      1.866
 
 bounds 8@
+
       Profile likelihood bounds for parameter 8 (dct7_7)
 
                   MLE      1.514    exp(MLE)      4.545
