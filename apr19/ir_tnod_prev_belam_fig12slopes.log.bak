@@ -2130,7 +2130,7 @@ Linear term 1
 
 lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5, sex and shape of dose response
@@ -3382,7 +3382,7 @@ Linear term 1
 
 lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -4637,7 +4637,7 @@ Linear term 1
 
 lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -5877,7 +5877,7 @@ Linear term 1
 
 lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -7110,7 +7110,7 @@ Linear term 1
 
 lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -8351,7 +8351,7 @@ Linear term 1
 
 lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -8841,7 +8841,7 @@ bounds 18@ !Figure 1 Dose reasponse plot at age 5
                97.5% upper bound       1.109
 
 
- *** WARNING: Parameter goiter_df_pal_2 changed by 3.3% MLE may be infinite or may not exist
+ *** WARNING: Parameter goiter_df_pal_2 changed by 3.7% MLE may be infinite or may not exist
 
 
 bounds 19@ !Figure 1 Dose reasponse plot at age 5 LE
@@ -8870,19 +8870,5 @@ bounds 20@ !Figure 2 Age at exposure plot
 
 
  *** WARNING: Parameter goiter_df_pal_2 changed by 5.0% MLE may be infinite or may not exist
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

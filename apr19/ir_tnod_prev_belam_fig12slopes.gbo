@@ -283,6 +283,9 @@ logl 1 -sex_l@ fit@
 !linear exponential dose-response 
 logl 1 +dgy@ 
 fit@ lrt@ 
+bounds 18@ 
+bounds 19@
+bounds 20@
 
 !linear quadratic dose-response 
 logl 1 - dgy @

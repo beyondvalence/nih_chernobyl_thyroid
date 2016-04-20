@@ -2358,11 +2358,42 @@ Log-linear term 1
 
 lrt@ 
 
-!linear quadratic dose-response 
-
              LR statistic       3.882      Degrees of freedom      1
                   P value      0.0488
 
+bounds 18@ 
+      Profile likelihood bounds for parameter 18 (dgy)
+
+                  MLE     0.2926
+
+               97.5% lower bound     0.07234
+               97.5% upper bound      0.6318
+
+
+bounds 19@
+      Profile likelihood bounds for parameter 19 (ex5)
+
+                  MLE    -0.2097    exp(MLE)     0.8108
+
+               97.5% lower bound     -0.4888
+                       exp(bound)     0.6133
+               97.5% upper bound    -0.08699
+                       exp(bound)     0.9167
+
+
+bounds 20@
+      Profile likelihood bounds for parameter 20 (dgy)
+
+                  MLE    0.05972    exp(MLE)      1.062
+
+               97.5% lower bound   0.0003029
+                       exp(bound)          1
+               97.5% upper bound      0.1304
+                       exp(bound)      1.139
+
+
+
+!linear quadratic dose-response 
 logl 1 - dgy @
 line 1 +dgysq@
 fit@  
