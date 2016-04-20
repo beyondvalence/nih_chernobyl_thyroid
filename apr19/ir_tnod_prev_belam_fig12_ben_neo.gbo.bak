@@ -1,5 +1,5 @@
 ! Figure 1 and 2
-! Model building for small and large nodules, whole dose range
+! Model building for benign and neoplastic nodules, whole dose range
 
 new @
 
@@ -20,7 +20,7 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 skip 1 @
 
 input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
-!input 'C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+!input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -98,9 +98,9 @@ categ dgy as dct8  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/ 6.000/ > @
 
 @
 
-!Small
+!Benign
 
-select (nod_sz==1 or thnod_prev==0)@
+select (nod_neo==0 or thnod_prev==0)@
 
 cases thnod_prev @
 
@@ -112,13 +112,13 @@ freq  thnod_prev @
 
 
 !Iodine
-select (nod_sz==1 or thnod_prev==0) and ismiss(iodine)==0@
+select (nod_neo==0 or thnod_prev==0) and ismiss(iodine)==0@
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n @
 line 1 dgy@
 fit@ null@
 logl 0 +iodine  @ fit@ lrt@
-select (nod_sz==1 or thnod_prev==0)@ 
+select (nod_neo==0 or thnod_prev==0)@ 
 
 !Thyroid volume enlargement
 nomodel @
@@ -171,10 +171,10 @@ line 1 +dgysq@
 fit@  lrt@
 
 
-! Final model for Figures 1, 2 small
+! Final model for Figures 1, 2 benign
 
 nomodel@
-logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21  ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 ex5@
 fit@ 
@@ -191,8 +191,7 @@ para 19=0@
 fit@ 
 
 !Figure 1 points (bounds not needed) but add 1 to estimates
-! dcat8
-
+! dcat8 test
 nomodel@
 logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct8@
@@ -200,9 +199,7 @@ logl 1 ex5@
 para 19=0@
 fit@ 
 
-
-
-! Points and CIs for Figure 2 small 
+! Points and CIs for Figure 2 benign
 
 nomodel@
 logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
@@ -215,9 +212,10 @@ bounds 20@
 bounds 21@ 
 bounds 22@
 
-!Large
 
-select (nod_sz==2 or thnod_prev==0)@
+!Neoplastic
+
+select (nod_neo==1 or thnod_prev==0)@
 
 cases thnod_prev @
 
@@ -229,13 +227,13 @@ freq  thnod_prev @
 
 
 !Iodine
-select (nod_sz==2 or thnod_prev==0) and ismiss(iodine)==0@
+select (nod_neo==1 or thnod_prev==0) and ismiss(iodine)==0@
 nomodel @
 logl 0 sex_l lage21  ex5 ur_rur obl_86n   @
 line 1 dgy@
 fit@ null@
 logl 0 +iodine  @ fit@ lrt@
-select (nod_sz==2 or thnod_prev==0)@ !Does not change risk estimate
+select (nod_neo==1 or thnod_prev==0)@ !Does not change risk estimate
 
 !Thyroid volume enlargement
 nomodel @
@@ -287,10 +285,10 @@ line 1 +dgysq@
 fit@  lrt@
 
 
-! Final model for Figures 1, 2 large
+! Final model for Figures 1, 2 benign neoplastic
 
 nomodel@
-logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21  ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 ex5@
 fit@ 
@@ -308,8 +306,7 @@ para 19=0@
 fit@ 
 
 !Figure 1 points (bounds not needed) but add 1 to estimates
-! dcat8
-
+! dcat8 test
 nomodel@
 logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct8@
@@ -318,8 +315,7 @@ para 19=0@
 fit@ 
 
 
-
-! Points and CIs for Figure 2 large 
+! Points and CIs for Figure 2 neo 
 
 nomodel@
 logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @

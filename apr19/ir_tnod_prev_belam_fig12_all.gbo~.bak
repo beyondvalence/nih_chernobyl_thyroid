@@ -236,15 +236,15 @@ bounds 25@
 ! Points and CIs for Figure 2 all - add 1 to estimate and CIs
 
 nomodel@
-logl 0 sex_l lage21 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21  exct4 ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 exct4@
-para 18=1@
+para 22=1@
 fit@ 
-bounds 19@ 
-bounds 20@ 
-bounds 21@ 
-bounds 22@
+bounds 23@ 
+bounds 24@ 
+bounds 25@ 
+bounds 26@
 
 
 mean age_exp; by exct4@

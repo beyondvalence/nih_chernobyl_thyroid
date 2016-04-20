@@ -19,8 +19,8 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 
 skip 1 @
 
-input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
-!input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+!input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
+input 'C:\REB\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -174,17 +174,17 @@ fit@  lrt@
 ! Final model for Figures 1, 2 benign
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21  ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 ex5@
 fit@ 
-bounds 19@ !Figure 1 Dose reasponse plot at age 5
-bounds 20@ !Figure 2 Age at exposure plot
+bounds 18@ !Figure 1 Dose reasponse plot at age 5
+bounds 19@ !Figure 2 Age at exposure plot
 
 !Figure 1 points (bounds not needed) but add 1 to estimates
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct7@
 logl 1 ex5@
 para 19=0@
@@ -193,7 +193,7 @@ fit@
 !Figure 1 points (bounds not needed) but add 1 to estimates
 ! dcat8 test
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct8@
 logl 1 ex5@
 para 19=0@
@@ -202,15 +202,15 @@ fit@
 ! Points and CIs for Figure 2 benign
 
 nomodel@
-logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 exct4@
-para 22=1@
+para 18=1@
 fit@ 
-bounds 23@ 
-bounds 24@ 
-bounds 25@ 
-bounds 26@
+bounds 19@ 
+bounds 20@ 
+bounds 21@ 
+bounds 22@
 
 
 !Neoplastic
@@ -288,18 +288,18 @@ fit@  lrt@
 ! Final model for Figures 1, 2 benign neoplastic
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21  ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 ex5@
 fit@ 
-bounds 19@ !Figure 1 Dose reasponse plot at age 5
-bounds 20@ !Figure 2 Age at exposure plot
+bounds 18@ !Figure 1 Dose reasponse plot at age 5
+bounds 19@ !Figure 2 Age at exposure plot
 
 
 !Figure 1 points (bounds not needed) but add 1 to estimates
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct7@
 logl 1 ex5@
 para 19=0@
@@ -308,7 +308,7 @@ fit@
 !Figure 1 points (bounds not needed) but add 1 to estimates
 ! dcat8 test
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct8@
 logl 1 ex5@
 para 19=0@
@@ -318,14 +318,12 @@ fit@
 ! Points and CIs for Figure 2 neo 
 
 nomodel@
-logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 exct4@
-para 22=1@
+para 18=1@
 fit@ 
-bounds 23@ 
-bounds 24@ 
-bounds 25@ 
-bounds 26@
-
-
+bounds 19@ 
+bounds 20@ 
+bounds 21@ 
+bounds 22@

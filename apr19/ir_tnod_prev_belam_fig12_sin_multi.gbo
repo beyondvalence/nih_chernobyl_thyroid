@@ -178,7 +178,7 @@ fit@  lrt@
 ! Final model for Figures 1, 2 single
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 ex5@
 fit@ 
@@ -188,7 +188,7 @@ bounds 20@ !Figure 2 Age at exposure plot
 !Figure 1 points (bounds not needed) but add 1 to estimates
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct7@
 logl 1 ex5@
 para 19=0@
@@ -197,17 +197,7 @@ fit@
 !Figure 1 points (bounds not needed) but add 1 to estimates
 ! test dct8
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
-line 1 dct8@
-logl 1 ex5@
-para 19=0@
-fit@ 
-
-!Figure 1 points (bounds not needed) but add 1 to estimates
-! test dcat8
-
-nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct8@
 logl 1 ex5@
 para 19=0@
@@ -216,15 +206,15 @@ fit@
 ! Points and CIs for Figure 2 single 
 
 nomodel@
-logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 exct4@
-para 22=1@
+para 18=1@
 fit@ 
-bounds 23@ 
-bounds 24@ 
-bounds 25@ 
-bounds 26@
+bounds 19@ 
+bounds 20@ 
+bounds 21@ 
+bounds 22@
 
 
 
@@ -307,7 +297,7 @@ fit@  lrt@
 ! Final model for Figures 1, 2 multiple
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21  ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 dgy ex5@
 fit@ 
@@ -319,7 +309,7 @@ bounds 21@ !Figure 2 Age at exposure plot
 !Figure 1 points (bounds not needed) but add 1 to estimates
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21  ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct7@
 logl 1 ex5@
 para 19=0@
@@ -329,7 +319,7 @@ fit@
 ! test dcat8
 
 nomodel@
-logl 0 sex_l lage21  ex5 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dct8@
 logl 1 ex5@
 para 19=0@
@@ -340,15 +330,15 @@ mean dgy by dct8 @
 ! Points and CIs for Figure 2 multiple 
 
 nomodel@
-logl 0 sex_l lage21  exct4 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+logl 0 sex_l lage21 ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
 line 1 dgy@
 logl 1 exct4@
-para 22=1@
+para 18=1@
 fit@ 
-bounds 23@ 
-bounds 24@ 
-bounds 25@ 
-bounds 26@
+bounds 19@ 
+bounds 20@ 
+bounds 21@ 
+bounds 22@
 
 
 
