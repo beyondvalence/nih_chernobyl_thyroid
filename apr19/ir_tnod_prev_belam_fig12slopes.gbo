@@ -163,7 +163,7 @@ fit@ null@
 logl 0 +obl_mn  @ fit@ lrt@
 logl 0 -obl_mn +obl_86n  @ fit@ lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -263,7 +263,7 @@ fit@ null@
 logl 0 +obl_mn  @ fit@ lrt@
 logl 0 -obl_mn +obl_86n  @ fit@ lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5, sex and shape of dose response
@@ -365,7 +365,7 @@ fit@ null@
 logl 0 +obl_mn  @ fit@ lrt@
 logl 0 -obl_mn +obl_86n  @ fit@ lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -465,7 +465,7 @@ fit@ null@
 logl 0 +obl_mn  @ fit@ lrt@
 logl 0 -obl_mn +obl_86n  @ fit@ lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -565,7 +565,7 @@ fit@ null@
 logl 0 +obl_mn  @ fit@ lrt@
 logl 0 -obl_mn +obl_86n  @ fit@ lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -665,7 +665,7 @@ fit@ null@
 logl 0 +obl_mn  @ fit@ lrt@
 logl 0 -obl_mn +obl_86n  @ fit@ lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
@@ -765,7 +765,7 @@ fit@ null@
 logl 0 +obl_mn  @ fit@ lrt@
 logl 0 -obl_mn +obl_86n  @ fit@ lrt@ 
 
-!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+!Final background: sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1
 
 
 !Interaction by ex5 and shape of dose response
