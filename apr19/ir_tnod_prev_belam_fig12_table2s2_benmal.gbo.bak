@@ -1,5 +1,5 @@
 ! Figure 1 and 2/ Table 2 and S2
-! Model building for all nodules, whole dose range, centered at age 5 at time of accident
+! Model building for benign/neoplastic nodules, whole dose range, centered at age 5 at time of accident
 
 new @
 
@@ -20,7 +20,7 @@ Cytology CytologyRecomend Operat OperatRecomend RefOnko fnb
 skip 1 @
 
 !input 'E:\NCI\IR_Nod_Prev_BelAm\Data\dose_tnprev_belam_exclude1.csv' @
-input 'C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
+ input 'C:\reb\chernobyl_thyroid\Data\dose_tnprev_belam_exclude1.csv' @
 
 tran dgy=dose_gyav_s;
      dgysq=dgy*dgy;
@@ -97,8 +97,12 @@ categ dgy as dct7  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/> @
 categ dgy as dct8  </ 0.1000/ 0.2500/ 0.500/ 1.000/ 2.000/ 4.000/ 6.000/ > @
 
 @
-
 cases thnod_prev @
+
+
+!Benign
+select (nod_neo==0 or thnod_prev==0)@
+
 
 freq  thnod_prev @
 
@@ -202,7 +206,7 @@ bounds 19@ !Figure 2 Age at exposure plot
 
 
 ! Points and CIs for Figure 1/Table 2 all - add 1 to estimate and CIs
-
+freq dct7 thnod_prev @
 nomodel@
 logl 0 sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
 line 1 dct7@
@@ -219,6 +223,157 @@ bounds 24@
 
 ! Points and CIs for Figure 1/Table S2 all - add 1 to estimate and CIs
 ! dcat8
+freq dct8 thnod_prev @
+
+nomodel@
+logl 0 sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+line 1 dct8@
+logl 1 ex5@
+para 18=0@
+fit@ 
+bounds 19@ 
+bounds 20@ 
+bounds 21@ 
+bounds 22@ 
+bounds 23@ 
+bounds 24@ 
+bounds 25@ 
+
+! Points and CIs for Figure 2 all - add 1 to estimate and CIs
+
+nomodel@
+logl 0 sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy*exct4@
+fit@ 
+bounds 18@ 
+bounds 19@ 
+bounds 20@ 
+bounds 21@
+mean age_exp; by exct4@
+
+!Neoplastic
+select (nod_neo==1 or thnod_prev==0)@
+
+freq  thnod_prev @
+
+! Background
+! A priori: sex, log attained age/21 
+! To examine: UR_RUR, oblast, iodine,  tvlarge, goiter_df_pal,any_fhf1, vitam_f
+
+!Urban rural
+nomodel @
+logl 0 sex_l lage21  @
+line 1 dgy@
+fit@ null@
+logl 0 +UR_RUR  @ fit@ lrt@
+logl 0 -UR_RUR +ur_rur86n  @ fit@ lrt@
+
+!Oblast
+nomodel @
+logl 0 sex_l lage21  UR_RUR@
+line 1 dgy@
+fit@ null@
+logl 0 +obl_mn  @ fit@ lrt@
+logl 0 -obl_mn +obl_86n  @ fit@ lrt@
+
+
+!Iodine
+select  ismiss(iodine)==0@
+nomodel @
+logl 0 sex_l lage21  ur_rur  @
+line 1 dgy@
+fit@ null@
+logl 0 +iodine  @ fit@ lrt@
+noselect@
+
+!Thyroid volume enlargement
+nomodel @
+logl 0 sex_l lage21  ur_rur@
+line 1 dgy@
+fit@ null@
+logl 0 +tvlarge @ fit@ lrt@
+
+
+!Presence of diffuse goiter as diagnosed at palpation (at 1st screening)
+nomodel @
+logl 0 sex_l lage21  ur_rur tvlarge@
+line 1 dgy@
+fit@ null@
+logl 0 +goiter_df_pal @ fit@ lrt@
+
+
+!Family history of any thyroid disease
+nomodel @
+logl 0 sex_l lage21  ur_rur tvlarge goiter_df_pal@
+line 1 dgy@
+fit@ null@
+logl 0 +any_fhf1 @ fit@ lrt@
+
+
+!Oblast again
+nomodel @
+logl 0 sex_l lage21  ur_rur tvlarge goiter_df_pal any_fhf1@
+line 1 dgy@
+fit@ null@
+logl 0 +obl_mn  @ fit@ lrt@
+logl 0 -obl_mn +obl_86n  @ fit@ lrt@ ! Almost the same but obl_86n gives more conservative estimate
+
+!Final background: sex_l lage21  ur_rur obl_86mn tvlarge goiter_df_pal any_fhf1
+
+
+!Interaction by ex5 and shape of dose response
+
+!Basic linear dose model **** Best model
+
+nomodel@
+logl 0 sex_l lage21  ur_rur obl_86n tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 ex5 @
+fit@ null@
+
+
+!linear exponential dose-response 
+
+logl 1 +dgy@ 
+fit@ lrt@ 
+
+!linear quadratic dose-response 
+
+logl 1 - dgy @
+line 1 +dgysq@
+fit@  lrt@
+
+
+! Final model for Figures 1, 2 
+
+nomodel@
+logl 0 sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+line 1 dgy@
+logl 1 ex5@
+fit@ 
+bounds 18@ !Figure 1 Dose reasponse plot at age 5
+bounds 19@ !Figure 2 Age at exposure plot
+
+
+! Points and CIs for Figure 1/Table 2 all - add 1 to estimate and CIs
+freq dct7 thnod_prev @
+nomodel@
+logl 0 sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
+line 1 dct7@
+logl 1 ex5@
+para 18=0@
+fit@ 
+bounds 19@ 
+bounds 20@ 
+bounds 21@ 
+bounds 22@ 
+bounds 23@ 
+bounds 24@ 
+
+
+! Points and CIs for Figure 1/Table S2 all - add 1 to estimate and CIs
+! dcat8
+freq dct8 thnod_prev @
 nomodel@
 logl 0 sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
 line 1 dct8@
@@ -246,3 +401,4 @@ bounds 21@
 
 
 mean age_exp; by exct4@
+
