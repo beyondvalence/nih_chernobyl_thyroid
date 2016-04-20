@@ -30,22 +30,22 @@ replace agecat2=1 if age_exp10==15
 replace agecat3=1 if age_exp10==35
 replace agecat4=1 if age_exp10==109
 
-scalar agecat1b=1.097
-scalar agecat1lob=-0.7239
-scalar agecat1hib=2.19722
+scalar agecat1b=1.234
+scalar agecat1lob=0.5252
+scalar agecat1hib=2.384
 *29.3
 
-scalar agecat2b=.4548
-scalar agecat2lob=-0.6017
-scalar agecat2hib=1.78
+scalar agecat2b=1.252
+scalar agecat2lob=0.6714
+scalar agecat2hib=2.155
 
-scalar agecat3b=-0.4833
-scalar agecat3lob=-1.429
-scalar agecat3hib=-.2825
+scalar agecat3b=-0.6165
+scalar agecat3lob=0.2895
+scalar agecat3hib=1.103
 
-scalar agecat4b=-1.998
-scalar agecat4lob=-4.366
-scalar agecat4hib=-1.194
+scalar agecat4b=0.1586
+scalar agecat4lob=0.3126
+scalar agecat4hib=0.3281
 
 gen ctpoint=.
 replace ctpoint=1 if age_exp10==6|age_exp10==15|age_exp10==35|age_exp10==109
@@ -56,8 +56,8 @@ gen exct4lorad= exp((agecat1lob*agecat1 + agecat2lob*agecat2 + agecat3lob*agecat
 
 !Modelled effect modification
 
-scalar dgyb=0.576
-scalar ex5b=-.3156
+scalar dgyb=0.5935
+scalar ex5b=-0.2411
 gen linrad= dgyb*dose1*exp(ex5b*(age_exp-5))+1
 
 twoway	(rcap exct4hirad exct4lorad age_exp) ///
@@ -118,12 +118,12 @@ gen exct4_mal_rad= exp((agecat1_mal_b*agecat1 + agecat2_mal_b*agecat2 + agecat3_
 
 !Modelled effect modification
 
-scalar dgy_ben_b=0.5108
-scalar ex5_ben_b=-0.2916
+scalar dgy_ben_b=0.4859
+scalar ex5_ben_b=-0.2223
 gen linrad_ben= dgy_ben_b*dose1*exp(ex5_ben_b*(age_exp-5))+1
 
-scalar dgy_mal_b=1.142
-scalar ex5_mal_b=-0.3676
+scalar dgy_mal_b=20124
+scalar ex5_mal_b=-0.2908
 gen linrad_mal= dgy_mal_b*dose1*exp(ex5_mal_b*(age_exp-5))+1
 
 twoway	(scatter exct4_ben_rad age_exp, mc(gray)) ///
@@ -189,12 +189,12 @@ gen exct4_lar_rad= exp((agecat1_lar_b*agecat1 + agecat2_lar_b*agecat2 + agecat3_
 
 !Modelled effect modification
 
-scalar dgy_sma_b=0.2949
-scalar ex5_sma_b=-0.3722
+scalar dgy_sma_b=0.3218
+scalar ex5_sma_b=-0.2527
 gen linrad_sma= dgy_sma_b*dose1*exp(ex5_sma_b*(age_exp-5))+1
 
-scalar dgy_lar_b=1.689
-scalar ex5_lar_b=-0.2745
+scalar dgy_lar_b=1.762
+scalar ex5_lar_b=-0.2445
 gen linrad_lar= dgy_lar_b*dose1*exp(ex5_lar_b*(age_exp-5))+1
 
 twoway	(scatter exct4_sma_rad age_exp, mc(gray)) ///
@@ -260,17 +260,17 @@ gen exct4_mul_rad= exp((agecat1_mul_b*agecat1 + agecat2_mul_b*agecat2 + agecat3_
 
 !Modelled effect modification
 
-scalar dgy_sin_b=0.5411
-scalar ex5_sin_b=-0.2605
+scalar dgy_sin_b=0.557
+scalar ex5_sin_b=-0.2069
 gen linrad_sin= dgy_sin_b*dose1*exp(ex5_sin_b*(age_exp-5))+1
 
-scalar dgy_mul_b=0.4869
-scalar ex5_mul_b=-0.5874
+scalar dgy_mul_b=0.59
+scalar ex5_mul_b=-0.4047
 gen linrad_mul= dgy_mul_b*dose1*exp(ex5_mul_b*(age_exp-5))+1
 
-scalar dgyLE_mul_b=0.2173 // coefficients results different 0.2168 or 0.2173
-scalar dgyLE_mul_LEb=0.08468 // different 0.08473 or 0.08468
-scalar ex5LE_mul_b=-0.6398 // different -0.6402 or-0.6398
+scalar dgyLE_mul_b=0.2165 // coefficients results different 0.2168 or 0.2173
+scalar dgyLE_mul_LEb=0.08932 
+scalar ex5LE_mul_b=-0.455 
 gen linErad_mul= dgyLE_mul_b*dose1*exp(ex5LE_mul_b*(age_exp-5)+dgyLE_mul_LEb*dose1)+1
 
 twoway	(scatter exct4_sin_rad age_exp, mc(gray)) ///

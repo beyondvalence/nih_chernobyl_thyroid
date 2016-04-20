@@ -31,29 +31,29 @@ replace dgycat5=1 if dose1000==1392
 replace dgycat6=1 if dose1000==2745
 replace dgycat7=1 if dose1000==7552
 
-scalar dgycat2b=1.03136
-scalar dgycat2lob=0.8139
-scalar dgycat2hib=1.4101
+scalar dgycat2b=1.1656
+scalar dgycat2lob=0.8519
+scalar dgycat2hib=1.6718
 
-scalar dgycat3b=1.2884
-scalar dgycat3lob=1.008
-scalar dgycat3hib=1.759
+scalar dgycat3b=1.4238
+scalar dgycat3lob=1.05256
+scalar dgycat3hib=1.9993
 
-scalar dgycat4b=1.4201
-scalar dgycat4lob=1.07432
-scalar dgycat4hib=1.9883
+scalar dgycat4b=1.5185
+scalar dgycat4lob=1.09962
+scalar dgycat4hib=2.164
 
-scalar dgycat5b=2.429
-scalar dgycat5lob=1.619
-scalar dgycat5hib=3.563
+scalar dgycat5b=2.579
+scalar dgycat5lob=1.7659
+scalar dgycat5hib=3.743
 
-scalar dgycat6b=2.124
-scalar dgycat6lob=1.4459
-scalar dgycat6hib=3.247
+scalar dgycat6b=2.218
+scalar dgycat6lob=1.4807
+scalar dgycat6hib=3.406
 
-scalar dgycat7b=5.406
-scalar dgycat7lob=2.992
-scalar dgycat7hib=9.09
+scalar dgycat7b=5.671
+scalar dgycat7lob=3.322
+scalar dgycat7hib=9.267
 
 gen ctpoint=.
 replace ctpoint=1 if dose1000==117|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
@@ -79,29 +79,29 @@ replace dct8_6=1 if dose1000==2745
 replace dct8_7=1 if dose1000==4953
 replace dct8_8=1 if dose1000==10302
 
-scalar dct82_all_b=0.97021
-scalar dct83_all_b=1.2997
-scalar dct84_all_b=1.3791
-scalar dct85_all_b=2.42
-scalar dct86_all_b=2.068
-scalar dct87_all_b=4.69
-scalar dct88_all_b=6.806
+scalar dct82_all_b=1.1536
+scalar dct83_all_b=1.41
+scalar dct84_all_b=1.5029
+scalar dct85_all_b=2.549
+scalar dct86_all_b=2.193
+scalar dct87_all_b=4.125
+scalar dct88_all_b=7.254
 
-scalar dct82_low_b=0.7377
-scalar dct83_low_b=0.97428
-scalar dct84_low_b=1.0137
-scalar dct85_low_b=1.6861
-scalar dct86_low_b=1.4006
-scalar dct87_low_b=2.405
-scalar dct88_low_b=3.816
+scalar dct82_low_b=0.8464
+scalar dct83_low_b=1.04486
+scalar dct84_low_b=1.09015
+scalar dct85_low_b=1.7337
+scalar dct86_low_b=1.4648
+scalar dct87_low_b=2.105
+scalar dct88_low_b=3.919
 
-scalar dct82_upp_b=1.3642
-scalar dct83_upp_b=1.793
-scalar dct84_upp_b=1.9377
-scalar dct85_upp_b=3.466
-scalar dct86_upp_b=3.133
-scalar dct87_upp_b=8.626
-scalar dct88_upp_b=11.82
+scalar dct82_upp_b=1.6555
+scalar dct83_upp_b=1.9807
+scalar dct84_upp_b=2.144
+scalar dct85_upp_b=3.707
+scalar dct86_upp_b=3.372
+scalar dct87_upp_b=7.772
+scalar dct88_upp_b=12.9
 
 gen ctpoint8=.
 replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
@@ -112,7 +112,7 @@ gen dct8_upp_rad= (dct82_upp_b*dct8_2+dct83_upp_b*dct8_3+dct84_upp_b*dct8_4+dct8
 
 
 !Linear model
-scalar lin_dgyb=0.576
+scalar lin_dgyb=0.5935
 
 gen linrad= lin_dgyb*dgy+1
 
@@ -227,16 +227,25 @@ gen dct8_ben_rad= (dct82_ben_b*dct8_2+dct83_ben_b*dct8_3+dct84_ben_b*dct8_4+dct8
 gen dct8_mal_rad= (dct82_mal_b*dct8_2+dct83_mal_b*dct8_3+dct84_mal_b*dct8_4+dct85_mal_b*dct8_5+dct86_mal_b*dct8_6+dct87_mal_b*dct8_7+dct88_mal_b*dct8_8)*ctpoint8
 
 !Linear model
-scalar lin_dgy_ben_b=0.5108
-scalar lin_dgy_mal_b=1.142
+scalar lin_dgy_ben_b = 0.4859
+scalar lin_dgy_mal_b = 2.124
 
 gen linrad_ben= lin_dgy_ben_b*dgy+1
 gen linrad_mal= lin_dgy_mal_b*dgy+1
 replace linrad_mal=. if linrad_mal > 12
 
+! Linear exponential model, non-neoplastic
+scalar le_dgy_ben_b = 0.2926
+scalar le_dgy_ben_expb = 0.05972
+gen lerad_ben= 1+le_dgy_ben_b*dgy*exp(le_dgy_ben_expb*dgy)
+
 twoway	(scatter dct8_ben_rad dgy, mc(gray)) ///
 		(line linrad_ben dgy, ///
 		 lpattern( solid ) /// 
+		 lcol(gray*0.75 ) ///
+		 lw(medthick)) ///
+		(line lerad_ben dgy, ///
+		 lpattern( shortdash ) /// 
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)) ///
 		(scatter dct8_mal_rad dgy, mc(black)) ///
@@ -249,7 +258,7 @@ twoway	(scatter dct8_ben_rad dgy, mc(gray)) ///
 			yla(0 (2) 12,ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
 			xla(0 (2) 12) ///
-			legend(region(lwidth(none)) order(2 "Non-neoplastic" 4 "Neoplastic")) ///
+			legend(region(lwidth(none)) order(2 "Non-neoplastic" 3 "Non-neoplastic LE" 5 "Neoplastic")) ///
 			legend(col(1) pos(5) ring (0) size (5.112) symxsize(4.8) keygap(0.7) textw(18.2) ) ///
 			name(Fig1B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
@@ -349,8 +358,8 @@ gen dct8_lar_rad= (dct82_lar_b*dct8_2+dct83_lar_b*dct8_3+dct84_lar_b*dct8_4+dct8
 
 
 !Linear model
-scalar lin_dgy_sma_b=0.2949
-scalar lin_dgy_lar_b=1.689
+scalar lin_dgy_sma_b=0.3218
+scalar lin_dgy_lar_b=1.762
 
 gen linrad_sma= lin_dgy_sma_b*dgy+1
 gen linrad_lar= lin_dgy_lar_b*dgy+1
@@ -432,15 +441,15 @@ gen dct7_sin_rad= (dgycat2_sin_b*dgycat2+dgycat3_sin_b*dgycat3+dgycat4_sin_b*dgy
 gen dct7_mul_rad= (dgycat2_mul_b*dgycat2+dgycat3_mul_b*dgycat3+dgycat4_mul_b*dgycat4+dgycat5_mul_b*dgycat5+dgycat6_mul_b*dgycat6+dgycat7_mul_b*dgycat7)*ctpoint
 
 !Linear model
-scalar lin_dgy_sin_b=0.5411
-scalar lin_dgy_mul_b=0.4869
+scalar lin_dgy_sin_b=0.557
+scalar lin_dgy_mul_b=0.59
 
 gen linrad_sin= lin_dgy_sin_b*dgy+1
 gen linrad_mul= lin_dgy_mul_b*dgy+1
 
 !Linear exponential model
-scalar le_dgy_mul_b=0.2168
-scalar le_dgy_mul_exb=0.08473
+scalar le_dgy_mul_b=0.2165
+scalar le_dgy_mul_exb=0.08932
 
 gen lerad_mul= 1+le_dgy_mul_b*dgy*exp(le_dgy_mul_exb*dgy)
 
