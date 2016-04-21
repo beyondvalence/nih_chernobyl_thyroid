@@ -354,16 +354,6 @@ fit@
 bounds 18@ !Figure 1 Dose reasponse plot at age 5
 bounds 19@ !Figure 2 Age at exposure plot
 
-! Final model for Figures 1, 2 , LE Mult
-
-nomodel@
-logl 0 sex_l lage21  ur_rur obl_mn tvlarge goiter_df_pal any_fhf1 @
-line 1 dgy@
-logl 1 ex5 dgy@
-fit@ 
-bounds 18@ !Figure 1 Dose reasponse plot at age 5
-bounds 19@ !Figure 2 Age at exposure plot
-
 
 ! Points and CIs for Figure 1/Table 2 all - add 1 to estimate and CIs
 freq dct7 thnod_prev @
