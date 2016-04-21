@@ -161,23 +161,23 @@ replace dgycat5=1 if dose1000==1392
 replace dgycat6=1 if dose1000==2745
 replace dgycat7=1 if dose1000==7552
 
-scalar dgycat2_ben_b=1.03958
-scalar dgycat2_mal_b=0.8737
+scalar dgycat2_ben_b=1.1393
+scalar dgycat2_mal_b=1.5485
 
-scalar dgycat3_ben_b=1.2934
-scalar dgycat3_mal_b=1.1989
+scalar dgycat3_ben_b=1.3744
+scalar dgycat3_mal_b=2.043
 
-scalar dgycat4_ben_b=1.3053
-scalar dgycat4_mal_b=1.9185
+scalar dgycat4_ben_b=1.3337
+scalar dgycat4_mal_b=3.439
 
-scalar dgycat5_ben_b=2.301
-scalar dgycat5_mal_b=2.893
+scalar dgycat5_ben_b=2.291
+scalar dgycat5_mal_b=5.999
 
-scalar dgycat6_ben_b=1.8548
-scalar dgycat6_mal_b=2.956
+scalar dgycat6_ben_b=1.8128
+scalar dgycat6_mal_b=6.269
 
-scalar dgycat7_ben_b=5.249
-scalar dgycat7_mal_b=5.347
+scalar dgycat7_ben_b=5.067
+scalar dgycat7_mal_b=12.43
 
 
 gen ctpoint=.
@@ -204,21 +204,21 @@ replace dct8_6=1 if dose1000==2745
 replace dct8_7=1 if dose1000==4953
 replace dct8_8=1 if dose1000==10302
 
-scalar dct82_ben_b=0.97401
-scalar dct83_ben_b=1.2809
-scalar dct84_ben_b=1.246
-scalar dct85_ben_b=2.237
-scalar dct86_ben_b=1.7527
-scalar dct87_ben_b=3.529
-scalar dct88_ben_b=7.166
+scalar dct82_ben_b=1.1235
+scalar dct83_ben_b=1.3573
+scalar dct84_ben_b=1.3155
+scalar dct85_ben_b=2.255
+scalar dct86_ben_b=1.7893
+scalar dct87_ben_b=2.937
+scalar dct88_ben_b=7.33
 
-scalar dct82_mal_b=1.04596
-scalar dct83_mal_b=1.5065
-scalar dct84_mal_b=2.324
-scalar dct85_mal_b=3.822
-scalar dct86_mal_b=4.143
-scalar dct87_mal_b=11.49
-scalar dct88_mal_b=6.196
+scalar dct82_mal_b=1.6633
+scalar dct83_mal_b=2.157
+scalar dct84_mal_b=3.63
+scalar dct85_mal_b=6.366
+scalar dct86_mal_b=6.685
+scalar dct87_mal_b=12 /*16.5*/
+scalar dct88_mal_b=10.07
 
 gen ctpoint8=.
 replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
@@ -292,23 +292,23 @@ replace dgycat5=1 if dose1000==1392
 replace dgycat6=1 if dose1000==2745
 replace dgycat7=1 if dose1000==7552
 
-scalar dgycat2_sma_b=1.0272
-scalar dgycat2_lar_b=1.08233
+scalar dgycat2_sma_b=1.1779
+scalar dgycat2_lar_b=1.2679
 
-scalar dgycat3_sma_b=1.1508
-scalar dgycat3_lar_b=1.9753
+scalar dgycat3_sma_b=1.2181
+scalar dgycat3_lar_b=2.391
 
-scalar dgycat4_sma_b=1.4442
-scalar dgycat4_lar_b=1.4761
+scalar dgycat4_sma_b=1.5458
+scalar dgycat4_lar_b=1.6365
 
-scalar dgycat5_sma_b=1.9421
-scalar dgycat5_lar_b=4.501
+scalar dgycat5_sma_b=2.062
+scalar dgycat5_lar_b=4.869
 
-scalar dgycat6_sma_b=1.4409
-scalar dgycat6_lar_b=4.992
+scalar dgycat6_sma_b=1.4274
+scalar dgycat6_lar_b=5.51
 
-scalar dgycat7_sma_b=3.777
-scalar dgycat7_lar_b=12.46
+scalar dgycat7_sma_b=3.962
+scalar dgycat7_lar_b=13.46
 
 gen ctpoint=.
 replace ctpoint=1 if dose1000==117|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
@@ -334,21 +334,21 @@ replace dct8_6=1 if dose1000==2745
 replace dct8_7=1 if dose1000==4953
 replace dct8_8=1 if dose1000==10302
 
-scalar dct82_sma_b=1.002923
-scalar dct83_sma_b=1.1281
-scalar dct84_sma_b=1.4421
-scalar dct85_sma_b=1.9828
-scalar dct86_sma_b=1.3774
-scalar dct87_sma_b=3.373
-scalar dct88_sma_b=4.927
+scalar dct82_sma_b=1.1762
+scalar dct83_sma_b=1.2145
+scalar dct84_sma_b=1.5423
+scalar dct85_sma_b=2.058
+scalar dct86_sma_b=1.4236
+scalar dct87_sma_b=3.006
+scalar dct88_sma_b=5.162
 
-scalar dct82_lar_b=0.98259
-scalar dct83_lar_b=2.089
-scalar dct84_lar_b=1.3585
-scalar dct85_lar_b=3.988
-scalar dct86_lar_b=4.581
-scalar dct87_lar_b=10.782
-scalar dct88_lar_b=13.61
+scalar dct82_lar_b=1.2503
+scalar dct83_lar_b=2.35
+scalar dct84_lar_b=1.6131
+scalar dct85_lar_b=4.794
+scalar dct86_lar_b=5.415
+scalar dct87_lar_b=9.998
+scalar dct88_lar_b=16 /*16.85*/
 
 gen ctpoint8=.
 replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)
@@ -416,23 +416,23 @@ replace dgycat5=1 if dose1000==1392
 replace dgycat6=1 if dose1000==2745
 replace dgycat7=1 if dose1000==7552
 
-scalar dgycat2_sin_b=1.09989
-scalar dgycat2_mul_b=1.03058
+scalar dgycat2_sin_b=1.2951
+scalar dgycat2_mul_b=0.8068
 
-scalar dgycat3_sin_b=1.217
-scalar dgycat3_mul_b=1.4673
+scalar dgycat3_sin_b=1.3753
+scalar dgycat3_mul_b=1.5431
 
-scalar dgycat4_sin_b=1.4245
-scalar dgycat4_mul_b=1.334
+scalar dgycat4_sin_b=1.5898
+scalar dgycat4_mul_b=1.3256
 
-scalar dgycat5_sin_b=2.346
-scalar dgycat5_mul_b=2.24
+scalar dgycat5_sin_b=2.572
+scalar dgycat5_mul_b=2.507
 
-scalar dgycat6_sin_b=1.9186
-scalar dgycat6_mul_b=2.268
+scalar dgycat6_sin_b=2.074
+scalar dgycat6_mul_b=2.587
 
-scalar dgycat7_sin_b=5.216
-scalar dgycat7_mul_b=4.43
+scalar dgycat7_sin_b=5.663
+scalar dgycat7_mul_b=5.361
 
 gen ctpoint=.
 replace ctpoint=1 if dose1000==117|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
@@ -470,21 +470,21 @@ replace dct8_6=1 if dose1000==2745
 replace dct8_7=1 if dose1000==4953
 replace dct8_8=1 if dose1000==10302
 
-scalar dct82_sin_b=1.03896
-scalar dct83_sin_b=1.1846
-scalar dct84_sin_b=1.3549
-scalar dct85_sin_b=2.224
-scalar dct86_sin_b=1.8133
-scalar dct87_sin_b=4.823
-scalar dct88_sin_b=5.479
+scalar dct82_sin_b=1.2917
+scalar dct83_sin_b=1.3717
+scalar dct84_sin_b=1.5855
+scalar dct85_sin_b=2.565
+scalar dct86_sin_b=2.069
+scalar dct87_sin_b=4.905
+scalar dct88_sin_b=6.548
 
-scalar dct82_mul_b=0.95457
-scalar dct83_mul_b=1.4875
-scalar dct84_mul_b=1.3126
-scalar dct85_mul_b=2.153
-scalar dct86_mul_b=2.18
-scalar dct87_mul_b=2.016
-scalar dct88_mul_b=6.408
+scalar dct82_mul_b=0.992109
+scalar dct83_mul_b=1.3273
+scalar dct84_mul_b=1.2127
+scalar dct85_mul_b=1.7667
+scalar dct86_mul_b=1.8481
+scalar dct87_mul_b=1.2564
+scalar dct88_mul_b=4.987
 
 gen ctpoint8=.
 replace ctpoint8=1 if inlist(dose1000, 167, 363, 708, 1387, 2745, 4953, 10302)

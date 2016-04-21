@@ -39,12 +39,12 @@ scalar agecat2b=1.252
 scalar agecat2lob=0.6714
 scalar agecat2hib=2.155
 
-scalar agecat3b=-0.6165
+scalar agecat3b=0.6165
 scalar agecat3lob=0.2895
 scalar agecat3hib=1.103
 
 scalar agecat4b=0.1586
-scalar agecat4lob=0.3126
+scalar agecat4lob=0.03126
 scalar agecat4hib=0.3281
 
 gen ctpoint=.
@@ -98,17 +98,17 @@ replace agecat2=1 if age_exp10==15
 replace agecat3=1 if age_exp10==35
 replace agecat4=1 if age_exp10==109
 
-scalar agecat1_ben_b=0.6219
-scalar agecat1_mal_b=2.19722 ///9.898
+scalar agecat1_ben_b=0.9132
+scalar agecat1_mal_b=2.19722 ///6.196
 
-scalar agecat2_ben_b=0.1198
-scalar agecat2_mal_b=2.19722 ///80.36 
+scalar agecat2_ben_b=1.049
+scalar agecat2_mal_b=2.19722 ///4.967 
 
-scalar agecat3_ben_b=-0.7143
-scalar agecat3_mal_b=0.279
+scalar agecat3_ben_b=0.4277
+scalar agecat3_mal_b=2.19722 ///4.02
 
-scalar agecat4_ben_b=-2.068
-scalar agecat4_mal_b=-1.018
+scalar agecat4_ben_b=0.1438
+scalar agecat4_mal_b=0.57
 
 gen ctpoint=.
 replace ctpoint=1 if age_exp10==6|age_exp10==15|age_exp10==35|age_exp10==109
@@ -122,7 +122,7 @@ scalar dgy_ben_b=0.4859
 scalar ex5_ben_b=-0.2223
 gen linrad_ben= dgy_ben_b*dose1*exp(ex5_ben_b*(age_exp-5))+1
 
-scalar dgy_mal_b=20124
+scalar dgy_mal_b=2.124
 scalar ex5_mal_b=-0.2908
 gen linrad_mal= dgy_mal_b*dose1*exp(ex5_mal_b*(age_exp-5))+1
 
@@ -169,17 +169,17 @@ replace agecat2=1 if age_exp10==15
 replace agecat3=1 if age_exp10==35
 replace agecat4=1 if age_exp10==109
 
-scalar agecat1_sma_b=-0.3522
-scalar agecat1_lar_b=2.19722 ///8.743
+scalar agecat1_sma_b=0.627
+scalar agecat1_lar_b=2.19722 ///2.915
 
-scalar agecat2_sma_b=-0.01155
-scalar agecat2_lar_b=1.821
+scalar agecat2_sma_b=0.7604
+scalar agecat2_lar_b=2.19722 ///3.038
 
-scalar agecat3_sma_b=-0.9415
-scalar agecat3_lar_b=0.6838
+scalar agecat3_sma_b=0.4182
+scalar agecat3_lar_b=1.262
 
-scalar agecat4_sma_b=-2.663
-scalar agecat4_lar_b=-1.026
+scalar agecat4_sma_b=0.07873
+scalar agecat4_lar_b=0.4273
 
 gen ctpoint=.
 replace ctpoint=1 if age_exp10==6|age_exp10==15|age_exp10==35|age_exp10==109
@@ -240,16 +240,16 @@ replace agecat2=1 if age_exp10==15
 replace agecat3=1 if age_exp10==35
 replace agecat4=1 if age_exp10==109
 
-scalar agecat1_sin_b=0.5009
+scalar agecat1_sin_b=0.7974
 scalar agecat1_mul_b=2.19722 ///10.63
 
-scalar agecat2_sin_b=0.8251
+scalar agecat2_sin_b=1.14
 scalar agecat2_mul_b=-0.1888
 
-scalar agecat3_sin_b=-1.131
+scalar agecat3_sin_b=0.4678
 scalar agecat3_mul_b=1.244
 
-scalar agecat4_sin_b=-1.912
+scalar agecat4_sin_b=0.1792
 scalar agecat4_mul_b=-2.069
 
 gen ctpoint=.
