@@ -33,7 +33,6 @@ replace agecat4=1 if age_exp10==109
 scalar agecat1b=1.234
 scalar agecat1lob=0.5252
 scalar agecat1hib=2.384
-*29.3
 
 scalar agecat2b=1.252
 scalar agecat2lob=0.6714
