@@ -1,5 +1,5 @@
 ! FIGURE 2
-
+! updated 20160511WED
 ! ERR rad vs Age at exposure plot	 
 ! For never-smoker:
 ! OR_rad=(dgyb*dose1)×exp(ex5b(age_exp-5))+1
