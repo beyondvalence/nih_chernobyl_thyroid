@@ -8,7 +8,7 @@
 !!!!!!!!!! All nodules
 
 clear
-set obs 200
+set obs 189
 gen age_exp10= _n-1
 gen age_exp=age_exp10/10
 scalar dose1=1
@@ -55,17 +55,17 @@ twoway	(rcap exct3hirad exct3lorad age_exp) ///
 		 lw(medthick )), ///
 			ti("{bf}All nodules ", pos(11) ring(1) size(5.7) )  ///
 			yti("{bf}Odds ratio*", size(4.7) )  ///
-			yla(,ang(0)) ylab(0 (2) 8) ///
+			yla(,ang(0)) ylab(0 (1) 4) ///
 			legend(region(lwidth(none)) order(2 "ORs and 95%CIs") col(1) pos(1) ring (0) ) ///
 			legend( size (5.5) symxsize(5) keygap(0.7) ) ///
 			xti("{bf}Age at time of accident", size(4.7) ) ///
-			xlab(0 (2) 20) ///
+			xlab(0 (2) 19) ///
 			name(Fig2A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
 
 !!!!!!!!!! Nodules by behavior: non-neoplastic / neoplastic
 
 clear
-set obs 200
+set obs 189
 gen age_exp10= _n-1
 gen age_exp=age_exp10/10
 scalar dose1=1
@@ -122,14 +122,14 @@ twoway	(scatter exct3_non_rad age_exp, mc(gray)) ///
 			legend(region(lwidth(none)) order(4 "Neoplastic" 2 "Non-neoplastic" ) col(1) pos(1) ring (0) ) ///
 			legend( size (5.5) symxsize(5) keygap(0.7) ) ///
 			xti("{bf}Age at time of accident", size(4.7) ) ///
-			xlab(0 (2) 20) ///
+			xlab(0 (2) 19) ///
 			name(Fig2B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 
 !!!!!!!!!! Nodules by size : small / large
 
 clear
-set obs 200
+set obs 189
 gen age_exp10= _n-1
 gen age_exp=age_exp10/10
 scalar dose1=1
@@ -185,14 +185,14 @@ twoway	(scatter exct3_sma_rad age_exp, mc(gray)) ///
 			legend(region(lwidth(none)) order(4 "Large, 10+ mm" 2 "Small, <10 mm"  ) col(1) pos(1) ring (0) ) ///
 			legend( size (5.5) symxsize(5) keygap(0.7) ) ///
 			xti("{bf}Age at time of accident", size(4.7) ) ///
-			xlab(0 (2) 20) ///
+			xlab(0 (2) 19) ///
 			name(Fig2C, replace) graphregion(fc(white) margin( 2 3 2 2 ))
 
 
 !!!!!!!!!! Nodules by singularity: single / multiple
 
 clear
-set obs 200
+set obs 189
 gen age_exp10= _n-1
 gen age_exp=age_exp10/10
 scalar dose1=1
@@ -246,11 +246,11 @@ twoway	(scatter exct3_sin_rad age_exp, mc(gray)) ///
 		 lw(medthick )), ///
 			ti("{bf}Singularity ", pos(11) ring(1) size(5.7) )  ///
 			yti("{bf}Odds ratio*", size(4.7) )  yla(,ang(0)) ///
-			ylab(0 (2) 8) ///
+			ylab(0 (1) 4) ///
 			legend(region(lwidth(none)) order(4 "Multiple" 2 "Single" ) col(1) pos(1) ring (0) ) ///
 			legend( size (5.5) symxsize(5) keygap(0.7) ) ///
 			xti("{bf}Age at time of accident", size(4.7) ) ///
-			xlab(0 (2) 20) ///
+			xlab(0 (2) 19) ///
 			name(Fig2D, replace) graphregion(fc(white) margin( 2 3 2 2 ))
 
 graph combine Fig2A Fig2B Fig2C Fig2D, ///
