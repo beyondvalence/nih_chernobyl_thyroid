@@ -178,7 +178,7 @@ scalar dgycat6_non_b=1.19
 scalar dgycat6_neo_b=5.96
 
 scalar dgycat7_non_b=4.74
-scalar dgycat7_neo_b=12.0 /// 13.9
+scalar dgycat7_neo_b=13.9
 
 
 gen ctpoint=.
@@ -233,7 +233,7 @@ scalar lin_dgy_neo_b = 2.124
 
 gen linrad_non= lin_dgy_non_b*dgy+1
 gen linrad_neo= lin_dgy_neo_b*dgy+1
-replace linrad_neo=. if linrad_neo > 12
+replace linrad_neo=. if linrad_neo > 14
 
 ! Linear exponential model, non-neoplastic
 scalar le_dgy_non_b = 0.1472
@@ -252,11 +252,11 @@ twoway	(scatter dct7_non_rad dgy, mc(gray)) ///
 		 lw(medthick)) , ///
 			ti("{bf}Behavior ", pos(11) ring(1) size(5.7) )  ///
 			yti("{bf}Odds ratio*", size(4.7) ) ///
-			yla(0 (2) 12,ang(1)) ///
+			yla(0 (2) 14, ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(4 "Neoplastic" 2 "Non-neoplastic")) ///
-			legend(col(1) pos(4) ring (0) size (4) symxsize(4.8) keygap(0.6) textw(14) ) ///
+			legend(col(1) pos(4) ring (0) size (3.64) symxsize(4.8) keygap(0.6) textw(13) ) ///
 			name(Fig1B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 !!!!!!! Nodules by size: small, large
@@ -290,22 +290,22 @@ replace dgycat6=1 if dose1000==2745
 replace dgycat7=1 if dose1000==7552
 
 scalar dgycat2_sma_b=1.13
-scalar dgycat2_lar_b=1.01
+scalar dgycat2_lar_b=1.02
 
-scalar dgycat3_sma_b=1.22
-scalar dgycat3_lar_b=2.07
+scalar dgycat3_sma_b=1.20
+scalar dgycat3_lar_b=1.19
 
 scalar dgycat4_sma_b=1.55
-scalar dgycat4_lar_b=1.39
+scalar dgycat4_lar_b=1.43
 
-scalar dgycat5_sma_b=2.10
-scalar dgycat5_lar_b=4.11
+scalar dgycat5_sma_b=2.09
+scalar dgycat5_lar_b=4.20
 
-scalar dgycat6_sma_b=1.58
-scalar dgycat6_lar_b=4.21
+scalar dgycat6_sma_b=1.41
+scalar dgycat6_lar_b=4.87
 
-scalar dgycat7_sma_b=4.50
-scalar dgycat7_lar_b=12.0 ///12.1
+scalar dgycat7_sma_b=4.28
+scalar dgycat7_lar_b=13.21
 
 gen ctpoint=.
 replace ctpoint=1 if dose1000==167|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
@@ -355,12 +355,12 @@ gen dct8_lar_rad= (dct82_lar_b*dct8_2+dct83_lar_b*dct8_3+dct84_lar_b*dct8_4+dct8
 
 
 !Linear model
-scalar lin_dgy_sma_b=0.3752
-scalar lin_dgy_lar_b=1.526
+scalar lin_dgy_sma_b=0.32 /*0.3752*/
+scalar lin_dgy_lar_b=1.76 /*1.526*/
 
 gen linrad_sma= lin_dgy_sma_b*dgy+1
 gen linrad_lar= lin_dgy_lar_b*dgy+1
-replace linrad_lar=. if linrad_lar > 12
+replace linrad_lar=. if linrad_lar > 14
 
 twoway	(scatter dct7_sma_rad dgy, mc(gray)) ///
 		(line linrad_sma dgy, ///
@@ -374,11 +374,11 @@ twoway	(scatter dct7_sma_rad dgy, mc(gray)) ///
 		 lw(medthick)), ///
 			ti("{bf}Size ", pos(11) ring(1) size(5.7) ) ///
 			yti("{bf}Odds ratio* ", size(4.7) )  ///
-			yla(0 (2) 12, ang(1)) ///
+			yla(0 (2) 14, ang(1)) ///
 			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
 			xla(0 (2) 12) ///
 			legend(region(lwidth(none)) order(4 "Large, 10+ mm" 2 "Small, <10 mm"  )) ///
-			legend(col(1) pos(4) ring (0) size (4.6) symxsize(4.7) keygap(0.6) textw(17.2) ) ///
+			legend(col(1) pos(3) ring (0) size (4.3) symxsize(4.7) keygap(0.6) textw(16.6) ) ///
 			name(Fig1C, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 !!!!!!! Nodules by singularity: single, multiple

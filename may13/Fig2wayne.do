@@ -161,12 +161,12 @@ gen exct3_lar_rad= ((agecat1_lar_b*agecat1 + agecat2_lar_b*agecat2 + agecat3_lar
 
 !Modelled effect modification
 
-scalar dgy_sma_b=0.38
-scalar ex5_sma_b=-0.23
+scalar dgy_sma_b=0.32
+scalar ex5_sma_b=-0.25
 gen linrad_sma= dgy_sma_b*dose1*exp(ex5_sma_b*(age_exp-5))+1
 
-scalar dgy_lar_b=1.53
-scalar ex5_lar_b=-0.25
+scalar dgy_lar_b=1.76
+scalar ex5_lar_b=-0.24
 gen linrad_lar= dgy_lar_b*dose1*exp(ex5_lar_b*(age_exp-5))+1
 
 twoway	(scatter exct3_sma_rad age_exp, mc(gray)) ///
