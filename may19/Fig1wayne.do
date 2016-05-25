@@ -1,5 +1,5 @@
 ! FIGURE 1: Curves and confidence intervals
-! whole dose range -> now restricted to 0-5 Gy
+! now restricted to 0-5 Gy
 ! updated 20160525 WTL
 
 !!!!!!! All nodules 
@@ -21,7 +21,6 @@ gen dgycat3=0
 gen dgycat4=0
 gen dgycat5=0
 gen dgycat6=0
-gen dgycat7=0
 
 *Based on medians
 *replace dgycat1=1 if dose1000==39
@@ -30,38 +29,33 @@ replace dgycat3=1 if dose1000==357
 replace dgycat4=1 if dose1000==688
 replace dgycat5=1 if dose1000==1340
 replace dgycat6=1 if dose1000==2730
-replace dgycat7=1 if dose1000==7030
 
-scalar dgycat2b=1.11
-scalar dgycat2lob=0.84
-scalar dgycat2hib=1.59
+scalar dgycat2b=1.12
+scalar dgycat2lob=0.83
+scalar dgycat2hib=1.61
 
-scalar dgycat3b=1.36
+scalar dgycat3b=1.37
 scalar dgycat3lob=1.02
-scalar dgycat3hib=1.91
+scalar dgycat3hib=1.93
 
-scalar dgycat4b=1.44
+scalar dgycat4b=1.46
 scalar dgycat4lob=1.06
-scalar dgycat4hib=2.06
+scalar dgycat4hib=2.09
 
-scalar dgycat5b=2.40
-scalar dgycat5lob=1.59
-scalar dgycat5hib=3.55
+scalar dgycat5b=2.45
+scalar dgycat5lob=1.60
+scalar dgycat5hib=3.60
 
-scalar dgycat6b=2.38
-scalar dgycat6lob=1.56
-scalar dgycat6hib=3.67
-
-scalar dgycat7b=5.14
-scalar dgycat7lob=2.88
-scalar dgycat7hib=8.79
+scalar dgycat6b=2.43
+scalar dgycat6lob=1.57
+scalar dgycat6hib=3.75
 
 gen ctpoint=.
-replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730, 7030)
+replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730)
 
-gen dct7_all_rad= (dgycat2b*dgycat2+dgycat3b*dgycat3+dgycat4b*dgycat4+dgycat5b*dgycat5+dgycat6b*dgycat6+dgycat7b*dgycat7)*ctpoint
-gen dct7_upp_rad= (dgycat2hib*dgycat2+dgycat3hib*dgycat3+dgycat4hib*dgycat4+dgycat5hib*dgycat5+dgycat6hib*dgycat6+dgycat7hib*dgycat7)*ctpoint
-gen dct7_low_rad= (dgycat2lob*dgycat2+dgycat3lob*dgycat3+dgycat4lob*dgycat4+dgycat5lob*dgycat5+dgycat6lob*dgycat6+dgycat7lob*dgycat7)*ctpoint
+gen dct7_all_rad= (dgycat2b*dgycat2+dgycat3b*dgycat3+dgycat4b*dgycat4+dgycat5b*dgycat5+dgycat6b*dgycat6)*ctpoint
+gen dct7_upp_rad= (dgycat2hib*dgycat2+dgycat3hib*dgycat3+dgycat4hib*dgycat4+dgycat5hib*dgycat5+dgycat6hib*dgycat6)*ctpoint
+gen dct7_low_rad= (dgycat2lob*dgycat2+dgycat3lob*dgycat3+dgycat4lob*dgycat4+dgycat5lob*dgycat5+dgycat6lob*dgycat6)*ctpoint
 
 *new dcat8 for all nodules
 gen dct8_2=0
@@ -134,7 +128,7 @@ twoway	(rcap dct7_upp_rad dct7_low_rad dgy)  ///
 			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.7) rowgap(*0.5) ) ///
 			name(Fig1A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
 
-!!!!!!! Nodules by behavior: non-neoplastic, neoplastic
+!!!!!!! Nodules by behavior: non-neoplastic, neoplastic, suspicious
 
 clear
 set obs 5001
@@ -153,7 +147,7 @@ gen dgycat3=0
 gen dgycat4=0
 gen dgycat5=0
 gen dgycat6=0
-gen dgycat7=0
+
 
 *Based on medians
 *replace dgycat1=1 if dose1000==39
@@ -162,32 +156,34 @@ replace dgycat3=1 if dose1000==357
 replace dgycat4=1 if dose1000==688
 replace dgycat5=1 if dose1000==1340
 replace dgycat6=1 if dose1000==2730
-replace dgycat7=1 if dose1000==7030
 
-scalar dgycat2_non_b=0.93
-scalar dgycat2_neo_b=1.29
 
-scalar dgycat3_non_b=1.16
-scalar dgycat3_neo_b=1.79
+scalar dgycat2_non_b=0.94
+scalar dgycat2_neo_b=1.52
+scalar dgycat2_sus_b=2.62
+
+scalar dgycat3_non_b=1.14
+scalar dgycat3_neo_b=2.02
+scalar dgycat3_sus_b=3.60
 
 scalar dgycat4_non_b=1.09
-scalar dgycat4_neo_b=3.01
+scalar dgycat4_neo_b=3.41
+scalar dgycat4_sus_b=3.28
 
-scalar dgycat5_non_b=1.77
-scalar dgycat5_neo_b=5.14
+scalar dgycat5_non_b=1.84
+scalar dgycat5_neo_b=5.89
+scalar dgycat5_sus_b=5.45
 
-scalar dgycat6_non_b=1.45
-scalar dgycat6_neo_b=6.57
-
-scalar dgycat7_non_b=3.85
-scalar dgycat7_neo_b=8.13
-
+scalar dgycat6_non_b=1.47
+scalar dgycat6_neo_b=7.72
+scalar dgycat6_sus_b=7.29
 
 gen ctpoint=.
-replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730, 7030)
+replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730)
 
-gen dct7_non_rad= (dgycat2_non_b*dgycat2+dgycat3_non_b*dgycat3+dgycat4_non_b*dgycat4+dgycat5_non_b*dgycat5+dgycat6_non_b*dgycat6+dgycat7_non_b*dgycat7)*ctpoint
-gen dct7_neo_rad= (dgycat2_neo_b*dgycat2+dgycat3_neo_b*dgycat3+dgycat4_neo_b*dgycat4+dgycat5_neo_b*dgycat5+dgycat6_neo_b*dgycat6+dgycat7_neo_b*dgycat7)*ctpoint
+gen dct7_non_rad= (dgycat2_non_b*dgycat2+dgycat3_non_b*dgycat3+dgycat4_non_b*dgycat4+dgycat5_non_b*dgycat5+dgycat6_non_b*dgycat6)*ctpoint
+gen dct7_neo_rad= (dgycat2_neo_b*dgycat2+dgycat3_neo_b*dgycat3+dgycat4_neo_b*dgycat4+dgycat5_neo_b*dgycat5+dgycat6_neo_b*dgycat6)*ctpoint
+gen dct7_sus_rad= (dgycat2_sus_b*dgycat2+dgycat3_sus_b*dgycat3+dgycat4_sus_b*dgycat4+dgycat5_sus_b*dgycat5+dgycat6_sus_b*dgycat6)*ctpoint
 
 
 *new dcat8 to investgate neoplastic point
@@ -232,9 +228,13 @@ gen dct8_neo_rad= (dct82_neo_b*dct8_2+dct83_neo_b*dct8_3+dct84_neo_b*dct8_4+dct8
 !Linear model
 scalar lin_dgy_non_b = 0.33
 scalar lin_dgy_neo_b = 3.83
+scalar lin_dgy_sus_b = 1.55
 
 gen linrad_non= lin_dgy_non_b*dgy+1
 gen linrad_neo= lin_dgy_neo_b*dgy+1
+gen linrad_sus= lin_dgy_sus_b*dgy+1
+
+replace linrad_sus=. if linrad_sus > 8
 replace linrad_neo=. if linrad_neo > 8
 
 ! Linear exponential model, non-neoplastic
@@ -251,7 +251,12 @@ twoway	(scatter dct7_non_rad dgy, mc(gray)) ///
 		(line linrad_neo dgy, ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
-		 lw(medthick)) , ///
+		 lw(medthick)), ///
+		/*(scatter dct7_sus_rad dgy, mc(gray) msymbol(T) ) ///
+		(line linrad_sus dgy, ///
+		 lpattern( shortdash ) /// 
+		 lcol(gray*0.75 ) ///
+		 lw(medthick)), */ /// 
 			ti("{bf}Behavior ", pos(11) ring(1) size(4) )  ///
 			yti("{bf}Odds ratio", size(3) ) ///
 			yla(0 (2) 8, ang(1) nogrid ) ///
@@ -259,8 +264,9 @@ twoway	(scatter dct7_non_rad dgy, mc(gray)) ///
 			xla(0 (1) 5) ///
 			legend(region(lwidth(none)) ///
 					order(4 "Neoplastic, EOR=3.83 (0.89,15.45)" ///
+							/*6 "Suspicious, EOR=1.55 (0.36,4.42)"*/ ///
 							2 "Non-neoplastic, EOR=0.33 (<0.04,0.70)")) ///
-			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.6) rowgap(*0.5) ) ///
+			legend(col(1) pos(5) ring (0) size (2.5) symxsize(2) keygap(0.6) rowgap(*0.1) /*colgap(*0.1)*/ ) ///
 			name(Fig1B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 !!!!!!! Nodules by size: small, large
@@ -282,7 +288,6 @@ gen dgycat3=0
 gen dgycat4=0
 gen dgycat5=0
 gen dgycat6=0
-gen dgycat7=0
 
 *Based on medians
 *replace dgycat1=1 if dose1000==39
@@ -291,31 +296,27 @@ replace dgycat3=1 if dose1000==357
 replace dgycat4=1 if dose1000==688
 replace dgycat5=1 if dose1000==1340
 replace dgycat6=1 if dose1000==2730
-replace dgycat7=1 if dose1000==7030
 
-scalar dgycat2_sma_b=1.11
-scalar dgycat2_lar_b=1.22
+scalar dgycat2_sma_b=1.09
+scalar dgycat2_lar_b=1.21
 
-scalar dgycat3_sma_b=1.18
-scalar dgycat3_lar_b=2.26
+scalar dgycat3_sma_b=1.17
+scalar dgycat3_lar_b=2.28
 
-scalar dgycat4_sma_b=1.46
-scalar dgycat4_lar_b=1.57
+scalar dgycat4_sma_b=1.44
+scalar dgycat4_lar_b=1.55
 
-scalar dgycat5_sma_b=1.93
-scalar dgycat5_lar_b=4.65
+scalar dgycat5_sma_b=1.89
+scalar dgycat5_lar_b=4.55
 
-scalar dgycat6_sma_b=1.49
-scalar dgycat6_lar_b=6.38
-
-scalar dgycat7_sma_b=3.88
-scalar dgycat7_lar_b=11.0
+scalar dgycat6_sma_b=1.47
+scalar dgycat6_lar_b=6.43
 
 gen ctpoint=.
-replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730, 7030)
+replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730)
 
-gen dct7_sma_rad= (dgycat2_sma_b*dgycat2+dgycat3_sma_b*dgycat3+dgycat4_sma_b*dgycat4+dgycat5_sma_b*dgycat5+dgycat6_sma_b*dgycat6+dgycat7_sma_b*dgycat7)*ctpoint
-gen dct7_lar_rad= (dgycat2_lar_b*dgycat2+dgycat3_lar_b*dgycat3+dgycat4_lar_b*dgycat4+dgycat5_lar_b*dgycat5+dgycat6_lar_b*dgycat6+dgycat7_lar_b*dgycat7)*ctpoint
+gen dct7_sma_rad= (dgycat2_sma_b*dgycat2+dgycat3_sma_b*dgycat3+dgycat4_sma_b*dgycat4+dgycat5_sma_b*dgycat5+dgycat6_sma_b*dgycat6)*ctpoint
+gen dct7_lar_rad= (dgycat2_lar_b*dgycat2+dgycat3_lar_b*dgycat3+dgycat4_lar_b*dgycat4+dgycat5_lar_b*dgycat5+dgycat6_lar_b*dgycat6)*ctpoint
 
 
 *new dcat8 for small large
@@ -408,7 +409,6 @@ gen dgycat3=0
 gen dgycat4=0
 gen dgycat5=0
 gen dgycat6=0
-gen dgycat7=0
 
 *Based on medians
 *replace dgycat1=1 if dose1000==39
@@ -417,31 +417,27 @@ replace dgycat3=1 if dose1000==357
 replace dgycat4=1 if dose1000==688
 replace dgycat5=1 if dose1000==1340
 replace dgycat6=1 if dose1000==2730
-replace dgycat7=1 if dose1000==7030
 
-scalar dgycat2_sin_b=1.24
-scalar dgycat2_mul_b=0.84
+scalar dgycat2_sin_b=1.26
+scalar dgycat2_mul_b=0.81
 
-scalar dgycat3_sin_b=1.33
-scalar dgycat3_mul_b=1.42
+scalar dgycat3_sin_b=1.35
+scalar dgycat3_mul_b=1.43
 
-scalar dgycat4_sin_b=1.52
-scalar dgycat4_mul_b=1.26
+scalar dgycat4_sin_b=1.55
+scalar dgycat4_mul_b=1.25
 
-scalar dgycat5_sin_b=2.45
-scalar dgycat5_mul_b=2.21
+scalar dgycat5_sin_b=2.50
+scalar dgycat5_mul_b=2.26
 
-scalar dgycat6_sin_b=2.41
-scalar dgycat6_mul_b=2.21
-
-scalar dgycat7_sin_b=4.99
-scalar dgycat7_mul_b=5.44
+scalar dgycat6_sin_b=2.47
+scalar dgycat6_mul_b=2.27
 
 gen ctpoint=.
-replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730, 7030)
+replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730)
 
-gen dct7_sin_rad= (dgycat2_sin_b*dgycat2+dgycat3_sin_b*dgycat3+dgycat4_sin_b*dgycat4+dgycat5_sin_b*dgycat5+dgycat6_sin_b*dgycat6+dgycat7_sin_b*dgycat7)*ctpoint
-gen dct7_mul_rad= (dgycat2_mul_b*dgycat2+dgycat3_mul_b*dgycat3+dgycat4_mul_b*dgycat4+dgycat5_mul_b*dgycat5+dgycat6_mul_b*dgycat6+dgycat7_mul_b*dgycat7)*ctpoint
+gen dct7_sin_rad= (dgycat2_sin_b*dgycat2+dgycat3_sin_b*dgycat3+dgycat4_sin_b*dgycat4+dgycat5_sin_b*dgycat5+dgycat6_sin_b*dgycat6)*ctpoint
+gen dct7_mul_rad= (dgycat2_mul_b*dgycat2+dgycat3_mul_b*dgycat3+dgycat4_mul_b*dgycat4+dgycat5_mul_b*dgycat5+dgycat6_mul_b*dgycat6)*ctpoint
 
 *new dcat8 to investgate multiple L-E curve
 gen dct8_2=0
