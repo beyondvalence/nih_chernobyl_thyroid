@@ -1,11 +1,11 @@
 ! FIGURE 1: Curves and confidence intervals
-! whole dose range
-! updated 20160513FRI WTL
+! whole dose range -> now restricted to 0-5 Gy
+! updated 20160525 WTL
 
 !!!!!!! All nodules 
 
 clear
-set obs 12001
+set obs 5001
 gen dose1000 = _n-1
 gen dgy=dose1000/1000
 
@@ -23,41 +23,41 @@ gen dgycat5=0
 gen dgycat6=0
 gen dgycat7=0
 
-*Based on means
-*replace dgycat1=1 if dose1000==43
-replace dgycat2=1 if dose1000==167
-replace dgycat3=1 if dose1000==364
-replace dgycat4=1 if dose1000==707
-replace dgycat5=1 if dose1000==1392
-replace dgycat6=1 if dose1000==2745
-replace dgycat7=1 if dose1000==7552
+*Based on medians
+*replace dgycat1=1 if dose1000==39
+replace dgycat2=1 if dose1000==162
+replace dgycat3=1 if dose1000==357
+replace dgycat4=1 if dose1000==688
+replace dgycat5=1 if dose1000==1340
+replace dgycat6=1 if dose1000==2730
+replace dgycat7=1 if dose1000==7030
 
-scalar dgycat2b=1.08
-scalar dgycat2lob=0.79
-scalar dgycat2hib=1.52
+scalar dgycat2b=1.11
+scalar dgycat2lob=0.84
+scalar dgycat2hib=1.59
 
-scalar dgycat3b=1.41
-scalar dgycat3lob=1.04
-scalar dgycat3hib=1.95
+scalar dgycat3b=1.36
+scalar dgycat3lob=1.02
+scalar dgycat3hib=1.91
 
-scalar dgycat4b=1.49
-scalar dgycat4lob=1.08
-scalar dgycat4hib=2.10
+scalar dgycat4b=1.44
+scalar dgycat4lob=1.06
+scalar dgycat4hib=2.06
 
-scalar dgycat5b=2.59
-scalar dgycat5lob=1.82
-scalar dgycat5hib=3.69
+scalar dgycat5b=2.40
+scalar dgycat5lob=1.59
+scalar dgycat5hib=3.55
 
-scalar dgycat6b=2.21
-scalar dgycat6lob=1.48
-scalar dgycat6hib=3.34
+scalar dgycat6b=2.38
+scalar dgycat6lob=1.56
+scalar dgycat6hib=3.67
 
-scalar dgycat7b=6.17
-scalar dgycat7lob=3.79
-scalar dgycat7hib=9.76
+scalar dgycat7b=5.14
+scalar dgycat7lob=2.88
+scalar dgycat7hib=8.79
 
 gen ctpoint=.
-replace ctpoint=1 if dose1000==167|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
+replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730, 7030)
 
 gen dct7_all_rad= (dgycat2b*dgycat2+dgycat3b*dgycat3+dgycat4b*dgycat4+dgycat5b*dgycat5+dgycat6b*dgycat6+dgycat7b*dgycat7)*ctpoint
 gen dct7_upp_rad= (dgycat2hib*dgycat2+dgycat3hib*dgycat3+dgycat4hib*dgycat4+dgycat5hib*dgycat5+dgycat6hib*dgycat6+dgycat7hib*dgycat7)*ctpoint
@@ -113,7 +113,7 @@ gen dct8_upp_rad= (dct82_upp_b*dct8_2+dct83_upp_b*dct8_3+dct84_upp_b*dct8_4+dct8
 
 
 !Linear model
-scalar lin_dgyb=0.5935
+scalar lin_dgyb=0.70
 
 gen linrad= lin_dgyb*dgy+1
 
@@ -123,19 +123,21 @@ twoway	(rcap dct7_upp_rad dct7_low_rad dgy)  ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )), ///
-			ti("{bf}All nodules ", pos(11) ring(1) size(5.7) ) ///
-			yti("{bf}Odds ratio*", size(4.7) )  ///
-			yla(0 (2) 10, ang(1)) ///
-			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
-			xla(0 (2) 12) ///
-			legend(region(lwidth(none)) order(2 "ORs and 95%CIs" 3 "Linear" )) ///
-			legend(col(1) pos(10) ring (0) size (4.5) symxsize(5) keygap(0.7) textw(19) ) ///
+			ti("{bf}All nodules", pos(11) ring(1) size(4) ) ///
+			yti("{bf}Odds ratio", size(3) )  ///
+			yla(0 (2) 8, ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
+			xla(0 (1) 5) ///
+			legend(region(lwidth(none)) ///
+				order(2 "ORs and 95%CIs" ///
+						3 "All, EOR=0.70 (0.33,1.18)" )) ///
+			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.7) rowgap(*0.5) ) ///
 			name(Fig1A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
 
 !!!!!!! Nodules by behavior: non-neoplastic, neoplastic
 
 clear
-set obs 12001
+set obs 5001
 gen dose1000 = _n-1
 gen dgy=dose1000/1000
 
@@ -153,36 +155,36 @@ gen dgycat5=0
 gen dgycat6=0
 gen dgycat7=0
 
-*Based on means
-*replace dgycat1=1 if dose1000==43
-replace dgycat2=1 if dose1000==167
-replace dgycat3=1 if dose1000==364
-replace dgycat4=1 if dose1000==707
-replace dgycat5=1 if dose1000==1392
-replace dgycat6=1 if dose1000==2745
-replace dgycat7=1 if dose1000==7552
+*Based on medians
+*replace dgycat1=1 if dose1000==39
+replace dgycat2=1 if dose1000==162
+replace dgycat3=1 if dose1000==357
+replace dgycat4=1 if dose1000==688
+replace dgycat5=1 if dose1000==1340
+replace dgycat6=1 if dose1000==2730
+replace dgycat7=1 if dose1000==7030
 
 scalar dgycat2_non_b=0.93
-scalar dgycat2_neo_b=1.42
+scalar dgycat2_neo_b=1.29
 
-scalar dgycat3_non_b=1.10
-scalar dgycat3_neo_b=1.99
+scalar dgycat3_non_b=1.16
+scalar dgycat3_neo_b=1.79
 
 scalar dgycat4_non_b=1.09
-scalar dgycat4_neo_b=3.19
+scalar dgycat4_neo_b=3.01
 
-scalar dgycat5_non_b=1.95
-scalar dgycat5_neo_b=5.41
+scalar dgycat5_non_b=1.77
+scalar dgycat5_neo_b=5.14
 
-scalar dgycat6_non_b=1.19
-scalar dgycat6_neo_b=5.96
+scalar dgycat6_non_b=1.45
+scalar dgycat6_neo_b=6.57
 
-scalar dgycat7_non_b=4.74
-scalar dgycat7_neo_b=13.9
+scalar dgycat7_non_b=3.85
+scalar dgycat7_neo_b=8.13
 
 
 gen ctpoint=.
-replace ctpoint=1 if dose1000==167|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
+replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730, 7030)
 
 gen dct7_non_rad= (dgycat2_non_b*dgycat2+dgycat3_non_b*dgycat3+dgycat4_non_b*dgycat4+dgycat5_non_b*dgycat5+dgycat6_non_b*dgycat6+dgycat7_non_b*dgycat7)*ctpoint
 gen dct7_neo_rad= (dgycat2_neo_b*dgycat2+dgycat3_neo_b*dgycat3+dgycat4_neo_b*dgycat4+dgycat5_neo_b*dgycat5+dgycat6_neo_b*dgycat6+dgycat7_neo_b*dgycat7)*ctpoint
@@ -228,12 +230,12 @@ gen dct8_non_rad= (dct82_non_b*dct8_2+dct83_non_b*dct8_3+dct84_non_b*dct8_4+dct8
 gen dct8_neo_rad= (dct82_neo_b*dct8_2+dct83_neo_b*dct8_3+dct84_neo_b*dct8_4+dct85_neo_b*dct8_5+dct86_neo_b*dct8_6+dct87_neo_b*dct8_7+dct88_neo_b*dct8_8)*ctpoint8
 
 !Linear model
-scalar lin_dgy_non_b = 0.3617
-scalar lin_dgy_neo_b = 2.124
+scalar lin_dgy_non_b = 0.33
+scalar lin_dgy_neo_b = 3.83
 
 gen linrad_non= lin_dgy_non_b*dgy+1
 gen linrad_neo= lin_dgy_neo_b*dgy+1
-replace linrad_neo=. if linrad_neo > 14
+replace linrad_neo=. if linrad_neo > 8
 
 ! Linear exponential model, non-neoplastic
 scalar le_dgy_non_b = 0.1472
@@ -241,7 +243,7 @@ scalar le_dgy_non_expb = 0.09457
 gen lerad_non= 1+le_dgy_non_b*dgy*exp(le_dgy_non_expb*dgy)
 
 twoway	(scatter dct7_non_rad dgy, mc(gray)) ///
-		(line lerad_non dgy, ///
+		(line linrad_non dgy, ///
 		 lpattern( solid ) /// 
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)) ///
@@ -250,19 +252,21 @@ twoway	(scatter dct7_non_rad dgy, mc(gray)) ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick)) , ///
-			ti("{bf}Behavior ", pos(11) ring(1) size(5.7) )  ///
-			yti("{bf}Odds ratio*", size(4.7) ) ///
-			yla(0 (2) 14, ang(1)) ///
-			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
-			xla(0 (2) 12) ///
-			legend(region(lwidth(none)) order(4 "Neoplastic" 2 "Non-neoplastic")) ///
-			legend(col(1) pos(4) ring (0) size (3.64) symxsize(4.8) keygap(0.6) textw(13) ) ///
+			ti("{bf}Behavior ", pos(11) ring(1) size(4) )  ///
+			yti("{bf}Odds ratio", size(3) ) ///
+			yla(0 (2) 8, ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
+			xla(0 (1) 5) ///
+			legend(region(lwidth(none)) ///
+					order(4 "Neoplastic, EOR=3.83 (0.89,15.45)" ///
+							2 "Non-neoplastic, EOR=0.33 (<0.04,0.70)")) ///
+			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.6) rowgap(*0.5) ) ///
 			name(Fig1B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 !!!!!!! Nodules by size: small, large
 
 clear
-set obs 12001
+set obs 5001
 gen dose1000 = _n-1
 gen dgy=dose1000/1000
 
@@ -280,35 +284,35 @@ gen dgycat5=0
 gen dgycat6=0
 gen dgycat7=0
 
-*Based on means
-*replace dgycat1=1 if dose1000==43
-replace dgycat2=1 if dose1000==167
-replace dgycat3=1 if dose1000==364
-replace dgycat4=1 if dose1000==707
-replace dgycat5=1 if dose1000==1392
-replace dgycat6=1 if dose1000==2745
-replace dgycat7=1 if dose1000==7552
+*Based on medians
+*replace dgycat1=1 if dose1000==39
+replace dgycat2=1 if dose1000==162
+replace dgycat3=1 if dose1000==357
+replace dgycat4=1 if dose1000==688
+replace dgycat5=1 if dose1000==1340
+replace dgycat6=1 if dose1000==2730
+replace dgycat7=1 if dose1000==7030
 
-scalar dgycat2_sma_b=1.13
-scalar dgycat2_lar_b=1.02
+scalar dgycat2_sma_b=1.11
+scalar dgycat2_lar_b=1.22
 
-scalar dgycat3_sma_b=1.20
-scalar dgycat3_lar_b=1.19
+scalar dgycat3_sma_b=1.18
+scalar dgycat3_lar_b=2.26
 
-scalar dgycat4_sma_b=1.55
-scalar dgycat4_lar_b=1.43
+scalar dgycat4_sma_b=1.46
+scalar dgycat4_lar_b=1.57
 
-scalar dgycat5_sma_b=2.09
-scalar dgycat5_lar_b=4.20
+scalar dgycat5_sma_b=1.93
+scalar dgycat5_lar_b=4.65
 
-scalar dgycat6_sma_b=1.41
-scalar dgycat6_lar_b=4.87
+scalar dgycat6_sma_b=1.49
+scalar dgycat6_lar_b=6.38
 
-scalar dgycat7_sma_b=4.28
-scalar dgycat7_lar_b=13.21
+scalar dgycat7_sma_b=3.88
+scalar dgycat7_lar_b=11.0
 
 gen ctpoint=.
-replace ctpoint=1 if dose1000==167|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
+replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730, 7030)
 
 gen dct7_sma_rad= (dgycat2_sma_b*dgycat2+dgycat3_sma_b*dgycat3+dgycat4_sma_b*dgycat4+dgycat5_sma_b*dgycat5+dgycat6_sma_b*dgycat6+dgycat7_sma_b*dgycat7)*ctpoint
 gen dct7_lar_rad= (dgycat2_lar_b*dgycat2+dgycat3_lar_b*dgycat3+dgycat4_lar_b*dgycat4+dgycat5_lar_b*dgycat5+dgycat6_lar_b*dgycat6+dgycat7_lar_b*dgycat7)*ctpoint
@@ -355,12 +359,12 @@ gen dct8_lar_rad= (dct82_lar_b*dct8_2+dct83_lar_b*dct8_3+dct84_lar_b*dct8_4+dct8
 
 
 !Linear model
-scalar lin_dgy_sma_b=0.32 /*0.3752*/
-scalar lin_dgy_lar_b=1.76 /*1.526*/
+scalar lin_dgy_sma_b=0.27
+scalar lin_dgy_lar_b=2.13
 
 gen linrad_sma= lin_dgy_sma_b*dgy+1
 gen linrad_lar= lin_dgy_lar_b*dgy+1
-replace linrad_lar=. if linrad_lar > 14
+replace linrad_lar=. if linrad_lar > 8
 
 twoway	(scatter dct7_sma_rad dgy, mc(gray)) ///
 		(line linrad_sma dgy, ///
@@ -372,19 +376,21 @@ twoway	(scatter dct7_sma_rad dgy, mc(gray)) ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick)), ///
-			ti("{bf}Size ", pos(11) ring(1) size(5.7) ) ///
-			yti("{bf}Odds ratio* ", size(4.7) )  ///
-			yla(0 (2) 14, ang(1)) ///
-			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
-			xla(0 (2) 12) ///
-			legend(region(lwidth(none)) order(4 "Large, 10+ mm" 2 "Small, <10 mm"  )) ///
-			legend(col(1) pos(3) ring (0) size (4.3) symxsize(4.7) keygap(0.6) textw(16.6) ) ///
+			ti("{bf}Size ", pos(11) ring(1) size(4) ) ///
+			yti("{bf}Odds ratio ", size(3) )  ///
+			yla(0 (2) 8, ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
+			xla(0 (1) 5) ///
+			legend(region(lwidth(none)) ///
+				order(4 "Large +10 mm, EOR=2.13 (0.97,4.59)" ///
+						2 "Small <10 mm, EOR=0.27 (<0.07,0.71)"  )) ///
+			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.6) rowgap(*0.5) ) ///
 			name(Fig1C, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 !!!!!!! Nodules by singularity: single, multiple
 
 clear
-set obs 12001
+set obs 5001
 gen dose1000 = _n-1
 gen dgy=dose1000/1000
 
@@ -404,35 +410,35 @@ gen dgycat5=0
 gen dgycat6=0
 gen dgycat7=0
 
-*Based on means
-*replace dgycat1=1 if dose1000==43
-replace dgycat2=1 if dose1000==167
-replace dgycat3=1 if dose1000==364
-replace dgycat4=1 if dose1000==707
-replace dgycat5=1 if dose1000==1392
-replace dgycat6=1 if dose1000==2745
-replace dgycat7=1 if dose1000==7552
+*Based on medians
+*replace dgycat1=1 if dose1000==39
+replace dgycat2=1 if dose1000==162
+replace dgycat3=1 if dose1000==357
+replace dgycat4=1 if dose1000==688
+replace dgycat5=1 if dose1000==1340
+replace dgycat6=1 if dose1000==2730
+replace dgycat7=1 if dose1000==7030
 
-scalar dgycat2_sin_b=1.18
-scalar dgycat2_mul_b=0.73
+scalar dgycat2_sin_b=1.24
+scalar dgycat2_mul_b=0.84
 
 scalar dgycat3_sin_b=1.33
-scalar dgycat3_mul_b=1.68
+scalar dgycat3_mul_b=1.42
 
-scalar dgycat4_sin_b=1.53
-scalar dgycat4_mul_b=1.33
+scalar dgycat4_sin_b=1.52
+scalar dgycat4_mul_b=1.26
 
-scalar dgycat5_sin_b=2.50
-scalar dgycat5_mul_b=2.80
+scalar dgycat5_sin_b=2.45
+scalar dgycat5_mul_b=2.21
 
-scalar dgycat6_sin_b=2.03
-scalar dgycat6_mul_b=2.78
+scalar dgycat6_sin_b=2.41
+scalar dgycat6_mul_b=2.21
 
-scalar dgycat7_sin_b=5.84
-scalar dgycat7_mul_b=7.15
+scalar dgycat7_sin_b=4.99
+scalar dgycat7_mul_b=5.44
 
 gen ctpoint=.
-replace ctpoint=1 if dose1000==167|dose1000==364|dose1000==707|dose1000==1392|dose1000==2745|dose1000==7552
+replace ctpoint=1 if inlist(dose1000, 162, 357, 688, 1340, 2730, 7030)
 
 gen dct7_sin_rad= (dgycat2_sin_b*dgycat2+dgycat3_sin_b*dgycat3+dgycat4_sin_b*dgycat4+dgycat5_sin_b*dgycat5+dgycat6_sin_b*dgycat6+dgycat7_sin_b*dgycat7)*ctpoint
 gen dct7_mul_rad= (dgycat2_mul_b*dgycat2+dgycat3_mul_b*dgycat3+dgycat4_mul_b*dgycat4+dgycat5_mul_b*dgycat5+dgycat6_mul_b*dgycat6+dgycat7_mul_b*dgycat7)*ctpoint
@@ -477,8 +483,8 @@ gen dct8_sin_rad= (dct82_sin_b*dct8_2+dct83_sin_b*dct8_3+dct84_sin_b*dct8_4+dct8
 gen dct8_mul_rad= (dct82_mul_b*dct8_2+dct83_mul_b*dct8_3+dct84_mul_b*dct8_4+dct85_mul_b*dct8_5+dct86_mul_b*dct8_6+dct87_mul_b*dct8_7+dct88_mul_b*dct8_8)*ctpoint8
 
 !Linear model
-scalar lin_dgy_sin_b=0.557
-scalar lin_dgy_mul_b=0.59
+scalar lin_dgy_sin_b=0.67
+scalar lin_dgy_mul_b=0.61
 
 gen linrad_sin= lin_dgy_sin_b*dgy+1
 gen linrad_mul= lin_dgy_mul_b*dgy+1
@@ -495,17 +501,19 @@ twoway	(scatter dct7_sin_rad dgy, mc(gray)) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick)) ///
 		(scatter dct7_mul_rad dgy, mc(black)) ///
-		(line lerad_mul dgy, ///
+		(line linrad_mul dgy, ///
 		 lpattern(solid) ///
 		 lcol(black ) ///
 		 lw(medthick)) , ///
-			ti("{bf}Singularity ", pos(11) ring(1) size(5.7) )  ///
-			yti("{bf}Odds ratio*" , size(4.7) )  ///
-			yla(0 (2) 10, ang(1)) ///
-			xti("{bf} Thyroid dose (Gy)", size(4.7) ) ///
-			xla(0 (2) 12) ///
-			legend(region(lwidth(none)) order(4 "Multiple" 2 "Single" )) ///
-			legend(col(1) pos(10) ring (0) size (5.4) symxsize(5) keygap(0.7) ) ///
+			ti("{bf}Singularity ", pos(11) ring(1) size(4) )  ///
+			yti("{bf}Odds ratio" , size(3) )  ///
+			yla(0 (2) 8, ang(1)) ///
+			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
+			xla(0 (1) 5) ///
+			legend(region(lwidth(none)) ///
+			order(4 "Multiple*, EOR=0.61 (<0.23,2.03)" ///
+					2 "Single, EOR=0.67 (0.30,1.19)" )) ///
+			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.7) rowgap(*0.5) ) ///
 			name(Fig1D, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 graph combine Fig1A Fig1B Fig1C Fig1D, ///
