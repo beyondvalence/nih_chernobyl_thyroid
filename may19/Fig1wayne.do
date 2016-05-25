@@ -125,7 +125,7 @@ twoway	(rcap dct7_upp_rad dct7_low_rad dgy)  ///
 		 lw(medthick )), ///
 			ti("{bf}All nodules", pos(11) ring(1) size(4) ) ///
 			yti("{bf}Odds ratio", size(3) )  ///
-			yla(0 (2) 8, ang(1)) ///
+			yla(0 (2) 8, ang(1) nogrid ) ///
 			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
 			xla(0 (1) 5) ///
 			legend(region(lwidth(none)) ///
@@ -254,7 +254,7 @@ twoway	(scatter dct7_non_rad dgy, mc(gray)) ///
 		 lw(medthick)) , ///
 			ti("{bf}Behavior ", pos(11) ring(1) size(4) )  ///
 			yti("{bf}Odds ratio", size(3) ) ///
-			yla(0 (2) 8, ang(1)) ///
+			yla(0 (2) 8, ang(1) nogrid ) ///
 			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
 			xla(0 (1) 5) ///
 			legend(region(lwidth(none)) ///
@@ -378,7 +378,7 @@ twoway	(scatter dct7_sma_rad dgy, mc(gray)) ///
 		 lw(medthick)), ///
 			ti("{bf}Size ", pos(11) ring(1) size(4) ) ///
 			yti("{bf}Odds ratio ", size(3) )  ///
-			yla(0 (2) 8, ang(1)) ///
+			yla(0 (2) 8, ang(1) nogrid ) ///
 			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
 			xla(0 (1) 5) ///
 			legend(region(lwidth(none)) ///
@@ -507,7 +507,7 @@ twoway	(scatter dct7_sin_rad dgy, mc(gray)) ///
 		 lw(medthick)) , ///
 			ti("{bf}Singularity ", pos(11) ring(1) size(4) )  ///
 			yti("{bf}Odds ratio" , size(3) )  ///
-			yla(0 (2) 8, ang(1)) ///
+			yla(0 (2) 8, ang(1) nogrid ) ///
 			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
 			xla(0 (1) 5) ///
 			legend(region(lwidth(none)) ///
