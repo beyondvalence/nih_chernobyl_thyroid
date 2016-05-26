@@ -54,10 +54,10 @@ twoway	(rcap exct3hirad exct3lorad age_exp) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )), ///
 			ti("{bf}All nodules ", pos(11) ring(1) size(4) )  ///
-			yti("{bf}Odds ratio*", size(3) )  ///
-			yla(,ang(0)) ylab(0 (1) 4) ///
+			yti("{bf}Odds ratio", size(3) )  ///
+			ylab(0 (1) 4, ang(0) nogrid ) ///
 			legend(region(lwidth(none)) order(2 "ORs and 95%CIs" 3 "All, P<0.001") col(1) pos(1) ring (0) ) ///
-			legend( size (3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
+			legend( size (4.3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
 			xti("{bf}Age at time of accident", size(3) ) ///
 			xlab(0 (2) 19) ///
 			name(Fig2A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
@@ -123,20 +123,20 @@ twoway	(scatter exct3_non_rad age_exp, mc(gray)) ///
 		 lpattern( solid ) ///
 		 lcol(black*0.75 ) ///
 		 lw(medthick )) ///
-		(scatter exct3_sus_rad age_exp, mc(gray) msymbol(T) ) ///
+		/*(scatter exct3_sus_rad age_exp, mc(gray) msymbol(T) ) ///
 		(line linrad_sus  age_exp, ///
 		 lpattern( shortdash ) ///
 		 lcol(gray*0.75 ) ///
-		 lw(medthick )) , ///
+		 lw(medthick )) */ , ///
 			ti("{bf}Behavior ", pos(11) ring(1) size(4) )  ///
-			yti("{bf}Odds ratio*", size(3) )  yla(,ang(0)) ///
-			ylab(0 (2) 18) ///
+			yti("{bf}Odds ratio", size(3) )  ///
+			ylab(0 (2) 18, ang(0) nogrid ) ///
 			legend(region(lwidth(none)) ///
 					order(4 "Neoplastic, P=0.002" ///
-							2 "Non-neoplastic, P=0.016" ///
+							/*2 "Non-neoplastic, P=0.016"*/ ///
 							6 "Suspicious, P<0.001" ) ///
 					col(1) pos(1) ring (0) ) ///
-			legend( size (3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
+			legend( size (4.3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
 			xti("{bf}Age at time of accident", size(3) ) ///
 			xlab(0 (2) 19) ///
 			name(Fig2B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
@@ -196,13 +196,13 @@ twoway	(scatter exct3_sma_rad age_exp, mc(gray)) ///
 		 lcol(black) ///
 		 lw(medthick )), ///
 			ti("{bf}Size ", pos(11) ring(1) size(4) )  ///
-			yti("{bf}Odds ratio*", size(3) )  yla(,ang(0)) ///
-			ylab(0 (2) 8) ///
+			yti("{bf}Odds ratio", size(3) )   ///
+			ylab(0 (2) 8, ang(0) nogrid ) ///
 			legend(region(lwidth(none)) ///
 					order(4 "Large, +10 mm, P=<0.001" ///
 							2 "Small, <10 mm, P=0.002" ) ///
 					col(1) pos(1) ring (0) ) ///
-			legend( size (3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
+			legend( size (4.3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
 			xti("{bf}Age at time of accident", size(3) ) ///
 			xlab(0 (2) 19) ///
 			name(Fig2C, replace) graphregion(fc(white) margin( 2 3 2 2 ))
@@ -243,15 +243,14 @@ gen exct3_mul_rad= ((agecat1_mul_b*agecat1 + agecat2_mul_b*agecat2 + agecat3_mul
 
 !Modelled effect modification
 
-scalar dgy_sin_b=0.56
-scalar ex5_sin_b=-0.21
+scalar dgy_sin_b=0.67
+scalar ex5_sin_b=-0.20
 gen linrad_sin= dgy_sin_b*dose1*exp(ex5_sin_b*(age_exp-5))+1
 
 
-scalar dgyLE_mul_b=0.22
-scalar dgyLE_mul_LEb=0.09
-scalar ex5LE_mul_b=-0.46
-gen linErad_mul= dgyLE_mul_b*dose1*exp(ex5LE_mul_b*(age_exp-5)+dgyLE_mul_LEb*dose1)+1
+scalar dgy_mul_b=0.61
+scalar ex5_mul_b=-0.38
+gen linrad_mul= dgy_mul_b*dose1*exp(ex5_mul_b*(age_exp-5))+1
 
 twoway	(scatter exct3_sin_rad age_exp, mc(gray)) ///
 		(line linrad_sin age_exp, ///
@@ -259,18 +258,18 @@ twoway	(scatter exct3_sin_rad age_exp, mc(gray)) ///
 		 lcol(gray*0.75 ) ///
 		 lw(medthick )) ///
 		(scatter exct3_mul_rad age_exp, mc(black)) ///
-		(line linErad_mul age_exp, ///
+		(line linrad_mul age_exp, ///
 		 lpattern( solid ) ///
 		 lcol( black ) ///
 		 lw(medthick )), ///
 			ti("{bf}Singularity ", pos(11) ring(1) size(4) )  ///
-			yti("{bf}Odds ratio*", size(3) )  yla(,ang(0)) ///
-			ylab(0 (1) 4) ///
+			yti("{bf}Odds ratio", size(3) )  ///
+			ylab(0 (2) 8, ang(0) nogrid ) ///
 			legend(region(lwidth(none)) ///
 					order(4 "Multiple, P=0.001" ///
 							2 "Single, P<0.001" ) ///
 					col(1) pos(1) ring (0) ) ///
-			legend( size (3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
+			legend( size (4.3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
 			xti("{bf}Age at time of accident", size(3) ) ///
 			xlab(0 (2) 19) ///
 			name(Fig2D, replace) graphregion(fc(white) margin( 2 3 2 2 ))
