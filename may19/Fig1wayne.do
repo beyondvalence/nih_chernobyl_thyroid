@@ -125,7 +125,7 @@ twoway	(rcap dct7_upp_rad dct7_low_rad dgy)  ///
 			legend(region(lwidth(none)) ///
 				order(2 "ORs and 95%CIs" ///
 						3 "All, EOR=0.70 (0.33,1.18)" )) ///
-			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.7) rowgap(*0.5) ) ///
+			legend(col(1) pos(4) ring (0) size (3.3) symxsize(2) keygap(0.7) rowgap(*0.1) ) ///
 			name(Fig1A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
 
 !!!!!!! Nodules by behavior: non-neoplastic, neoplastic, suspicious
@@ -266,7 +266,7 @@ twoway	(scatter dct7_non_rad dgy, mc(gray)) ///
 					order(4 "Neoplastic, EOR=3.83 (0.89,15.45)" ///
 							/*6 "Suspicious, EOR=1.55 (0.36,4.42)"*/ ///
 							2 "Non-neoplastic, EOR=0.33 (<0.04,0.70)")) ///
-			legend(col(1) pos(5) ring (0) size (2.5) symxsize(2) keygap(0.6) rowgap(*0.1) /*colgap(*0.1)*/ ) ///
+			legend(col(1) pos(5) ring (0) size (3.3) symxsize(2) keygap(0.6) rowgap(*0.1) /*colgap(*0.1)*/ ) ///
 			name(Fig1B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
 
 !!!!!!! Nodules by size: small, large
@@ -383,9 +383,9 @@ twoway	(scatter dct7_sma_rad dgy, mc(gray)) ///
 			xti("{bf} Thyroid dose (Gy)", size(3) ) ///
 			xla(0 (1) 5) ///
 			legend(region(lwidth(none)) ///
-				order(4 "Large +10 mm, EOR=2.13 (0.97,4.59)" ///
-						2 "Small <10 mm, EOR=0.27 (<0.07,0.71)"  )) ///
-			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.6) rowgap(*0.5) ) ///
+				order(4 "10+ mm, EOR=2.13 (0.97,4.59)" ///
+						2 "<10 mm, EOR=0.27 (<0.07,0.71)"  )) ///
+			legend(col(1) pos(4) ring (0) size (3.3) symxsize(2) keygap(0.6) rowgap(*0.1) ) ///
 			name(Fig1C, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 !!!!!!! Nodules by singularity: single, multiple
@@ -509,7 +509,7 @@ twoway	(scatter dct7_sin_rad dgy, mc(gray)) ///
 			legend(region(lwidth(none)) ///
 			order(4 "Multiple*, EOR=0.61 (<0.23,2.03)" ///
 					2 "Single, EOR=0.67 (0.30,1.19)" )) ///
-			legend(col(1) pos(4) ring (0) size (2.5) symxsize(2) keygap(0.7) rowgap(*0.5) ) ///
+			legend(col(1) pos(4) ring (0) size (3.3) symxsize(2) keygap(0.7) rowgap(*0.1) ) ///
 			name(Fig1D, replace) graphregion(fc(white) margin( 2 3 2 2 )) 
 
 graph combine Fig1A Fig1B Fig1C Fig1D, ///

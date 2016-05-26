@@ -57,7 +57,7 @@ twoway	(rcap exct3hirad exct3lorad age_exp) ///
 			yti("{bf}Odds ratio", size(3) )  ///
 			ylab(0 (1) 4, ang(0) nogrid ) ///
 			legend(region(lwidth(none)) order(2 "ORs and 95%CIs" 3 "All, P<0.001") col(1) pos(1) ring (0) ) ///
-			legend( size (4.3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
+			legend( size (4.3) symxsize(2) keygap(0.6) rowgap(*0.2) ) ///
 			xti("{bf}Age at time of accident", size(3) ) ///
 			xlab(0 (2) 19) ///
 			name(Fig2A, replace) graphregion(fc(white) margin( 2 3 2 1 )) 
@@ -133,10 +133,10 @@ twoway	(scatter exct3_non_rad age_exp, mc(gray)) ///
 			ylab(0 (2) 18, ang(0) nogrid ) ///
 			legend(region(lwidth(none)) ///
 					order(4 "Neoplastic, P=0.002" ///
-							/*2 "Non-neoplastic, P=0.016"*/ ///
-							6 "Suspicious, P<0.001" ) ///
+							2 "Non-neoplastic, P=0.016" ///
+							/*6 "Suspicious, P<0.001"*/ ) ///
 					col(1) pos(1) ring (0) ) ///
-			legend( size (4.3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
+			legend( size (4.3) symxsize(2) keygap(0.6) rowgap(*0.2) ) ///
 			xti("{bf}Age at time of accident", size(3) ) ///
 			xlab(0 (2) 19) ///
 			name(Fig2B, replace) graphregion(fc(white) margin( 2 3 2 1 ))
@@ -199,10 +199,10 @@ twoway	(scatter exct3_sma_rad age_exp, mc(gray)) ///
 			yti("{bf}Odds ratio", size(3) )   ///
 			ylab(0 (2) 8, ang(0) nogrid ) ///
 			legend(region(lwidth(none)) ///
-					order(4 "Large, +10 mm, P=<0.001" ///
-							2 "Small, <10 mm, P=0.002" ) ///
+					order(4 "10+ mm, P<0.001" ///
+							2 "<10 mm, P=0.002" ) ///
 					col(1) pos(1) ring (0) ) ///
-			legend( size (4.3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
+			legend( size (4.3) symxsize(2) keygap(0.6) rowgap(*0.2) ) ///
 			xti("{bf}Age at time of accident", size(3) ) ///
 			xlab(0 (2) 19) ///
 			name(Fig2C, replace) graphregion(fc(white) margin( 2 3 2 2 ))
@@ -269,7 +269,7 @@ twoway	(scatter exct3_sin_rad age_exp, mc(gray)) ///
 					order(4 "Multiple, P=0.001" ///
 							2 "Single, P<0.001" ) ///
 					col(1) pos(1) ring (0) ) ///
-			legend( size (4.3) symxsize(5) keygap(0.6) rowgap(*0.2) ) ///
+			legend( size (4.3) symxsize(2) keygap(0.6) rowgap(*0.2) ) ///
 			xti("{bf}Age at time of accident", size(3) ) ///
 			xlab(0 (2) 19) ///
 			name(Fig2D, replace) graphregion(fc(white) margin( 2 3 2 2 ))
